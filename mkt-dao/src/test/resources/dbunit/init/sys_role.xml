@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <sys_role id="1" name="系统管理" description="拥有所有权限的系统管理员" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <sys_role id="2" name="理财经理" description="理财经理" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <sys_role id="3" name="管理者" description="理财经理的上级管理人员" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <sys_role id="4" name="被删除的" description="被删除的" status="0" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+</dataset>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.system.SysPermissionMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysPermission">
+        <id property="id" column="id" javaType="Long"/>
+        <result property="id" column="id" javaType="Long"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="description" column="description" javaType="String"/>
+        <result property="status" column="status" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="date"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+    <!--<sql id="Base_Column_List">-->
+        <!--su.id AS id,-->
+        <!--su.name AS name,-->
+        <!--su.description AS description,-->
+        <!--su.status AS status,-->
+        <!--su.create_user AS createUser,-->
+        <!--su.create_time AS createTime,-->
+        <!--su.update_user AS updateUser,-->
+        <!--su.update_time AS updateTime-->
+    <!--</sql>-->
+    <!--<select id="selectByUserId" resultMap="Base_Result_Map" parameterType="Long">-->
+        <!--SELECT-->
+          <!--<include refid="Base_Column_List" />-->
+        <!--FROM sys_role su-->
+            <!--JOIN rele_user_role rur ON rur.role_id = su.id-->
+        <!--WHERE rur.user_id = #{userId}-->
+        <!--ORDER BY su.id-->
+    <!--</select>-->
+    <!--<select id="selectByPermissionId" resultMap="Base_Result_Map" parameterType="Long">-->
+        <!--SELECT-->
+          <!--<include refid="Base_Column_List" />-->
+        <!--FROM sys_role su-->
+          <!--JOIN rele_role_permission rrp ON su.id = rrp.role_id-->
+        <!--WHERE rrp.permission_id = #{permissionId}-->
+        <!--ORDER BY su.id-->
+    <!--</select>-->
+    <select id="selectNamesByRolesId" resultType="String">
+        SELECT DISTINCT sp.name
+        FROM rele_role_permission rrp
+          JOIN sys_permission sp ON rrp.permission_id=sp.id
+        WHERE rrp.role_id IN
+        <foreach collection="rolesId" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+    </select>
+</mapper>

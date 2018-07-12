@@ -1,0 +1,70 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /mkt
+  error:
+    path: /error
+
+spring:
+  application:
+    name: Marketing API
+  profiles:
+#    active: @environment@
+    active: dev
+  jackson:
+#    mapper: true
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      indent_output: true
+      fail_on_empty_beans: false
+      write_dates_as_timestamps: false
+      write_bigdecimal_as_plain: true
+      write_empty_json_arrays: true
+    deserialization:
+      fail_on_unknown_properties: true
+      accept_empty_string_as_null_object: true
+      read_unknown_enum_values_as_null: false
+    locale: zh_CN
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    sql-script-encoding: UTF-8
+
+
+mybatis-plus:
+#  type-enums-package: cn.com.geasy.marketing.domain.enums
+  type-aliases-package: cn.com.geasy.marketing.domain.entity.*
+  mapper-locations: classpath:cn/com/geasy/marketing/mapper/**/*Mapper.xml
+  global-config:
+    refresh-mapper: true
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    #自定义填充策略接口实现
+    meta-object-handler: com.gitee.mechanic.mybatis.handler.AutoFillMetaObjectHandler
+    #自定义SQL注入器
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+#    call-setters-on-nulls: true
+    return-instance-for-empty-row: true
+
+logging:
+  register-shutdown-hook: false
+  level:
+    ROOT: debug
+    com.baomidou: debug
+    org.apache.ibatis: debug
+    cn.com.geasy.marketing: debug

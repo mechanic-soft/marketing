@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <rele_role_permission id="1" role_id="1" permission_id="1" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="2" role_id="1" permission_id="2" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="3" role_id="1" permission_id="3" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="4" role_id="1" permission_id="4" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="5" role_id="2" permission_id="1" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="6" role_id="2" permission_id="4" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="7" role_id="3" permission_id="4" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <rele_role_permission id="8" role_id="3" permission_id="1" status="0" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+</dataset>

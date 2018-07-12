@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <sys_user id="1" username="admin" password="4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8" salt="e5a721750f676a48ee77f3fe8c5a58e9" name="管理员" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <sys_user id="2" username="user" password="4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8" salt="e5a721750f676a48ee77f3fe8c5a58e9" name="操作用户" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <sys_user id="3" username="manager" password="4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8" salt="e5a721750f676a48ee77f3fe8c5a58e9" name="查询用户" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+    <sys_user id="4" username="deleteduser" password="4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8" salt="e5a721750f676a48ee77f3fe8c5a58e9" name="被删除的" status="0" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>
+</dataset>

@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /mkt
+  error:
+    path: /error
+
+spring:
+  application:
+    name: Marketing API
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      indent_output: true
+      fail_on_empty_beans: false
+      write_dates_as_timestamps: false
+      write_bigdecimal_as_plain: true
+      write_empty_json_arrays: true
+    deserialization:
+      fail_on_unknown_properties: true
+      accept_empty_string_as_null_object: true
+      read_unknown_enum_values_as_null: false
+    locale: zh_CN
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    sql-script-encoding: UTF-8
+
+logging:
+  register-shutdown-hook: false
+  level:
+    ROOT: debug
+    com.baomidou: debug
+    org.apache.ibatis: debug
+    cn.com.geasy.marketing: debug

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.com.g-easy</groupId>
+    <artifactId>marketing</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>mkt-dao</module>
+        <module>mkt-domain</module>
+        <module>mkt-service</module>
+        <module>mkt-api</module>
+        <module>mkt-web</module>
+    </modules>
+    <packaging>pom</packaging>
+    <name>Marketing</name>
+    <description>Goeasy - Marketing</description>
+    <url>https://gitee.com/tvi/marketing</url>
+    <organization>
+        <name>TechViewInfo Co.,Ltd</name>
+        <url>http://www.techviewinfo.com</url>
+    </organization>
+    <issueManagement>
+        <system>Gitee</system>
+        <url>${url}/issues</url>
+    </issueManagement>
+    <scm>
+        <url>${url}</url>
+        <connection>scm:git:${url}.git</connection>
+        <developerConnection>scm:git:${url}.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshots</name>
+            <url>http://tvi3.f3322.net:18081/repository/tvi-snapshots/</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <name>Releases</name>
+            <url>http://tvi3.f3322.net:18081/repository/tvi-releases/</url>
+        </repository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>tvi-maven</id>
+            <url>http://tvi3.f3322.net:18081/repository/maven-public/</url>
+        </repository>
+    </repositories>
+    <developers>
+        <developer>
+            <id>feng.cheng@techviewinfo.com</id>
+            <name>Phil Cheng</name>
+            <organization>TechViewInfo Co.,Ltd</organization>
+            <organizationUrl>http://www.techviewinfo.com</organizationUrl>
+            <roles>
+                <role>Manager</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>tingfei.wang@techviewinfo.com</id>
+            <name>Tingfei Wang</name>
+            <organization>TechViewInfo Co.,Ltd</organization>
+            <organizationUrl>http://www.techviewinfo.com</organizationUrl>
+            <roles>
+                <role>Programmer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>874511058@qq.com</id>
+            <name>mingliang.yang</name>
+            <organization>TechViewInfo Co.,Ltd</organization>
+            <organizationUrl>http://www.techviewinfo.com</organizationUrl>
+            <roles>
+                <role>Programmer</role>
+            </roles>
+        </developer>
+    </developers>
+    <properties>
+        <java.version>1.8</java.version>
+        <!--Compiler versions-->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!--Dependency versions-->
+        <springboot.version>2.0.3.RELEASE</springboot.version>
+        <springfox.version>2.6.1</springfox.version>
+        <mapstruct.version>1.2.0.Final</mapstruct.version>
+        <log4jdbc.version>1.16</log4jdbc.version>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagBase>${url}/tags</tagBase>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.gitee.mechanic</groupId>
+                <artifactId>imech-dependencies</artifactId>
+                <version>2.0.1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>dev</environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <environment>test</environment>
+            </properties>
+        </profile>
+        <!-- 生产环境 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <environment>prod</environment>
+            </properties>
+        </profile>
+    </profiles>
+</project>
