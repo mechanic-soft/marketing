@@ -19,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
+    @Override
+    public SysUser findByUsername(String username) {
+        return super.baseMapper.findByUsername(username);
+    }
 }

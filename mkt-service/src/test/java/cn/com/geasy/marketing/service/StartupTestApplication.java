@@ -2,7 +2,7 @@
  * Copyright 2016-2018 the original author or authors.
  * Created on 2018/7/11 上午9:58
  */
-package cn.com.geasy.marketing.dao;
+package cn.com.geasy.marketing.service;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author phil
  * @version 1.0.0
  */
-@SpringBootApplication(scanBasePackages = {"cn.com.geasy.marketing.dao"})
+@SpringBootApplication(scanBasePackages = {"cn.com.geasy.marketing"})
 @EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan(basePackages = "cn.com.geasy.marketing.dao")
 public class StartupTestApplication {

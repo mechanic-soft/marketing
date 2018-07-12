@@ -20,6 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysUserDto implements Serializable {
+    private static final long serialVersionUID = 6131455440052853807L;
     /**
      * 用户ID
      */
@@ -33,7 +34,31 @@ public class SysUserDto implements Serializable {
      */
     private String password;
     /**
-     * 姓名
+     * 真实姓名
      */
-    private String name;
+    private String realName;
+    /**
+     * 微信用户信息识别码(唯一)
+     */
+    private Long wxUin;
+    /**
+     * 加密的微信号(唯一)
+     */
+    private String wxUsername;
+    /**
+     * 微信昵称
+     */
+    private String wxNickname;
+    /**
+     * 头像URL
+     */
+    private String wxHeadImgUrl;
+    /**
+     * 微信性别。1=男，2=女
+     */
+    private Integer wxSex;
+    /**
+     * 微信签名
+     */
+    private String wxSignature;
 }

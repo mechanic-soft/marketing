@@ -6,7 +6,6 @@ package cn.com.geasy.marketing.dao.config;
 
 import com.github.springtestdbunit.bean.DatabaseConfigBean;
 import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
-import org.dbunit.database.DatabaseConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,8 +28,7 @@ public class DbunitConfiguration {
 
     @Bean
     public DatabaseDataSourceConnectionFactoryBean dbUnitDatabaseConnection(
-            DatabaseConfigBean dbUnitDatabaseConfig,
-            DataSource dataSource) {
+            DatabaseConfigBean dbUnitDatabaseConfig, DataSource dataSource) {
         DatabaseDataSourceConnectionFactoryBean bean = new DatabaseDataSourceConnectionFactoryBean(dataSource);
         bean.setDatabaseConfig(dbUnitDatabaseConfig);
 

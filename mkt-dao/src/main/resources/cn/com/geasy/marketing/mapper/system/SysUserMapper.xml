@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.system.SysUserMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysUser">
+        <id property="id" column="id" javaType="Long"/>
+        <result property="id" column="id" javaType="Long"/>
+        <result property="username" column="username" javaType="String"/>
+        <result property="password" column="password" javaType="String"/>
+        <result property="salt" column="salt" javaType="String"/>
+        <result property="realName" column="real_name" javaType="String"/>
+        <result property="wxUin" column="wx_uin" javaType="Long"/>
+        <result property="wxUsername" column="wx_username" javaType="String"/>
+        <result property="wxNickname" column="wx_nickname" javaType="String"/>
+        <result property="wxHeadImgUrl" column="wx_head_img_url" javaType="String"/>
+        <result property="wxSex" column="wx_sex" javaType="Integer"/>
+        <result property="wxSignature" column="wx_signature" javaType="String"/>
+        <result property="status" column="status" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="date"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        su.id AS id,
+        su.username AS username,
+        su.password AS password,
+        su.salt AS salt,
+        su.real_name AS real_name,
+        su.wx_uin AS wx_uin,
+        su.wx_username AS wx_username,
+        su.wx_nickname AS wx_nickname,
+        su.wx_head_img_url AS wx_head_img_url,
+        su.wx_sex AS wx_sex,
+        su.wx_signature AS wx_signature,
+        su.status AS status,
+        su.create_user AS createUser,
+        su.create_time AS createTime,
+        su.update_user AS updateUser,
+        su.update_time AS updateTime
+    </sql>
+    <select id="findByUsername" resultMap="Base_Result_Map">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM sys_user su
+        WHERE su.username = #{username}
+    </select>
+</mapper>

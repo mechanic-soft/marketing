@@ -47,7 +47,12 @@ public class SysUserContorllerTest extends AbstractWebMvcTest {
         expect.setUsername("admin");
         expect.setPassword("123456");
         expect.setSalt("salt");
-        expect.setName("name");
+        expect.setRealName("name");
+        expect.setWxUsername("wxusername");
+        expect.setWxNickname("wxnickname");
+        expect.setWxHeadImgUrl("WxHeadImgUrl");
+        expect.setWxSex(1);
+        expect.setWxSignature("signature");
 
         given(this.sysUserService.selectById(anyLong())).willReturn(expect);
 
@@ -58,6 +63,11 @@ public class SysUserContorllerTest extends AbstractWebMvcTest {
                 .andExpect(jsonPath("$.data.id").value("1"))
                 .andExpect(jsonPath("$.data.username").value("admin"))
                 .andExpect(jsonPath("$.data.password").value("123456"))
-                .andExpect(jsonPath("$.data.name").value("name"));
+                .andExpect(jsonPath("$.data.realName").value("name"))
+                .andExpect(jsonPath("$.data.wxUsername").value("wxusername"))
+                .andExpect(jsonPath("$.data.wxNickname").value("wxnickname"))
+                .andExpect(jsonPath("$.data.wxHeadImgUrl").value("WxHeadImgUrl"))
+                .andExpect(jsonPath("$.data.wxSex").value(1))
+                .andExpect(jsonPath("$.data.wxSignature").value("signature"));
     }
 }

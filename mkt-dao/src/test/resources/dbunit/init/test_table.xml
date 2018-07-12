@@ -1,0 +1,15 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+    <table name="test_table">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value>1</value>
+            <value>row 0 col 1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <null/>
+        </row>
+    </table>
+</dataset>

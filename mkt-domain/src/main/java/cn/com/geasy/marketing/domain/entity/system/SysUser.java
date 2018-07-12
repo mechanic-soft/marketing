@@ -39,7 +39,31 @@ public class SysUser extends Entity implements Serializable {
      */
     private String salt;
     /**
-     * 姓名
+     * 真实姓名
      */
-    private String name;
+    private String realName;
+    /**
+     * 微信用户信息识别码(唯一)
+     */
+    private Long wxUin;
+    /**
+     * 加密的微信号(唯一)
+     */
+    private String wxUsername;
+    /**
+     * 微信昵称
+     */
+    private String wxNickname;
+    /**
+     * 头像URL
+     */
+    private String wxHeadImgUrl;
+    /**
+     * 微信性别。1=男，2=女
+     */
+    private Integer wxSex;
+    /**
+     * 微信签名
+     */
+    private String wxSignature;
 }

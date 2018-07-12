@@ -13,36 +13,36 @@
         <result property="updateTime" column="update_time" javaType="Integer"/>
     </resultMap>
     <sql id="Base_Column_List">
-        su.id AS id,
-        su.name AS name,
-        su.description AS description,
-        su.status AS status,
-        su.create_user AS createUser,
-        su.create_time AS createTime,
-        su.update_user AS updateUser,
-        su.update_time AS updateTime
+        sr.id AS id,
+        sr.name AS name,
+        sr.description AS description,
+        sr.status AS status,
+        sr.create_user AS createUser,
+        sr.create_time AS createTime,
+        sr.update_user AS updateUser,
+        sr.update_time AS updateTime
     </sql>
     <select id="selectByUserId" resultMap="Base_Result_Map" parameterType="Long">
         SELECT
           <include refid="Base_Column_List" />
-        FROM sys_role su
-            JOIN rele_user_role rur ON rur.role_id = su.id
+        FROM sys_role sr
+            JOIN rele_user_role rur ON rur.role_id = sr.id
         WHERE rur.user_id = #{userId}
-        ORDER BY su.id
+        ORDER BY sr.id
     </select>
     <select id="selectByPermissionId" resultMap="Base_Result_Map" parameterType="Long">
         SELECT
           <include refid="Base_Column_List" />
-        FROM sys_role su
-          JOIN rele_role_permission rrp ON su.id = rrp.role_id
+        FROM sys_role sr
+          JOIN rele_role_permission rrp ON sr.id = rrp.role_id
         WHERE rrp.permission_id = #{permissionId}
-        ORDER BY su.id
+        ORDER BY sr.id
     </select>
     <select id="selectByPermissionsId" resultMap="Base_Result_Map">
         SELECT DISTINCT
           <include refid="Base_Column_List" />
-        FROM sys_role su
-          JOIN rele_role_permission rrp ON su.id=rrp.role_id
+        FROM sys_role sr
+          JOIN rele_role_permission rrp ON sr.id=rrp.role_id
         WHERE rrp.permission_id IN
         <foreach collection="permissionsId" index="index" item="item" open="(" separator="," close=")">
           #{item}

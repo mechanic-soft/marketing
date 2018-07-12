@@ -14,5 +14,11 @@ import com.gitee.mechanic.mybatis.base.SuperService;
  * @version 1.0.0
  */
 public interface SysUserService extends SuperService<SysUser> {
-
+    /**
+     * 返回匹配指定登录账户的用户
+     *
+     * @param username 登录账户
+     * @return SysUser 用户
+     */
+    SysUser findByUsername(String username);
 }
