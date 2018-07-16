@@ -17,7 +17,7 @@ drop table if exists rule_customer_label;
 drop table if exists rule_trigger_action;
 drop table if exists system_label;
 drop table if exists task;
-drop table if exists user_task;
+drop table if exists rele_user_task;
 drop table if exists wechat_contact;
 
 /*==============================================================*/
@@ -49,14 +49,14 @@ CREATE TABLE sys_user
 /* Table: 系统角色表                                              */
 /*==============================================================*/
 CREATE TABLE sys_role (
-  id          BIGINT PRIMARY KEY      NOT NULL, -- 角色ID
-  name        VARCHAR(64)             NOT NULL, -- 角色名称
-  description VARCHAR(1024)           NULL, -- 描述
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY NOT NULL, -- 角色ID
+  name        VARCHAR(64)        NOT NULL, -- 角色名称
+  description VARCHAR(1024)      NULL, -- 描述
+  status      TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -64,16 +64,16 @@ CREATE TABLE sys_role (
 /*==============================================================*/
 CREATE TABLE sys_permission
 (
-  id          BIGINT PRIMARY KEY               NOT NULL, -- 权限ID
-  name        VARCHAR(256)                     NOT NULL, -- 权限名称
-  endpoint    VARCHAR(1024)                    NULL, -- 资源地址
-  action      VARCHAR(16)                      NULL, -- 资源地址
-  description VARCHAR(1024)                    NULL, -- 描述
-  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                           NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP                        NULL, -- 创建记录的时间
-  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY NOT NULL, -- 权限ID
+  name        VARCHAR(256)       NOT NULL, -- 权限名称
+  endpoint    VARCHAR(1024)      NULL, -- 资源地址
+  action      VARCHAR(16)        NULL, -- 资源地址
+  description VARCHAR(1024)      NULL, -- 描述
+  status      TINYINT            NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -81,14 +81,14 @@ CREATE TABLE sys_permission
 /*==============================================================*/
 CREATE TABLE rele_user_role
 (
-  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
-  user_id     BIGINT                           NOT NULL, -- 用户主键
-  role_id     BIGINT                           NOT NULL, -- 角色主键
-  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                           NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP                        NULL, -- 创建记录的时间
-  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY NOT NULL, -- ID
+  user_id     BIGINT             NOT NULL, -- 用户主键
+  role_id     BIGINT             NOT NULL, -- 角色主键
+  status      TINYINT            NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -96,19 +96,35 @@ CREATE TABLE rele_user_role
 /*==============================================================*/
 CREATE TABLE rele_role_permission
 (
-  id            BIGINT PRIMARY KEY               NOT NULL, -- ID
-  role_id       BIGINT                           NOT NULL, -- 角色主键
-  permission_id BIGINT                           NOT NULL, -- 权限主键
-  status        TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
-  create_user   BIGINT                           NULL, -- 创建记录的用户编号
-  create_time   TIMESTAMP                        NULL, -- 创建记录的时间
-  update_user   BIGINT                           NULL, -- 记录最后一次更新的用户编号
-  update_time   TIMESTAMP                        NULL -- 记录最后一次更新时间
+  id            BIGINT PRIMARY KEY NOT NULL, -- ID
+  role_id       BIGINT             NOT NULL, -- 角色主键
+  permission_id BIGINT             NOT NULL, -- 权限主键
+  status        TINYINT            NOT NULL, -- 状态(0=删除,1=正常)
+  create_user   BIGINT             NULL, -- 创建记录的用户编号
+  create_time   TIMESTAMP          NULL, -- 创建记录的时间
+  update_user   BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time   TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
--- 公司信息表
 /*==============================================================*/
 /* Table: 日志信息表                                              */
+/*==============================================================*/
+CREATE TABLE sys_module
+(
+  id          BIGINT PRIMARY KEY      NOT NULL, -- ID
+  parent_id   BIGINT DEFAULT '0'      NOT NULL, -- 父级id
+  name        VARCHAR(255) DEFAULT '' NOT NULL, -- 模块名
+  label       VARCHAR(255) DEFAULT '' NOT NULL, -- 模块标签
+  status      TINYINT                 NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                  NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP               NULL, -- 创建记录的时间
+  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+);
+
+
+/*==============================================================*/
+/* Table: 公司信息表                                              */
 /*==============================================================*/
 CREATE TABLE sys_corp
 (
@@ -121,21 +137,22 @@ CREATE TABLE sys_corp
   update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
+
 /*==============================================================*/
 /* Table: 日志信息表                                              */
 /*==============================================================*/
 CREATE TABLE sys_log
 (
-  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
-  real_name   TINYINT                          NOT NULL, -- 用户姓名
-  menu        VARCHAR(64)                      NULL, -- 菜单
-  url         VARCHAR(2048)                    NULL, -- URL
-  remark      VARCHAR(2048)                    NULL, -- 备注
-  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                           NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP                        NULL, -- 创建记录的时间
-  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY NOT NULL, -- ID
+  real_name   TINYINT            NOT NULL, -- 用户姓名
+  menu        VARCHAR(64)        NULL, -- 菜单
+  url         VARCHAR(2048)      NULL, -- URL
+  remark      VARCHAR(2048)      NULL, -- 备注
+  status      TINYINT            NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -143,34 +160,132 @@ CREATE TABLE sys_log
 /*==============================================================*/
 CREATE TABLE sys_namecard
 (
-  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
-  user_id     BIGINT                           NOT NULL, -- 用户ID
-  real_name   TINYINT                          NOT NULL, -- 用户姓名
-  phone       VARCHAR(32)                      NULL, -- 手机号
-  position    VARCHAR(64)                      NULL, -- 职位
-  address     VARCHAR(2048)                    NULL, -- 地址
-  qucode_url  VARCHAR(2048)                    NULL, -- 微信二维码路径
-  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                           NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP                        NULL, -- 创建记录的时间
-  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY NOT NULL, -- ID
+  user_id     BIGINT             NOT NULL, -- 用户ID
+  real_name   TINYINT            NOT NULL, -- 用户姓名
+  phone       VARCHAR(32)        NULL, -- 手机号
+  position    VARCHAR(64)        NULL, -- 职位
+  address     VARCHAR(2048)      NULL, -- 地址
+  qucode_url  VARCHAR(2048)      NULL, -- 微信二维码路径
+  status      TINYINT            NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
+/*==============================================================*/
+/* Table: 文章表                                                 */
+/*==============================================================*/
+CREATE TABLE article
+(
+  id          BIGINT PRIMARY KEY NOT NULL,
+  source_url  VARCHAR(1024)      NULL, -- 转载文章的原始链接
+  target_url  VARCHAR(1024)      NULL, -- 生成的自己的链接
+  title       VARCHAR(512)       NULL, -- 标题
+  icon        varchar(512)       NULL, -- 图标
+  content     varchar(1024)      NULL, -- 文章内容
+  `desc`      varchar(512)       NULL, -- 文章的描述
+  user_id     BIGINT             NOT NULL, -- 作者userId
+  status      TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
+);
 
 /*==============================================================*/
-/* Table: chat_records                                          */
+/* Table: 非微信文章信息正则规则                                   */
+/*==============================================================*/
+CREATE TABLE article_info_regular
+(
+  id           BIGINT PRIMARY KEY NOT NULL,
+  domain       varchar(100)       NULL, -- 网站域名
+  title_reg    varchar(500)       NULL, -- title的正则提取规则
+  icon_url_reg varchar(500)       NULL, -- icon_url的正则提取规则
+  desc_reg     varchar(500)       NULL, -- desc的正则提取规则
+  status       TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user  BIGINT             NULL, -- 创建记录的用户编号
+  create_time  TIMESTAMP          NULL, -- 创建记录的时间
+  update_user  BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time  TIMESTAMP          NULL -- 记录最后一次更新时间
+);
+/*==============================================================*/
+/* Table: 文章喜欢状态表                                          */
+/*==============================================================*/
+CREATE TABLE article_like_info
+(
+  id              BIGINT PRIMARY KEY  NOT NULL,
+  article_info_id BIGINT              NOT NULL, -- 文章id
+  user_id         BIGINT              NOT NULL, -- 用户
+  is_like         TINYINT default '0' NOT NULL, -- 喜欢状态，0：默认，1,：喜欢
+  status          TINYINT DEFAULT 1   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user     BIGINT              NULL, -- 创建记录的用户编号
+  create_time     TIMESTAMP           NULL, -- 创建记录的时间
+  update_user     BIGINT              NULL, -- 记录最后一次更新的用户编号
+  update_time     TIMESTAMP           NULL -- 记录最后一次更新时间
+);
+/*==============================================================*/
+/* Table: 文章阅读表                                              */
+/*==============================================================*/
+CREATE TABLE article_read_info
+(
+  id              BIGINT PRIMARY KEY NOT NULL,
+  shared_info_id  BIGINT             NULL, -- 分享信息的id
+  article_info_id BIGINT             NOT NULL, -- 文章id
+  user_id         BIGINT             NOT NULL, -- 读者id
+  start_time      timestamp          NULL, -- 开始阅读时间
+  end_time        timestamp          NULL, -- 结束阅读时间
+  reading_time    int default '0'    NULL, -- 阅读时长
+  status          TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user     BIGINT             NULL, -- 创建记录的用户编号
+  create_time     TIMESTAMP          NULL, -- 创建记录的时间
+  update_user     BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time     TIMESTAMP          NULL -- 记录最后一次更新时间
+);
+/*==============================================================*/
+/* Table: 文章分享表                                              */
+/*==============================================================*/
+CREATE TABLE article_shared_info
+(
+  id              BIGINT PRIMARY KEY NOT NULL,
+  parent_id       BIGINT             NULL, -- 上游分享人
+  article_info_id BIGINT             NOT NULL, -- 文章id
+  user_id         BIGINT             NOT NULL, -- 分享人
+  status          TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user     BIGINT             NULL, -- 创建记录的用户编号
+  create_time     TIMESTAMP          NULL, -- 创建记录的时间
+  update_user     BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time     TIMESTAMP          NULL -- 记录最后一次更新时间
+);
+/*==============================================================*/
+/* Table: 文章订阅表                                              */
+/*==============================================================*/
+CREATE TABLE article_subscription
+(
+  id                   BIGINT PRIMARY KEY  NOT NULL,
+  subscription_user_id BIGINT              NOT NULL, -- 被订阅的人id
+  user_id              BIGINT              NOT NULL, -- 普通用户id
+  subscription         TINYINT default '0' NOT NULL, -- 订阅状态，0：默认，1：订阅
+  status               TINYINT DEFAULT 1   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user          BIGINT              NULL, -- 创建记录的用户编号
+  create_time          TIMESTAMP           NULL, -- 创建记录的时间
+  update_user          BIGINT              NULL, -- 记录最后一次更新的用户编号
+  update_time          TIMESTAMP           NULL -- 记录最后一次更新时间
+);
+/*==============================================================*/
+/* Table: 聊天记录表                                             */
 /*==============================================================*/
 CREATE TABLE chat_records
 (
   id           BIGINT PRIMARY KEY               NOT NULL,
   customer_id  BIGINT                           NOT NULL,
-  user_id      VARCHAR(256),
-  event_date   DATE,
-  content      VARCHAR(1024),
-  msg_type     BIGINT,
-  url          VARCHAR(256),
-  is_input_msg TINYINT,
+  user_id      VARCHAR(256)                     NULL,
+  event_date   TIMESTAMP                        NULL,
+  content      VARCHAR(1024)                    NULL,
+  msg_type     BIGINT                           NULL,
+  url          VARCHAR(256)                     NULL,
+  is_input_msg TINYINT                          NULL,
   status       TINYINT DEFAULT 1                NOT NULL, -- 状态(0=删除,1=正常)
   create_user  BIGINT                           NULL, -- 创建记录的用户编号
   create_time  TIMESTAMP                        NULL, -- 创建记录的时间
@@ -179,7 +294,7 @@ CREATE TABLE chat_records
 );
 
 /*==============================================================*/
-/* Table: custom_label                                          */
+/* Table: 自定义标签表                                            */
 /*==============================================================*/
 CREATE TABLE custom_label
 (
@@ -197,7 +312,7 @@ CREATE TABLE custom_label
 );
 
 /*==============================================================*/
-/* Table: customer                                              */
+/* Table: 客户表                                                 */
 /*==============================================================*/
 CREATE TABLE customer
 (
@@ -220,7 +335,7 @@ CREATE TABLE customer
 );
 
 /*==============================================================*/
-/* Table: customer_dynamic                                      */
+/* Table: 客户动态表                                              */
 /*==============================================================*/
 CREATE TABLE customer_dynamic
 (
@@ -238,9 +353,9 @@ CREATE TABLE customer_dynamic
 );
 
 /*==============================================================*/
-/* Table: customer_label                                        */
+/* Table: 客户标签关联表                                          */
 /*==============================================================*/
-CREATE TABLE customer_label
+CREATE TABLE rele_customer_label
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   customer_id BIGINT                              NOT NULL,
@@ -253,7 +368,7 @@ CREATE TABLE customer_label
 );
 
 /*==============================================================*/
-/* Table: customer_lifecycle_event                              */
+/* Table: 客户生命周期事件表                                       */
 /*==============================================================*/
 CREATE TABLE customer_lifecycle_event
 (
@@ -270,7 +385,7 @@ CREATE TABLE customer_lifecycle_event
 );
 
 /*==============================================================*/
-/* Table: rule                                                  */
+/* Table: 规则表                                                 */
 /*==============================================================*/
 CREATE TABLE rule
 (
@@ -289,9 +404,9 @@ CREATE TABLE rule
 );
 
 /*==============================================================*/
-/* Table: rule_customer_label                                   */
+/* Table: 规则客户标签关联表                                       */
 /*==============================================================*/
-CREATE TABLE rule_customer_label
+CREATE TABLE rele_rule_customer_label
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   rule_id     BIGINT                              NOT NULL,
@@ -304,14 +419,14 @@ CREATE TABLE rule_customer_label
 );
 
 /*==============================================================*/
-/* Table: rule_trigger_action                                   */
+/* Table: 规则触发行为表                                          */
 /*==============================================================*/
 CREATE TABLE rule_trigger_action
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   rule_id     BIGINT                              NOT NULL,
   action      VARCHAR(32),
-  "condition" VARCHAR(4),
+  `condition` VARCHAR(4),
   frequency   TINYINT,
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                              NULL, -- 创建记录的用户编号
@@ -321,9 +436,9 @@ CREATE TABLE rule_trigger_action
 );
 
 /*==============================================================*/
-/* Table: system_label                                          */
+/* Table: 系统标签表                                             */
 /*==============================================================*/
-CREATE TABLE system_label
+CREATE TABLE sys_label
 (
   id             BIGINT PRIMARY KEY                 NOT NULL,
   name           VARCHAR(64),
@@ -338,7 +453,7 @@ CREATE TABLE system_label
 );
 
 /*==============================================================*/
-/* Table: task                                                  */
+/* Table: 任务表                                                 */
 /*==============================================================*/
 CREATE TABLE task
 (
@@ -355,9 +470,9 @@ CREATE TABLE task
 );
 
 /*==============================================================*/
-/* Table: user_task                                             */
+/* Table: 用户任务关联表                                          */
 /*==============================================================*/
-CREATE TABLE user_task
+CREATE TABLE rele_user_task
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   task_id     BIGINT,
@@ -370,22 +485,23 @@ CREATE TABLE user_task
 );
 
 /*==============================================================*/
-/* Table: wechat_contact                                        */
+/* Table: 微信联系人                                              */
 /*==============================================================*/
-CREATE TABLE wechat_contact
+CREATE TABLE wx_contact
 (
   id                  BIGINT PRIMARY KEY      NOT NULL,
-  uin                 TINYINT,
-  user_name           VARCHAR(256),
-  nick_name           VARCHAR(256),
-  head_img_url        VARCHAR(256),
+  customer_id         BIGINT                  NULL,
+  uin                 BIGINT                  NULL, -- 微信用户信息识别码(唯一)
+  username            VARCHAR(255)            NULL, -- 加密的微信号(唯一)
+  nickname            VARCHAR(255)            NULL, -- 微信昵称
+  head_img_url        VARCHAR(2048)           NULL, -- 头像URL
   contact_flag        TINYINT,
   member_count        TINYINT,
   member_list         VARCHAR(256),
   remark_name         VARCHAR(256),
   hide_input_bar_flag TINYINT,
-  sex                 TINYINT,
-  signature           VARCHAR(256),
+  sex                 TINYINT                 NULL, -- 微信性别
+  signature           VARCHAR(2048)           NULL, -- 微信签名
   verify_flag         TINYINT,
   owner_uin           TINYINT,
   py_initial          VARCHAR(256),
@@ -397,7 +513,7 @@ CREATE TABLE wechat_contact
   statues             TINYINT,
   attrStatus          TINYINT,
   province            VARCHAR(256),
-  cty                 VARCHAR(256),
+  city                VARCHAR(256),
   alias               VARCHAR(256),
   sns_flag            TINYINT,
   uni_friend          TINYINT,
@@ -405,11 +521,31 @@ CREATE TABLE wechat_contact
   chat_room_id        TINYINT,
   keyword             VARCHAR(256),
   wncry_chat_room_id  VARCHAR(256),
-  user_id             BIGINT,
   status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
   create_user         BIGINT                  NULL, -- 创建记录的用户编号
   create_time         TIMESTAMP               NULL, -- 创建记录的时间
   update_user         BIGINT                  NULL, -- 记录最后一次更新的用户编号
   update_time         TIMESTAMP               NULL -- 记录最后一次更新时间
 );
+
+/*==============================================================*/
+/* Table: 服务号用户                                              */
+/*==============================================================*/
+CREATE TABLE mp_user
+(
+  id           BIGINT PRIMARY KEY      NOT NULL,
+  customer_id  BIGINT                  NULL, -- 客户编号
+  mp_openid    VARCHAR(255)            NULL, -- 服务号OPENID
+  mp_uuid      VARCHAR(255)            NULL, -- 服务号UIUD
+  mp_province  VARCHAR(32)             NULL, -- 省
+  mp_city      VARCHAR(32)             NULL, -- 城市
+  mp_country   VARCHAR(32)             NULL, -- 县
+  mp_address   VARCHAR(255)            NULL, -- 地址
+  mp_subscribe tinyint default '0'     null, -- 是否关注，0：未关注，1：关注
+  status       TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
+  create_user  BIGINT                  NULL, -- 创建记录的用户编号
+  create_time  TIMESTAMP               NULL, -- 创建记录的时间
+  update_user  BIGINT                  NULL, -- 记录最后一次更新的用户编号
+  update_time  TIMESTAMP               NULL -- 记录最后一次更新时间
+)
 
