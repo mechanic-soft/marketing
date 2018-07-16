@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.system.SysCorpMapper">
+    <!--<resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysCorpDto">-->
+        <!--<id property="id" column="id" jdbcType="BIGINT" javaType="Integer"/>-->
+        <!--<result property="name" column="name" jdbcType="VARCHAR" javaType="String"/>-->
+        <!--<result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime"/>-->
+    <!--</resultMap>-->
+    <!--<sql id="Base_Where">-->
+        <!--<if test="sc != null">-->
+            <!--<if test="sc.id != null and sc.id != ''">-->
+                <!--AND sc.id=#{sc.id}-->
+            <!--</if>-->
+            <!--<if test="sc.name != null and sc.name != ''">-->
+                <!--AND sc.name=#{sc.name}-->
+            <!--</if>-->
+            <!--<if test="sc.createTime != null and sc.createTime != ''">-->
+                <!--AND sc.create_time=#{sc.createTime}-->
+            <!--</if>-->
+        <!--</if>-->
+    <!--</sql>-->
+    <!--<sql id="Base_Colume_List">-->
+        <!--sc.id AS id,-->
+        <!--sc.name AS name,-->
+        <!--sc.create_time AS create_time-->
+    <!--</sql>-->
+    <!--<select id="selectAllPage" parameterType="cn.com.geasy.marketing.domain.dto.system.SysCorpDto"-->
+            <!--resultMap="Base_Result_Map">-->
+        <!--SELECT-->
+        <!--<include refid="Base_Colume_List"/>-->
+        <!--FROM sys_corp sc-->
+        <!--<include refid="Base_Where"/>-->
+    <!--</select>-->
+</mapper>

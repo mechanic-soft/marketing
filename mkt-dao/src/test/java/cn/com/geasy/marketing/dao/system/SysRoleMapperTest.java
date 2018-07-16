@@ -8,9 +8,14 @@ import cn.com.geasy.marketing.domain.entity.system.SysRole;
 import com.gitee.mechanic.test.AbstractTransSpringBootDbunitTests;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseSetups;
+import com.github.springtestdbunit.annotation.DbUnitConfiguration;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import com.github.springtestdbunit.dataset.XmlDataSetLoader;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
@@ -21,9 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author phil
  * @version 1.0.0
  */
+@DbUnitConfiguration(dataSetLoader = XmlDataSetLoader.class)
 @DatabaseSetups(value = {
         @DatabaseSetup(value = "/dbunit/init/sys_role.xml")
 })
+@DirtiesContext
 public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
     @Autowired
     private SysRoleMapper roleMapper;
@@ -103,5 +110,11 @@ public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
         assertThat(sysRoles.get(2).getName()).isEqualTo("管理者");
         assertThat(sysRoles.get(2).getDescription()).isEqualTo("理财经理的上级管理人员");
         assertThat(sysRoles.get(2).getStatus()).isEqualTo(1);
+    }
+
+    @ExpectedDatabase(value = "/dbunit/delete/sys_role.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @Test
+    public void testDelete(){
+        this.roleMapper.deleteById(3L);
     }
 }

@@ -7,6 +7,8 @@ package cn.com.geasy.marketing.dao.system;
 import com.gitee.mechanic.test.AbstractTransSpringBootDbunitTests;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseSetups;
+import com.github.springtestdbunit.annotation.DbUnitConfiguration;
+import com.github.springtestdbunit.dataset.XmlDataSetLoader;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author phil
  * @version 1.0.0
  */
+@DbUnitConfiguration(dataSetLoader = XmlDataSetLoader.class)
 @DatabaseSetups(value = {
         @DatabaseSetup(value = "/dbunit/init/sys_permission.xml")
 })
@@ -32,14 +35,14 @@ public class SysPermissionMapperTest extends AbstractTransSpringBootDbunitTests 
             @DatabaseSetup(value = "/dbunit/init/rele_role_permission.xml")
     })
     @Test
-    public void selectNameByRolesId() {
+    public void selectNamesByRolesId() {
 
 
-        Set<String> rolesName = permissionMapper.selectNamesByRolesId(Lists.newArrayList(2L, 3L));
-        assertThat(rolesName).isNotNull();
-        assertThat(rolesName.size()).isEqualTo(2);
-        assertThat(rolesName.contains("add_user")).isTrue();
-        assertThat(rolesName.contains("get_user")).isTrue();
+        Set<String> permissionName = permissionMapper.selectNamesByRolesId(Lists.newArrayList(2L, 3L));
+        assertThat(permissionName).isNotNull();
+        assertThat(permissionName.size()).isEqualTo(2);
+        assertThat(permissionName.contains("添加用户")).isTrue();
+        assertThat(permissionName.contains("获取用户")).isTrue();
 
     }
 }

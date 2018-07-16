@@ -11,6 +11,8 @@
         <column>wx_head_img_url</column>
         <column>wx_sex</column>
         <column>wx_signature</column>
+        <column>mp_openid</column>
+        <column>mp_uuid</column>
         <column>status</column>
         <column>create_user</column>
         <column>create_time</column>
@@ -28,6 +30,8 @@
             <value><![CDATA[/cgi-bin/mmwebwx-bin/webwxgeticon?seq=1856357848&username=@42dc1e0cb92c1eb6eda3cb65c0ddbf64&skey=@crypt_69a1cdd6_64f03a7c1eff37e99cee69ef9f93a70c]]></value>
             <value>1</value>
             <value>一代鲜肉替腊肉，终究风干无人识。</value>
+            <null/>
+            <null/>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -40,6 +44,8 @@
             <value>4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8</value>
             <value>e5a721750f676a48ee77f3fe8c5a58e9</value>
             <value>管理者</value>
+            <null/>
+            <null/>
             <null/>
             <null/>
             <null/>
@@ -64,6 +70,8 @@
             <null/>
             <null/>
             <null/>
+            <null/>
+            <null/>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -76,6 +84,8 @@
             <value>4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8</value>
             <value>e5a721750f676a48ee77f3fe8c5a58e9</value>
             <value>被删除的</value>
+            <null/>
+            <null/>
             <null/>
             <null/>
             <null/>

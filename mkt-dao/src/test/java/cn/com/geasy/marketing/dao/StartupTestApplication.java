@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author phil
  * @version 1.0.0
  */
-@SpringBootApplication(scanBasePackages = {"cn.com.geasy.marketing.dao"})
+@SpringBootApplication(scanBasePackages = {"cn.com.geasy.marketing.domain","cn.com.geasy.marketing.dao"})
 @EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan(basePackages = "cn.com.geasy.marketing.dao")
 public class StartupTestApplication {

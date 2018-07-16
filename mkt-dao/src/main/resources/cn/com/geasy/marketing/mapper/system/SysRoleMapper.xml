@@ -47,6 +47,6 @@
         <foreach collection="permissionsId" index="index" item="item" open="(" separator="," close=")">
           #{item}
         </foreach>
-        ORDER BY su.id
+        ORDER BY sr.id
     </select>
 </mapper>

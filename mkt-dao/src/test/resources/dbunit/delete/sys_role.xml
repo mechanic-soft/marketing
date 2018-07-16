@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <table name="sys_permission">
+    <table name="sys_role">
         <column>id</column>
         <column>name</column>
-        <column>endpoint</column>
-        <column>action</column>
         <column>description</column>
         <column>status</column>
         <column>create_user</column>
@@ -13,10 +11,8 @@
         <column>update_time</column>
         <row>
             <value>1</value>
-            <value>添加用户</value>
-            <value>add_user</value>
-            <value>/users</value>
-            <value>POST</value>
+            <value>系统管理</value>
+            <value>拥有所有权限的系统管理员</value>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -25,10 +21,8 @@
         </row>
         <row>
             <value>2</value>
-            <value>更新用户</value>
-            <value>update_user</value>
-            <value>/users</value>
-            <value>PUT</value>
+            <value>理财经理</value>
+            <value>理财经理</value>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -37,11 +31,9 @@
         </row>
         <row>
             <value>3</value>
-            <value>删除用户</value>
-            <value>delete_user</value>
-            <value>/users</value>
-            <value>DELETE</value>
-            <value>1</value>
+            <value>管理者</value>
+            <value>理财经理的上级管理人员</value>
+            <value>0</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
             <value>1</value>
@@ -49,22 +41,8 @@
         </row>
         <row>
             <value>4</value>
-            <value>获取用户</value>
-            <value>get_user</value>
-            <value>/users</value>
-            <value>GET</value>
-            <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-        </row>
-        <row>
-            <value>5</value>
-            <value>添加用户</value>
-            <value>deleted</value>
             <value>被删除的</value>
-            <value>NONE</value>
+            <value>被删除的</value>
             <value>0</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
