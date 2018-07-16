@@ -64,16 +64,16 @@ CREATE TABLE sys_role (
 /*==============================================================*/
 CREATE TABLE sys_permission
 (
-  id          BIGINT PRIMARY KEY, -- 权限ID
-  name        VARCHAR(256)  NOT NULL, -- 权限名称
-  endpoint    VARCHAR(1024) NULL, -- 资源地址
-  action      VARCHAR(16)   NULL, -- 资源地址
-  description VARCHAR(1024) NULL, -- 描述
-  status      TINYINT       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT        NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP     NULL, -- 创建记录的时间
-  update_user BIGINT        NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP     NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY               NOT NULL, -- 权限ID
+  name        VARCHAR(256)                     NOT NULL, -- 权限名称
+  endpoint    VARCHAR(1024)                    NULL, -- 资源地址
+  action      VARCHAR(16)                      NULL, -- 资源地址
+  description VARCHAR(1024)                    NULL, -- 描述
+  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                           NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -81,14 +81,14 @@ CREATE TABLE sys_permission
 /*==============================================================*/
 CREATE TABLE rele_user_role
 (
-  id          BIGINT PRIMARY KEY, -- ID
-  user_id     BIGINT    NOT NULL, -- 用户主键
-  role_id     BIGINT    NOT NULL, -- 角色主键
-  status      TINYINT   NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT    NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP NULL, -- 创建记录的时间
-  update_user BIGINT    NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
+  user_id     BIGINT                           NOT NULL, -- 用户主键
+  role_id     BIGINT                           NOT NULL, -- 角色主键
+  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                           NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -96,14 +96,14 @@ CREATE TABLE rele_user_role
 /*==============================================================*/
 CREATE TABLE rele_role_permission
 (
-  id            BIGINT PRIMARY KEY, -- ID
-  role_id       BIGINT    NOT NULL, -- 角色主键
-  permission_id BIGINT    NOT NULL, -- 权限主键
-  status        TINYINT   NOT NULL, -- 状态(0=删除,1=正常)
-  create_user   BIGINT    NULL, -- 创建记录的用户编号
-  create_time   TIMESTAMP NULL, -- 创建记录的时间
-  update_user   BIGINT    NULL, -- 记录最后一次更新的用户编号
-  update_time   TIMESTAMP NULL -- 记录最后一次更新时间
+  id            BIGINT PRIMARY KEY               NOT NULL, -- ID
+  role_id       BIGINT                           NOT NULL, -- 角色主键
+  permission_id BIGINT                           NOT NULL, -- 权限主键
+  status        TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
+  create_user   BIGINT                           NULL, -- 创建记录的用户编号
+  create_time   TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user   BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time   TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 -- 公司信息表
@@ -112,13 +112,13 @@ CREATE TABLE rele_role_permission
 /*==============================================================*/
 CREATE TABLE sys_corp
 (
-  id          BIGINT PRIMARY KEY, -- ID
-  name        VARCHAR(64) NOT NULL, -- 角色主键
-  status      TINYINT     NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT      NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP   NULL, -- 创建记录的时间
-  update_user BIGINT      NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP   NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
+  name        VARCHAR(64)                      NOT NULL, -- 角色主键
+  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                           NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -126,16 +126,16 @@ CREATE TABLE sys_corp
 /*==============================================================*/
 CREATE TABLE sys_log
 (
-  id          BIGINT PRIMARY KEY, -- ID
-  real_name   TINYINT       NOT NULL, -- 用户姓名
-  menu        VARCHAR(64)   NULL, -- 菜单
-  url         VARCHAR(2048) NULL, -- URL
-  remark      VARCHAR(2048) NULL, -- 备注
-  status      TINYINT       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT        NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP     NULL, -- 创建记录的时间
-  update_user BIGINT        NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP     NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
+  real_name   TINYINT                          NOT NULL, -- 用户姓名
+  menu        VARCHAR(64)                      NULL, -- 菜单
+  url         VARCHAR(2048)                    NULL, -- URL
+  remark      VARCHAR(2048)                    NULL, -- 备注
+  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                           NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -143,269 +143,269 @@ CREATE TABLE sys_log
 /*==============================================================*/
 CREATE TABLE sys_namecard
 (
-  id          BIGINT PRIMARY KEY, -- ID
-  user_id     BIGINT        NOT NULL, -- 用户ID
-  real_name   TINYINT       NOT NULL, -- 用户姓名
-  phone       VARCHAR(32)   NULL, -- 手机号
-  position    VARCHAR(64)   NULL, -- 职位
-  address     VARCHAR(2048) NULL, -- 地址
-  qucode_url  VARCHAR(2048) NULL, -- 微信二维码路径
-  status      TINYINT       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT        NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP     NULL, -- 创建记录的时间
-  update_user BIGINT        NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP     NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY               NOT NULL, -- ID
+  user_id     BIGINT                           NOT NULL, -- 用户ID
+  real_name   TINYINT                          NOT NULL, -- 用户姓名
+  phone       VARCHAR(32)                      NULL, -- 手机号
+  position    VARCHAR(64)                      NULL, -- 职位
+  address     VARCHAR(2048)                    NULL, -- 地址
+  qucode_url  VARCHAR(2048)                    NULL, -- 微信二维码路径
+  status      TINYINT                          NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                           NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 
 /*==============================================================*/
 /* Table: chat_records                                          */
 /*==============================================================*/
-create table chat_records
+CREATE TABLE chat_records
 (
-  id           bigint                  not null,
-  customer_id  bigint                  not null,
-  user_id      varchar(256),
-  event_date   date,
-  content      varchar(1024),
-  msg_type     bigint,
-  url          varchar(256),
-  is_input_msg tinyint,
-  status       TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user  BIGINT                  NULL, -- 创建记录的用户编号
-  create_time  TIMESTAMP               NULL, -- 创建记录的时间
-  update_user  BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time  TIMESTAMP               NULL -- 记录最后一次更新时间
+  id           BIGINT PRIMARY KEY               NOT NULL,
+  customer_id  BIGINT                           NOT NULL,
+  user_id      VARCHAR(256),
+  event_date   DATE,
+  content      VARCHAR(1024),
+  msg_type     BIGINT,
+  url          VARCHAR(256),
+  is_input_msg TINYINT,
+  status       TINYINT DEFAULT 1                NOT NULL, -- 状态(0=删除,1=正常)
+  create_user  BIGINT                           NULL, -- 创建记录的用户编号
+  create_time  TIMESTAMP                        NULL, -- 创建记录的时间
+  update_user  BIGINT                           NULL, -- 记录最后一次更新的用户编号
+  update_time  TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: custom_label                                          */
 /*==============================================================*/
-create table custom_label
+CREATE TABLE custom_label
 (
-  id            bigint                  not null,
-  customer_id   bigint                  not null,
-  laber_name    varchar(256),
-  laber_type_id bigint,
-  user_id       bigint,
-  add_time      datetime,
-  status        TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user   BIGINT                  NULL, -- 创建记录的用户编号
-  create_time   TIMESTAMP               NULL, -- 创建记录的时间
-  update_user   BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time   TIMESTAMP               NULL -- 记录最后一次更新时间
+  id            BIGINT PRIMARY KEY                 NOT NULL,
+  customer_id   BIGINT                             NOT NULL,
+  laber_name    VARCHAR(256),
+  laber_type_id BIGINT,
+  user_id       BIGINT,
+  add_time      TIMESTAMP,
+  status        TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user   BIGINT                             NULL, -- 创建记录的用户编号
+  create_time   TIMESTAMP                          NULL, -- 创建记录的时间
+  update_user   BIGINT                             NULL, -- 记录最后一次更新的用户编号
+  update_time   TIMESTAMP                          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: customer                                              */
 /*==============================================================*/
-create table customer
+CREATE TABLE customer
 (
-  id                  bigint                  not null,
-  call_date           datetime,
-  customer_code       varchar(256),
-  is_agree_add_wechat tinyint,
-  wechat_id           varchar(64),
-  phone               varchar(32),
-  remark              varchar(256),
-  customer_maturity   int,
-  is_wechat_contact   tinyint,
-  is_open_account     tinyint,
-  wechat_contact_id   bigint,
-  status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user         BIGINT                  NULL, -- 创建记录的用户编号
-  create_time         TIMESTAMP               NULL, -- 创建记录的时间
-  update_user         BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time         TIMESTAMP               NULL -- 记录最后一次更新时间
+  id                  BIGINT PRIMARY KEY                NOT NULL,
+  call_date           TIMESTAMP,
+  customer_code       VARCHAR(256),
+  is_agree_add_wechat TINYINT,
+  wechat_id           VARCHAR(64),
+  phone               VARCHAR(32),
+  remark              VARCHAR(256),
+  customer_maturity   TINYINT,
+  is_wechat_contact   TINYINT,
+  is_open_account     TINYINT,
+  wechat_contact_id   BIGINT,
+  status              TINYINT DEFAULT 1                 NOT NULL, -- 状态(0=删除,1=正常)
+  create_user         BIGINT                            NULL, -- 创建记录的用户编号
+  create_time         TIMESTAMP                         NULL, -- 创建记录的时间
+  update_user         BIGINT                            NULL, -- 记录最后一次更新的用户编号
+  update_time         TIMESTAMP                         NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: customer_dynamic                                      */
 /*==============================================================*/
-create table customer_dynamic
+CREATE TABLE customer_dynamic
 (
-  id          bigint                  not null,
-  customer_id bigint                  not null,
-  action      varchar(256),
-  event_date  date,
-  article_id  bigint,
-  user_id     bigint,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  customer_id BIGINT                              NOT NULL,
+  action      VARCHAR(256),
+  event_date  DATE,
+  article_id  BIGINT,
+  user_id     BIGINT,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: customer_label                                        */
 /*==============================================================*/
-create table customer_label
+CREATE TABLE customer_label
 (
-  id          bigint                  not null,
-  customer_id bigint                  not null,
-  label_id    bigint,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  customer_id BIGINT                              NOT NULL,
+  label_id    BIGINT,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: customer_lifecycle_event                              */
 /*==============================================================*/
-create table customer_lifecycle_event
+CREATE TABLE customer_lifecycle_event
 (
-  id          bigint                  not null,
-  customer_id bigint                  not null,
-  event       varchar(256),
-  event_date  date,
-  user_id     bigint,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  customer_id BIGINT                              NOT NULL,
+  event       VARCHAR(256),
+  event_date  DATE,
+  user_id     BIGINT,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: rule                                                  */
 /*==============================================================*/
-create table rule
+CREATE TABLE rule
 (
-  id          bigint                  not null,
-  title       varchar(256),
-  content     varchar(256),
-  start_date  date,
-  end_date    date,
-  user_id     bigint,
-  add_time    datetime,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  title       VARCHAR(256),
+  content     VARCHAR(256),
+  start_date  DATE,
+  end_date    DATE,
+  user_id     BIGINT,
+  add_time    TIMESTAMP,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: rule_customer_label                                   */
 /*==============================================================*/
-create table rule_customer_label
+CREATE TABLE rule_customer_label
 (
-  id          bigint                  not null,
-  rule_id     bigint                  not null,
-  label_id    bigint,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  rule_id     BIGINT                              NOT NULL,
+  label_id    BIGINT,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: rule_trigger_action                                   */
 /*==============================================================*/
-create table rule_trigger_action
+CREATE TABLE rule_trigger_action
 (
-  id          bigint                  not null,
-  rule_id     bigint                  not null,
-  action      varchar(32),
-  "condition" varchar(4),
-  frequency   int,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  rule_id     BIGINT                              NOT NULL,
+  action      VARCHAR(32),
+  "condition" VARCHAR(4),
+  frequency   TINYINT,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: system_label                                          */
 /*==============================================================*/
-create table system_label
+CREATE TABLE system_label
 (
-  id             bigint                  not null,
-  name           varchar(64),
-  label_type     varchar(64)             not null,
-  sub_label_type varchar(64),
-  label_src      varchar(64),
-  status         TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user    BIGINT                  NULL, -- 创建记录的用户编号
-  create_time    TIMESTAMP               NULL, -- 创建记录的时间
-  update_user    BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time    TIMESTAMP               NULL -- 记录最后一次更新时间
+  id             BIGINT PRIMARY KEY                 NOT NULL,
+  name           VARCHAR(64),
+  label_type     VARCHAR(64)                        NOT NULL,
+  sub_label_type VARCHAR(64),
+  label_src      VARCHAR(64),
+  status         TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user    BIGINT                             NULL, -- 创建记录的用户编号
+  create_time    TIMESTAMP                          NULL, -- 创建记录的时间
+  update_user    BIGINT                             NULL, -- 记录最后一次更新的用户编号
+  update_time    TIMESTAMP                          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: task                                                  */
 /*==============================================================*/
-create table task
+CREATE TABLE task
 (
-  id          bigint                  not null,
-  title       varchar(256),
-  content     varchar(256),
-  user_id     bigint,
-  add_time    datetime,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  title       VARCHAR(256),
+  content     VARCHAR(256),
+  user_id     BIGINT,
+  add_time    TIMESTAMP,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: user_task                                             */
 /*==============================================================*/
-create table user_task
+CREATE TABLE user_task
 (
-  id          bigint                  not null,
-  task_id     bigint,
-  user_id     bigint,
-  status      TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                  NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP               NULL, -- 创建记录的时间
-  update_user BIGINT                  NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP               NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY                  NOT NULL,
+  task_id     BIGINT,
+  user_id     BIGINT,
+  status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                              NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                           NULL, -- 创建记录的时间
+  update_user BIGINT                              NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                           NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: wechat_contact                                        */
 /*==============================================================*/
-create table wechat_contact
+CREATE TABLE wechat_contact
 (
-  id                  bigint primary key      not null,
-  uin                 int,
-  user_name           varchar(256),
-  nick_name           varchar(256),
-  head_img_url        varchar(256),
-  contact_flag        int,
-  member_count        int,
-  member_list         varchar(256),
-  remark_name         varchar(256),
-  hide_input_bar_flag int,
-  sex                 tinyint,
-  signature           varchar(256),
-  verify_flag         int,
-  owner_uin           int,
-  py_initial          varchar(256),
-  py_quan_pin         varchar(256),
-  remark_py_initial   varchar(256),
-  remark_py_quan_pin  varchar(256),
-  star_friend         int,
-  app_account_flag    int,
-  statues             int,
-  attrStatus          int,
-  province            varchar(256),
-  cty                 varchar(256),
-  alias               varchar(256),
-  sns_flag            int,
-  uni_friend          int,
-  display_name        varchar(256),
-  chat_room_id        int,
-  keyword             varchar(256),
-  wncry_chat_room_id  varchar(256),
-  user_id             bigint,
+  id                  BIGINT PRIMARY KEY      NOT NULL,
+  uin                 TINYINT,
+  user_name           VARCHAR(256),
+  nick_name           VARCHAR(256),
+  head_img_url        VARCHAR(256),
+  contact_flag        TINYINT,
+  member_count        TINYINT,
+  member_list         VARCHAR(256),
+  remark_name         VARCHAR(256),
+  hide_input_bar_flag TINYINT,
+  sex                 TINYINT,
+  signature           VARCHAR(256),
+  verify_flag         TINYINT,
+  owner_uin           TINYINT,
+  py_initial          VARCHAR(256),
+  py_quan_pin         VARCHAR(256),
+  remark_py_initial   VARCHAR(256),
+  remark_py_quan_pin  VARCHAR(256),
+  star_friend         TINYINT,
+  app_account_flag    TINYINT,
+  statues             TINYINT,
+  attrStatus          TINYINT,
+  province            VARCHAR(256),
+  cty                 VARCHAR(256),
+  alias               VARCHAR(256),
+  sns_flag            TINYINT,
+  uni_friend          TINYINT,
+  display_name        VARCHAR(256),
+  chat_room_id        TINYINT,
+  keyword             VARCHAR(256),
+  wncry_chat_room_id  VARCHAR(256),
+  user_id             BIGINT,
   status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
   create_user         BIGINT                  NULL, -- 创建记录的用户编号
   create_time         TIMESTAMP               NULL, -- 创建记录的时间
