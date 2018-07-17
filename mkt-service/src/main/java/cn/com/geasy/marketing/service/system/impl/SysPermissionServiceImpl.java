@@ -10,6 +10,8 @@ import cn.com.geasy.marketing.service.system.SysPermissionService;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 权限服务
  *
@@ -18,4 +20,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysPermissionServiceImpl extends SuperServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
+    @Override
+    public List<SysPermission> selectAllCaseRole() {
+        return super.baseMapper.selectAllCaseRole();
+    }
 }

@@ -14,39 +14,68 @@
         <result property="updateUser" column="update_user" javaType="Integer"/>
         <result property="updateTime" column="update_time" javaType="Integer"/>
     </resultMap>
-    <!--<sql id="Base_Column_List">-->
-        <!--su.id AS id,-->
-        <!--su.name AS name,-->
-        <!--su.description AS description,-->
-        <!--su.status AS status,-->
-        <!--su.create_user AS createUser,-->
-        <!--su.create_time AS createTime,-->
-        <!--su.update_user AS updateUser,-->
-        <!--su.update_time AS updateTime-->
-    <!--</sql>-->
-    <!--<select id="selectByUserId" resultMap="Base_Result_Map" parameterType="Long">-->
-        <!--SELECT-->
-          <!--<include refid="Base_Column_List" />-->
-        <!--FROM sys_role su-->
-            <!--JOIN rele_user_role rur ON rur.role_id = su.id-->
-        <!--WHERE rur.user_id = #{userId}-->
-        <!--ORDER BY su.id-->
-    <!--</select>-->
-    <!--<select id="selectByPermissionId" resultMap="Base_Result_Map" parameterType="Long">-->
-        <!--SELECT-->
-          <!--<include refid="Base_Column_List" />-->
-        <!--FROM sys_role su-->
-          <!--JOIN rele_role_permission rrp ON su.id = rrp.role_id-->
-        <!--WHERE rrp.permission_id = #{permissionId}-->
-        <!--ORDER BY su.id-->
-    <!--</select>-->
-    <select id="selectNamesByRolesId" resultType="String">
+    <resultMap id="Case_SysRole_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysPermission">
+        <id property="id" column="id" javaType="Long"/>
+        <result property="id" column="id" javaType="Long"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="endpoint" column="endpoint" javaType="String"/>
+        <result property="action" column="action" javaType="String"/>
+        <result property="description" column="description" javaType="String"/>
+        <result property="status" column="status" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="date"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+        <collection property="roles" ofType="cn.com.geasy.marketing.domain.entity.system.SysRole">
+            <id property="id" column="roleId"/>
+            <result property="name" column="roleName"/>
+            <result property="description" column="roleDescription"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        sp.id AS id,
+        sp.name AS name,
+        sp.endpoint AS endpoint,
+        sp.action AS action,
+        sp.description AS description,
+        sp.status AS status,
+        sp.create_user AS createUser,
+        sp.create_time AS createTime,
+        sp.update_user AS updateUser,
+        sp.update_time AS updateTime,
+        sr.id AS roleId,
+        sr.name AS roleName,
+        sr.description AS roleDescription
+    </sql>
+    <select id="selectNamesByRolesId" resultType="String" resultMap="Base_Result_Map">
         SELECT DISTINCT sp.name
         FROM rele_role_permission rrp
-          JOIN sys_permission sp ON rrp.permission_id=sp.id
+        JOIN sys_permission sp ON rrp.permission_id=sp.id
         WHERE rrp.role_id IN
         <foreach collection="rolesId" index="index" item="item" open="(" separator="," close=")">
-          #{item}
+            #{item}
         </foreach>
+        WHERE sp.status = 1 AND rrp.status = 1
     </select>
+    <select id="selectAllCaseRole" resultMap="Case_SysRole_Result_Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_permission sp
+          LEFT OUTER JOIN rele_role_permission rrp ON sp.id = rrp.permission_id
+          LEFT OUTER JOIN sys_role sr ON rrp.role_id = sr.id
+        WHERE sp.status = 1 AND rrp.status = 1 AND sr.status = 1
+        ORDER BY sp.id
+    </select>
+    <!--<select id="selectAllCaseRole" resultMap="Case_SysRole_Result_Map">-->
+    <!--SELECT-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--FROM-->
+    <!--sys_permission sp,-->
+    <!--rele_role_permission rrp,-->
+    <!--sys_role sr-->
+    <!--WHERE-->
+    <!--sp.id = rrp.permission_id-->
+    <!--AND rrp.role_id=sr.id-->
+    <!--ORDER BY sp.id-->
+    <!--</select>-->
 </mapper>

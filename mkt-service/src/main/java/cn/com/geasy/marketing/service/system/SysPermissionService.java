@@ -7,6 +7,8 @@ package cn.com.geasy.marketing.service.system;
 import cn.com.geasy.marketing.domain.entity.system.SysPermission;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
+import java.util.List;
+
 /**
  * 权限服务接口
  *
@@ -14,4 +16,10 @@ import com.gitee.mechanic.mybatis.base.SuperService;
  * @version 1.0.0
  */
 public interface SysPermissionService extends SuperService<SysPermission> {
+    /**
+     * 返回所有权限及其所关联角色名称
+     *
+     * @return List&lt;SysPermission&gt; 权限及其所关联角色名称
+     */
+    List<SysPermission> selectAllCaseRole();
 }

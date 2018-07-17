@@ -25,4 +25,10 @@ public interface SysPermissionMapper extends SuperMapper<SysPermission> {
      * @return Set&lt;String&gt; 权限名称
      */
     Set<String> selectNamesByRolesId(@Param("rolesId") List<Long> rolesId);
+    /**
+     * 返回所有权限及其所关联角色名称
+     *
+     * @return List&lt;SysPermission&gt; 权限及其所关联角色名称
+     */
+    List<SysPermission> selectAllCaseRole();
 }
