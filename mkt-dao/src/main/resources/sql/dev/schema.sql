@@ -362,11 +362,13 @@ CREATE TABLE customer_dynamic
 (
   id            BIGINT PRIMARY KEY                  NOT NULL,
   customer_id   BIGINT                              NOT NULL, -- 客户ID
-  event         TINYINT DEFAULT 0                   NULL, -- 事件(0=阅读,1=订阅,2=联系)
+  event         TINYINT                             NULL, -- 事件(0=阅读,1=订阅,2=联系)
   event_date    TIMESTAMP                           NULL, -- 发生日期
   article_id    BIGINT                              NULL, -- 文章ID
   article_title VARCHAR(512)                        NULL, -- 文章标题
   article_tag   VARCHAR(512)                        NULL, -- 文章标签
+  read_time     TIMESTAMP                           NULL, -- 阅读时长
+  is_full_read  TINYINT                             NULL, -- 是否阅读全文
   user_id       BIGINT                              NULL, -- 用户ID
   status        TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
   create_user   BIGINT                              NULL, -- 创建记录的用户编号
