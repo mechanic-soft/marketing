@@ -414,8 +414,8 @@ CREATE TABLE rule
   id          BIGINT PRIMARY KEY NOT NULL,
   title       VARCHAR(256)       NOT NULL,
   content     VARCHAR(256)       NULL,
-  start_date  TIMESTAMP          NULL,  --开始日期
-  end_date    TIMESTAMP          NULL,  --结束日期
+  start_date  TIMESTAMP          NULL,  -- 开始日期
+  end_date    TIMESTAMP          NULL,  -- 结束日期
   status      TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT             NULL, -- 创建记录的用户编号
   create_time TIMESTAMP          NULL, -- 创建记录的时间
