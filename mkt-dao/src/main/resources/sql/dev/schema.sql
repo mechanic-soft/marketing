@@ -158,7 +158,7 @@ CREATE TABLE sys_log
 /*==============================================================*/
 /* Table: 名片表                                                 */
 /*==============================================================*/
-CREATE TABLE sys_namecard
+CREATE TABLE sys_visiting_card
 (
   id          BIGINT PRIMARY KEY NOT NULL, -- ID
   user_id     BIGINT             NOT NULL, -- 用户ID
@@ -300,20 +300,6 @@ CREATE TABLE chat_records
   update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
 );
 
-/*==============================================================*/
-/* Table: 标签类别表                                            */
-/*==============================================================*/
-CREATE TABLE tag_type
-(
-  id          BIGINT PRIMARY KEY                 NOT NULL,
-  parent_id   BIGINT default '0'                 NULL, -- 父级ID
-  name        VARCHAR(256)                       NULL, -- 标签名称
-  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                             NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP                          NULL, -- 创建记录的时间
-  update_user BIGINT                             NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP                          NULL -- 记录最后一次更新时间
-);
 
 /*==============================================================*/
 /* Table: 自定义标签表                                            */
@@ -339,7 +325,7 @@ CREATE TABLE customer
 (
   id                 BIGINT PRIMARY KEY NOT NULL,
   wx_contact_id      BIGINT             NULL, -- 微信联系人ID
-  mp_id              BIGINT             NULL, -- 服务号ID
+  mp_user_id         BIGINT             NULL, -- 服务号用户ID
   call_time          TIMESTAMP          NULL, -- 呼叫时间(同步)
   customer_code      VARCHAR(256)       NULL, -- 用户编码(同步)
   is_agree_add_wx    TINYINT            NULL, -- 是否同意添加微信(同步)
@@ -363,7 +349,7 @@ CREATE TABLE customer
 CREATE TABLE customer_dynamic
 (
   id            BIGINT PRIMARY KEY                  NOT NULL,
-  customer_id   BIGINT                              NOT NULL,
+  customer_id   BIGINT                              NOT NULL, -- 客户ID
   event         VARCHAR(256)                        NULL, -- 事件
   event_date    TIMESTAMP                           NULL, -- 发生日期
   article_id    BIGINT                              NULL, -- 文章ID
@@ -458,9 +444,9 @@ CREATE TABLE rule_trigger_action
 );
 
 /*==============================================================*/
-/* Table: 系统标签表                                             */
+/* Table: 标签表                                             */
 /*==============================================================*/
-CREATE TABLE sys_tag
+CREATE TABLE tag
 (
   id          BIGINT PRIMARY KEY                     NOT NULL,
   parent_id   BIGINT                                 NULL, -- 父级ID
@@ -473,6 +459,37 @@ CREATE TABLE sys_tag
   create_time TIMESTAMP                              NULL, -- 创建记录的时间
   update_user BIGINT                                 NULL, -- 记录最后一次更新的用户编号
   update_time TIMESTAMP                              NULL -- 记录最后一次更新时间
+);
+
+
+/*==============================================================*/
+/* Table: 标签类别表                                            */
+/*==============================================================*/
+CREATE TABLE tag_type
+(
+  id          BIGINT PRIMARY KEY                 NOT NULL,
+  parent_id   BIGINT default '0'                 NULL, -- 父级ID
+  name        VARCHAR(256)                       NULL, -- 标签名称
+  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                          NULL, -- 创建记录的时间
+  update_user BIGINT                             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                          NULL -- 记录最后一次更新时间
+);
+
+/*==============================================================*/
+/* Table: 标签文章关联表                                            */
+/*==============================================================*/
+CREATE TABLE rele_tag_tag_article
+(
+  id          BIGINT PRIMARY KEY                 NOT NULL,
+  tag_id      BIGINT                             NULL, -- 标签ID
+  article_id  BIGINT                             NULL, -- 文章ID
+  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT                             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP                          NULL, -- 创建记录的时间
+  update_user BIGINT                             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP                          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
@@ -560,7 +577,7 @@ CREATE TABLE mp_user
   mp_openid       VARCHAR(255)            NULL, -- 服务号OPENID
   mp_uuid         VARCHAR(255)            NULL, -- 服务号UIUD
   mp_province     VARCHAR(32)             NULL, -- 省
-  mp_city         VARCHAR(32)             NULL, -- 城市
+  mp_city         VARCHAR(32)             NULL, -- 市
   mp_country      VARCHAR(32)             NULL, -- 县
   mp_address      VARCHAR(255)            NULL, -- 地址
   mp_subscribe    tinyint                 null, -- 是否关注，0：未关注，1：关注
