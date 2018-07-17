@@ -13,10 +13,10 @@
         <column>update_time</column>
         <row>
             <value>1</value>
-            <value>添加用户</value>
             <value>add_user</value>
             <value>/users</value>
             <value>POST</value>
+            <value>添加用户</value>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -25,10 +25,10 @@
         </row>
         <row>
             <value>2</value>
-            <value>更新用户</value>
             <value>update_user</value>
             <value>/users</value>
             <value>PUT</value>
+            <value>更新用户</value>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -37,10 +37,10 @@
         </row>
         <row>
             <value>3</value>
-            <value>删除用户</value>
             <value>delete_user</value>
             <value>/users</value>
             <value>DELETE</value>
+            <value>删除用户</value>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -49,10 +49,10 @@
         </row>
         <row>
             <value>4</value>
-            <value>获取用户</value>
             <value>get_user</value>
             <value>/users</value>
             <value>GET</value>
+            <value>获取用户</value>
             <value>1</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
@@ -61,10 +61,10 @@
         </row>
         <row>
             <value>5</value>
-            <value>添加用户</value>
             <value>deleted</value>
+            <value>/users</value>
+            <value>DELETE</value>
             <value>被删除的</value>
-            <value>NONE</value>
             <value>0</value>
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
