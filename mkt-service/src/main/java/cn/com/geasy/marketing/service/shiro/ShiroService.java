@@ -6,7 +6,6 @@ package cn.com.geasy.marketing.service.shiro;
 
 import cn.com.geasy.marketing.domain.entity.system.SysPermission;
 import cn.com.geasy.marketing.service.system.SysPermissionService;
-import cn.com.geasy.marketing.service.system.SysRoleService;
 import com.gitee.mechanic.core.enums.HttpCode;
 import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.shiro.filter.RolesOrAuthorizationFilter;
@@ -39,18 +38,18 @@ import java.util.Map;
 public class ShiroService {
     private final ShiroFilterFactoryBean shiroFilterFactoryBean;
     private final SysPermissionService permissionService;
-    private final SysRoleService roleService;
+//    private final SysRoleService roleService;
     private final LoginRealm loginRealm;
 
     @Autowired
     public ShiroService(
             ShiroFilterFactoryBean shiroFilterFactoryBean,
             SysPermissionService permissionService,
-            SysRoleService roleService,
+//            SysRoleService roleService,
             LoginRealm loginRealm) {
         this.shiroFilterFactoryBean = shiroFilterFactoryBean;
         this.permissionService = permissionService;
-        this.roleService = roleService;
+//        this.roleService = roleService;
         this.loginRealm = loginRealm;
     }
 

@@ -61,19 +61,3 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 #    call-setters-on-nulls: true
     return-instance-for-empty-row: true
-
-
-mp:
-  app-id: wxea5b317381755917
-  app-secret: 75c07fd1c018cac5715c1571974c1728
-  app-token:  kuai_grow
-  qrcode: http://
-domain-url:
-  page-url: http://anxin.trace.g-easy.com.cn/anxin-web-static/index.html
-  domain: http://anxin.trace.g-easy.com.cn
-  api-url: http://anxin.trace.g-easy.com.cn/anxin
-multipart:
-  image-path: /app/anxin-trace/anxinImage/
-  html-path: /app/anxin-trace/anxinHtml/
-message:
-  article-create-notice-templateId: JsfqoZ8lwKQnOmEAfOsxX5CbXxBCgWQzPw03VF9Va7s
