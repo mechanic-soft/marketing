@@ -1,3 +1,4 @@
+
 INSERT INTO sys_user VALUES (
   1,
   'admin',
@@ -12,6 +13,8 @@ INSERT INTO sys_user VALUES (
   '一代鲜肉替腊肉，终究风干无人识。',
   '',
   '',
+  '',
+  NULL,
   1,
   1,
   CURRENT_TIMESTAMP(),
@@ -32,6 +35,8 @@ INSERT INTO sys_user VALUES (
   '',
   '',
   '',
+  '',
+  NULL,
   1,
   1,
   CURRENT_TIMESTAMP(),
@@ -52,6 +57,8 @@ INSERT INTO sys_user VALUES (
   '',
   '',
   '',
+  '',
+  NULL ,
   1,
   1,
   CURRENT_TIMESTAMP(),
