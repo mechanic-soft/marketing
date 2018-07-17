@@ -288,10 +288,10 @@ CREATE TABLE chat_records
   id          BIGINT PRIMARY KEY               NOT NULL,
   customer_id BIGINT                           NOT NULL,
   wx_username VARCHAR(256)                     NULL,
-  msg_type    BIGINT                           NULL,
+  msg_type    TINYINT DEFAULT 0                NULL, -- 消息类型(0=文本,1=图片,2=文件)
   content     VARCHAR(1024)                    NULL,
   url         VARCHAR(256)                     NULL,
-  is_send     TINYINT                          NULL,
+  is_send     TINYINT                          NULL, -- 状态(0=接收,1=发送)
   send_time   TIMESTAMP                        NULL,
   status      TINYINT DEFAULT 1                NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                           NULL, -- 创建记录的用户编号
@@ -350,7 +350,7 @@ CREATE TABLE customer_dynamic
 (
   id            BIGINT PRIMARY KEY                  NOT NULL,
   customer_id   BIGINT                              NOT NULL, -- 客户ID
-  event         VARCHAR(256)                        NULL, -- 事件
+  event         TINYINT DEFAULT 0                   NULL, -- 事件(0=阅读,1=订阅,2=联系)
   event_date    TIMESTAMP                           NULL, -- 发生日期
   article_id    BIGINT                              NULL, -- 文章ID
   article_title VARCHAR(512)                        NULL, -- 文章标题
@@ -384,7 +384,7 @@ CREATE TABLE customer_lifecycle_event
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   customer_id BIGINT                              NOT NULL, -- 客户ID
-  event       VARCHAR(256)                        NULL, -- 事件(...)
+  event       TINYINT DEFAULT 0                   NULL, -- 事件(0=呼叫,1=加微,2=转发,3=开户,4=阅读,5=联系)
   event_date  TIMESTAMP                           NULL, -- 事件日期
   user_id     BIGINT                              NULL, -- 用户ID
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
@@ -400,10 +400,10 @@ CREATE TABLE customer_lifecycle_event
 CREATE TABLE rule
 (
   id          BIGINT PRIMARY KEY NOT NULL,
-  title       VARCHAR(256),
-  content     VARCHAR(256),
-  start_date  TIMESTAMP,
-  end_date    TIMESTAMP,
+  title       VARCHAR(256)       NOT NULL,
+  content     VARCHAR(256)       NULL,
+  start_date  TIMESTAMP          NULL,  --开始日期
+  end_date    TIMESTAMP          NULL,  --结束日期
   status      TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT             NULL, -- 创建记录的用户编号
   create_time TIMESTAMP          NULL, -- 创建记录的时间
@@ -418,7 +418,7 @@ CREATE TABLE rele_rule_customer_label
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   rule_id     BIGINT                              NOT NULL,
-  tag_id      BIGINT,
+  tag_id      BIGINT                              NULL,
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                              NULL, -- 创建记录的用户编号
   create_time TIMESTAMP                           NULL, -- 创建记录的时间
@@ -433,8 +433,8 @@ CREATE TABLE rule_trigger_action
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   rule_id     BIGINT                              NOT NULL,
-  action      VARCHAR(32)                         NULL, -- 行为
-  `condition` VARCHAR(4)                          NULL, -- 条件
+  action      TINYINT DEFAULT 1                   NULL, -- 行为(0=阅读,1=订阅,3=聊天)
+  `condition` TINYINT DEFAULT 1                   NULL, -- 条件(0= >,1= < ,2= >=,3= <=,4= =)
   frequency   TINYINT                             NULL, -- 次数
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                              NULL, -- 创建记录的用户编号
@@ -451,8 +451,8 @@ CREATE TABLE tag
   id          BIGINT PRIMARY KEY                     NOT NULL,
   parent_id   BIGINT                                 NULL, -- 父级ID
   name        VARCHAR(64)                            NULL, -- 名称
-  tag_type    VARCHAR(64)                            NOT NULL, -- 类型
-  tag_src     VARCHAR(64)                            NULL, -- 标签来源(...)
+  tag_type    BIGINT                                 NOT NULL, -- 类型
+  tag_src     TINYINT DEFAULT 0                      NULL, -- 标签来源(0=微信,1=外呼)
   is_sys      TINYINT DEFAULT 0                      NULL, -- 是否系统标签(0=系统标签，1=自定义标签)
   status      TINYINT DEFAULT 1                      NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                                 NULL, -- 创建记录的用户编号
