@@ -1,16 +1,16 @@
-server:
-  port: 8080
-  servlet:
-    context-path: /mkt
-  error:
-    path: /error
+#server:
+#  port: 8080
+#  servlet:
+#    context-path: /mkt
+#  error:
+#    path: /error
 
 spring:
   application:
-    name: Marketing API
+    name: Marketing DAQ Test
   profiles:
 #    active: @environment@
-    active: test
+    active: unit_test
   jackson:
 #    mapper: true
     date-format: yyyy-MM-dd HH:mm:ss
@@ -78,6 +78,12 @@ logging:
   register-shutdown-hook: false
   level:
     ROOT: off
-    com.baomidou: debug
-    org.apache.ibatis: debug
+#    com.baomidou: debug
+#    org.apache.ibatis: debug
     cn.com.geasy.marketing: debug
+    jdbc.sqltiming: debug
+    jdbc.resultsettable: info
+    jdbc.sqlonly: off
+    jdbc.connection: off
+    jdbc.audit: off
+    jdbc.resultset: off
