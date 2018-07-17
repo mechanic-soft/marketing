@@ -56,6 +56,7 @@ CREATE TABLE sys_user
   update_time        TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
+
 /*==============================================================*/
 /* Table: 系统角色表                                              */
 /*==============================================================*/
@@ -515,7 +516,7 @@ CREATE TABLE task
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   title       VARCHAR(256)                        NULL, -- 标题
-  content     VARCHAR(256)                        NULL, -- 内容
+  content     VARCHAR(1024)                        NULL, -- 内容
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                              NULL, -- 创建记录的用户编号
   create_time TIMESTAMP                           NULL, -- 创建记录的时间
@@ -602,5 +603,4 @@ CREATE TABLE mp_user
   create_time     TIMESTAMP               NULL, -- 创建记录的时间
   update_user     BIGINT                  NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP               NULL -- 记录最后一次更新时间
-)
-
+);
