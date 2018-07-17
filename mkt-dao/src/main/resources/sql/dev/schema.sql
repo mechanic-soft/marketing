@@ -3,22 +3,31 @@ DROP TABLE IF EXISTS sys_role;
 DROP TABLE IF EXISTS sys_permission;
 DROP TABLE IF EXISTS rele_user_role;
 DROP TABLE IF EXISTS rele_role_permission;
+DROP TABLE IF EXISTS sys_module;
 DROP TABLE IF EXISTS sys_corp;
 DROP TABLE IF EXISTS sys_log;
-DROP TABLE IF EXISTS sys_namecard;
+DROP TABLE IF EXISTS sys_visiting_card;
+DROP TABLE IF EXISTS article;
+DROP TABLE IF EXISTS article_regular;
+DROP TABLE IF EXISTS article_like;
+DROP TABLE IF EXISTS article_read;
+DROP TABLE IF EXISTS article_shared;
+DROP TABLE IF EXISTS article_subscription;
 drop table if exists chat_records;
-drop table if exists custom_label;
 drop table if exists customer;
 drop table if exists customer_dynamic;
-drop table if exists customer_label;
+drop table if exists rele_customer_tag;
 drop table if exists customer_lifecycle_event;
 drop table if exists rule;
-drop table if exists rule_customer_label;
+drop table if exists rele_rule_customer_label;
 drop table if exists rule_trigger_action;
-drop table if exists system_label;
+drop table if exists tag;
+drop table if exists tag_type;
+drop table if exists rele_tag_article;
 drop table if exists task;
 drop table if exists rele_user_task;
-drop table if exists wechat_contact;
+drop table if exists wx_contact;
+drop table if exists mp_user;
 
 /*==============================================================*/
 /* Table: 系统用户表                                              */
@@ -180,26 +189,29 @@ CREATE TABLE sys_visiting_card
 /*==============================================================*/
 CREATE TABLE article
 (
-  id          BIGINT PRIMARY KEY NOT NULL,
-  source_url  VARCHAR(1024)      NULL, -- 转载文章的原始链接
-  target_url  VARCHAR(1024)      NULL, -- 生成的自己的链接
-  title       VARCHAR(512)       NULL, -- 标题
-  icon        varchar(512)       NULL, -- 图标
-  content     varchar(1024)      NULL, -- 文章内容
-  `desc`      varchar(512)       NULL, -- 文章的描述
-  user_id     BIGINT             NOT NULL, -- 作者userId
-  corp_id     BIGINT             NULL, -- 公司ID
-  status      TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT             NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP          NULL, -- 创建记录的时间
-  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
+  id                   BIGINT PRIMARY KEY NOT NULL,
+  source_url           VARCHAR(1024)      NULL, -- 转载文章的原始链接
+  target_url           VARCHAR(1024)      NULL, -- 生成的自己的链接
+  title                VARCHAR(512)       NULL, -- 标题
+  icon                 varchar(512)       NULL, -- 图标
+  content              varchar(1024)      NULL, -- 文章内容
+  is_link              INTEGER            NULL, -- 是否转载链接的文章。0=否(手工编辑)，1=是(转载链接)
+  is_send              INTEGER            NULL, -- 是否发送。0=否，1=是
+  send_to_mp           INTEGER            NULL, -- 发送到服务号或微信。1=服务号，2=微信好友
+  is_add_visiting_card INTEGER            NULL, -- 是否添加名片。0=否，1=是
+  user_id              BIGINT             NOT NULL, -- 作者userId
+  corp_id              BIGINT             NULL, -- 公司ID
+  status               TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user          BIGINT             NULL, -- 创建记录的用户编号
+  create_time          TIMESTAMP          NULL, -- 创建记录的时间
+  update_user          BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time          TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
 /*==============================================================*/
 /* Table: 非微信文章信息正则规则                                   */
 /*==============================================================*/
-CREATE TABLE article_info_regular
+CREATE TABLE article_regular
 (
   id           BIGINT PRIMARY KEY NOT NULL,
   domain       varchar(100)       NULL, -- 网站域名
@@ -216,7 +228,7 @@ CREATE TABLE article_info_regular
 /*==============================================================*/
 /* Table: 文章喜欢状态表                                          */
 /*==============================================================*/
-CREATE TABLE article_like_info
+CREATE TABLE article_like
 (
   id              BIGINT PRIMARY KEY  NOT NULL,
   article_info_id BIGINT              NOT NULL, -- 文章id
@@ -232,7 +244,7 @@ CREATE TABLE article_like_info
 /*==============================================================*/
 /* Table: 文章阅读表                                              */
 /*==============================================================*/
-CREATE TABLE article_read_info
+CREATE TABLE article_read
 (
   id              BIGINT PRIMARY KEY NOT NULL,
   shared_info_id  BIGINT             NULL, -- 分享信息的id
@@ -251,7 +263,7 @@ CREATE TABLE article_read_info
 /*==============================================================*/
 /* Table: 文章分享表                                              */
 /*==============================================================*/
-CREATE TABLE article_shared_info
+CREATE TABLE article_shared
 (
   id              BIGINT PRIMARY KEY NOT NULL,
   parent_id       BIGINT             NULL, -- 上游分享人
@@ -480,7 +492,7 @@ CREATE TABLE tag_type
 /*==============================================================*/
 /* Table: 标签文章关联表                                            */
 /*==============================================================*/
-CREATE TABLE rele_tag_tag_article
+CREATE TABLE rele_tag_article
 (
   id          BIGINT PRIMARY KEY                 NOT NULL,
   tag_id      BIGINT                             NULL, -- 标签ID

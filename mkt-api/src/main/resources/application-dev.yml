@@ -6,7 +6,7 @@ spring:
     username: sa
     password:
     schema: classpath:sql/dev/schema.sql
-    data: classpath:sql/dev/data.sql
+#    data: classpath:sql/dev/data.sql
     initialization-mode: embedded
   h2:
     console:
@@ -14,3 +14,12 @@ spring:
       path: /h2
       settings:
         web-allow-others: false
+
+
+logging:
+  register-shutdown-hook: false
+  level:
+    ROOT: info
+    com.baomidou: debug
+    org.apache.ibatis: debug
+    cn.com.geasy.marketing: debug

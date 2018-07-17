@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * 请在此写下该类的说明
+ * API层测试父类
  *
  * @author phil
  * @version 1.0.0

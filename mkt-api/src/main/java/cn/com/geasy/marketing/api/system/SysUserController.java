@@ -5,7 +5,7 @@
 package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
-import cn.com.geasy.marketing.mapstruct.SysUserMapstruct;
+import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;

@@ -41,29 +41,46 @@ public class SysUser extends Entity implements Serializable {
     /**
      * 真实姓名
      */
+//    @TableField("real_name")
     private String realName;
     /**
      * 微信用户信息识别码(唯一)
      */
+//    @TableField("wx_uin")
     private Long wxUin;
     /**
      * 加密的微信号(唯一)
      */
+//    @TableField("wx_username")
     private String wxUsername;
     /**
      * 微信昵称
      */
+//    @TableField("wx_nickname")
     private String wxNickname;
     /**
      * 头像URL
      */
+//    @TableField("wx_head_img_url")
     private String wxHeadImgUrl;
     /**
      * 微信性别。1=男，2=女
      */
+//    @TableField("wx_sex")
     private Integer wxSex;
     /**
      * 微信签名
      */
+//    @TableField("wx_signature")
     private String wxSignature;
+    /**
+     * 服务号OpenID
+     */
+//    @TableField("mp_openid")
+    private String mpOpenid;
+    /**
+     * 服务号UUID
+     */
+//    @TableField("mp_uuid")
+    private String mpUuid;
 }

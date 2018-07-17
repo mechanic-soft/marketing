@@ -13,7 +13,7 @@ spring:
     active: dev
   jackson:
 #    mapper: true
-    date-format: yyyy-MM-dd HH:mm:ss
+#    date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
     serialization:
       indent_output: true
@@ -26,6 +26,7 @@ spring:
       accept_empty_string_as_null_object: true
       read_unknown_enum_values_as_null: false
     locale: zh_CN
+#    joda-date-time-format: yyyy-MM-dd HH:mm:ss
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     sql-script-encoding: UTF-8
@@ -61,10 +62,18 @@ mybatis-plus:
 #    call-setters-on-nulls: true
     return-instance-for-empty-row: true
 
-logging:
-  register-shutdown-hook: false
-  level:
-    ROOT: debug
-    com.baomidou: debug
-    org.apache.ibatis: debug
-    cn.com.geasy.marketing: debug
+
+mp:
+  app-id: wxea5b317381755917
+  app-secret: 75c07fd1c018cac5715c1571974c1728
+  app-token:  kuai_grow
+  qrcode: http://
+domain-url:
+  page-url: http://anxin.trace.g-easy.com.cn/anxin-web-static/index.html
+  domain: http://anxin.trace.g-easy.com.cn
+  api-url: http://anxin.trace.g-easy.com.cn/anxin
+multipart:
+  image-path: /app/anxin-trace/anxinImage/
+  html-path: /app/anxin-trace/anxinHtml/
+message:
+  article-create-notice-templateId: JsfqoZ8lwKQnOmEAfOsxX5CbXxBCgWQzPw03VF9Va7s

@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.domain.dto.system;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ import java.io.Serializable;
 public class SysUserDto implements Serializable {
     private static final long serialVersionUID = 6131455440052853807L;
     /**
-     * 用户ID
+     * ID
      */
     private Long id;
     /**
@@ -32,6 +33,7 @@ public class SysUserDto implements Serializable {
     /**
      * 密码
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String password;
     /**
      * 真实姓名
@@ -61,4 +63,12 @@ public class SysUserDto implements Serializable {
      * 微信签名
      */
     private String wxSignature;
+    /**
+     * 服务号OpenID
+     */
+    private String mpOpenid;
+    /**
+     * 服务号UUID
+     */
+    private String mpUuid;
 }

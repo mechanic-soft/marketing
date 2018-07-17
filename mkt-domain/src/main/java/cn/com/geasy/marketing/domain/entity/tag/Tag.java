@@ -3,7 +3,6 @@
  */
 package cn.com.geasy.marketing.domain.entity.tag;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
@@ -35,7 +34,6 @@ public class Tag extends Entity implements Serializable {
     /**
      * 标签创建人
      */
-    @TableField("user_id")
     private Long userId;
 
     /**

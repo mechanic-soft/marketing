@@ -28,11 +28,18 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_permission")
 public class SysPermission extends Entity implements Serializable {
-    private static final long serialVersionUID = -5640366819272273166L;
-    /**
-     * 权限名称
+    private static final long serialVersionUID = -5640366819272273166L;    /**
+     * 端点资源地址
      */
     private String name;
+    /**
+     * 端点资源地址
+     */
+    private String endpoint;
+    /**
+     * HTTP 事件
+     */
+    private String action;
     /**
      * 描述
      */

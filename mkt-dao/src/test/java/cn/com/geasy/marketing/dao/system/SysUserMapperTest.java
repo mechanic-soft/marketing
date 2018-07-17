@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test for {@link SysRoleMapper}
+ * Test for {@link SysUserMapper}
  *
  * @author phil
  * @version 1.0.0
@@ -48,4 +48,9 @@ public class SysUserMapperTest extends AbstractTransSpringBootDbunitTests {
         assertThat(sysUser.getWxSex()).isEqualTo(1);
         assertThat(sysUser.getWxSignature()).isEqualTo("一代鲜肉替腊肉，终究风干无人识。");
     }
+
+//    @Test
+//    public void testSelectById(){
+//        SysUser  sysUser = userMapper.findByUsername("admin");
+//    }
 }

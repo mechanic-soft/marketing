@@ -37,7 +37,6 @@ public class SysUserServiceTest {
 
     @Before
     public void setUp() throws Exception{
-//        userService = new SysUserServiceImpl();
     }
 
     @Test

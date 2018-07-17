@@ -27,29 +27,18 @@ import java.io.Serializable;
 @TableName("sys_module")
 public class SysModule extends Entity implements Serializable {
     private static final long serialVersionUID = -2512166677542096840L;
-    /**
-     * 模块名
-     */
-    private String name;
-
-    /**
-     * 模块标签
-     */
-    private String label;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
     /**
      * 父级id
      */
     @TableField("parent_id")
     private Long parentId;
-
     /**
-     * 创建人
+     * 模块名
      */
-    private Long userId;
+    private String name;
+    /**
+     * 模块标签
+     */
+    private String url;
 }

@@ -4,7 +4,9 @@
  */
 package cn.com.geasy.marketing.service.article;
 
+import cn.com.geasy.marketing.domain.dto.article.ArticleDto;
 import cn.com.geasy.marketing.domain.entity.article.Article;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
 /**
@@ -14,4 +16,9 @@ import com.gitee.mechanic.mybatis.base.SuperService;
  * @version 1.0.0
  */
 public interface ArticleService extends SuperService<Article> {
+    //Article saveArticle(Article article, Long wechatUserId);
+
+    //Page<ArticleListDto> findByUserIdPage(Page page, String title, Long currentMpUserId);
+
+    Page<ArticleDto> findById(Long id);
 }

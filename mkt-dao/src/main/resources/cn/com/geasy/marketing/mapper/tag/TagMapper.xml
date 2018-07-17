@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.geasy.marketing.dao.tag.TagMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.tag.Tag">
+        <id property="id" column="id" javaType="Long"/>
+        <result property="id" column="id" javaType="Long"/>
+        <result property="userId" column="user_id" javaType="Long"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="type" column="type" javaType="Integer"/>
+        <result property="status" column="status" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="date"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        t.id AS id,
+        t.user_id AS user_id,
+        t.name AS name,
+        t.type AS type,
+        t.status AS status,
+        t.create_user AS createUser,
+        t.create_time AS createTime,
+        t.update_user AS updateUser,
+        t.update_time AS updateTime
+    </sql>
+    <select id="findTagByArticleId" resultMap="Base_Result_Map">
+        SELECT
+          <include refid="Base_Column_List"/>
+        from tag t
+            join rele_tag_article rta on t.id = rta.tag_id
+        where rta.article_id =#{articleId}
+    </select>
+</mapper>

@@ -7,6 +7,8 @@ package cn.com.geasy.marketing.dao.tag;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 
+import java.util.List;
+
 /**
  * 标签数据访问接口
  *
@@ -14,4 +16,5 @@ import com.gitee.mechanic.mybatis.base.SuperMapper;
  * @version 1.0.0
  */
 public interface TagMapper extends SuperMapper<Tag> {
+    List<Tag> findTagByArticleId(Long articleId);
 }

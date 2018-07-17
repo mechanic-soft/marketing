@@ -17,6 +17,10 @@
             <artifactId>imech-mybatis</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.gitee.mechanic</groupId>
+            <artifactId>imech-json</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>
             <version>${mapstruct.version}</version>

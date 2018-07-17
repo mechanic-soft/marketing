@@ -23,4 +23,5 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     public SysUser findByUsername(String username) {
         return super.baseMapper.findByUsername(username);
     }
+    
 }

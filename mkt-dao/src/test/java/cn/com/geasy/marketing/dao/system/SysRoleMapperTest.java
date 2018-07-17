@@ -41,6 +41,7 @@ public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
     @Test
     public void testSelectByUserId(){
         List<SysRole> sysRoles = roleMapper.selectByUserId(2L);
+
         assertThat(sysRoles).isNotNull();
         assertThat(sysRoles.size()).isEqualTo(3);
 
