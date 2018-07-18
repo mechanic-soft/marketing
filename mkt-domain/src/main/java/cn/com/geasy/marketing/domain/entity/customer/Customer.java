@@ -28,51 +28,51 @@ public class Customer extends Entity implements Serializable {
     private static final long serialVersionUID = 267795432213577189L;
 
     /**
-     * 登录账户
+     * 微信联系人ID
      */
     private String wxContactId;
     /**
-     * 事件
+     * 服务号用户ID
      */
     private String mpUserId;
     /**
-     * 发生日期
+     * 呼叫时间(同步)
      */
     private String callTime;
     /**
-     * 文章ID
+     * 用户编码(同步)
      */
     private String customerCode;
     /**
-     * 文章标题
+     * 是否同意添加微信(同步)
      */
     private Long isAgreeAddWx;
     /**
-     * 用户ID
+     * 微信号(同步)
      */
     private String wxId;
     /**
-     * 用户ID
+     * 手机号(同步)
      */
     private String phone;
     /**
-     * 用户ID
+     * 备注(同步)
      */
     private String remark;
     /**
-     * 用户ID
+     * 客户成熟度
      */
     private String maturity;
     /**
-     * 用户ID
+     * 是否开户
      */
     private String isOpenAccount;
     /**
-     * 用户ID
+     * 外呼平台用户ID
      */
     private String callcenterUserId;
     /**
-     * 用户ID
+     * 公司ID
      */
     private String corpId;
 }
