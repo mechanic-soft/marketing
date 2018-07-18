@@ -465,9 +465,8 @@ CREATE TABLE rule_trigger_action
 CREATE TABLE tag
 (
   id          BIGINT PRIMARY KEY                     NOT NULL,
-  parent_id   BIGINT                                 NULL, -- 父级ID
   name        VARCHAR(64)                            NULL, -- 名称
-  tag_type    BIGINT                                 NOT NULL, -- 类型
+  tag_type_id BIGINT                                 NOT NULL, -- 类型ID
   tag_src     TINYINT DEFAULT 0                      NULL, -- 标签来源(0=微信,1=外呼)
   is_sys      TINYINT DEFAULT 0                      NULL, -- 是否系统标签(0=系统标签，1=自定义标签)
   status      TINYINT DEFAULT 1                      NOT NULL, -- 状态(0=删除,1=正常)
@@ -516,7 +515,7 @@ CREATE TABLE task
 (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   title       VARCHAR(256)                        NULL, -- 标题
-  content     VARCHAR(1024)                        NULL, -- 内容
+  content     VARCHAR(1024)                       NULL, -- 内容
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                              NULL, -- 创建记录的用户编号
   create_time TIMESTAMP                           NULL, -- 创建记录的时间
@@ -576,6 +575,7 @@ CREATE TABLE wx_contact
   chat_room_id        TINYINT,
   keyword             VARCHAR(256),
   wncry_chat_room_id  VARCHAR(256),
+  is_sync             TINYINT, -- 是否同步(0=未同步，1=已同步)
   status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
   create_user         BIGINT                  NULL, -- 创建记录的用户编号
   create_time         TIMESTAMP               NULL, -- 创建记录的时间
