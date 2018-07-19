@@ -20,7 +20,7 @@ import java.util.List;
 /**
 客户管理
  */
-@Api(tags = "Login", description = "客户管理接口")
+@Api(tags = "Customer", description = "客户管理接口")
 @Slf4j
 @RestController
 public class CustomerController {
