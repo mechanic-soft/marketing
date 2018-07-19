@@ -44,8 +44,8 @@ public class SysPermissionMapperTest extends AbstractTransSpringBootDbunitTests 
         Set<String> permissionName = this.permissionMapper.selectNamesByRolesId(Lists.newArrayList(2L, 3L));
         assertThat(permissionName).isNotNull();
         assertThat(permissionName.size()).isEqualTo(2);
-        assertThat(permissionName.contains("添加用户")).isTrue();
-        assertThat(permissionName.contains("获取用户")).isTrue();
+        assertThat(permissionName.contains("add_user")).isTrue();
+        assertThat(permissionName.contains("get_user")).isTrue();
 
     }
 

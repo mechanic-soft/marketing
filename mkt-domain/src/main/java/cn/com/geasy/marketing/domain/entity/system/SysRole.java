@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.domain.entity.system;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 系统角色实体
@@ -34,4 +36,7 @@ public class SysRole  extends Entity implements Serializable {
      * 描述
      */
     private String description;
+
+    @TableField(exist = false)
+    private List<SysPermission> permissions;
 }

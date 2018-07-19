@@ -28,5 +28,6 @@
 //
 //    @Override
 //    public void onApplicationEvent(ContextRefreshedEvent event) {
+//        this.shiroService.reloadFilterChains();
 //    }
 //}

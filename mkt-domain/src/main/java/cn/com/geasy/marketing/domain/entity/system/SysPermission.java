@@ -7,13 +7,15 @@ package cn.com.geasy.marketing.domain.entity.system;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.gitee.mechanic.mybatis.base.Entity;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -50,15 +52,34 @@ public class SysPermission extends Entity implements Serializable {
     @TableField(exist = false)
     private Set<SysRole> roles;
 
-    public String getRolesName() {
-        Set<SysRole> roles = getRoles();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (SysRole role : roles) {
-            stringBuilder.append("\"").append(role.getName()).append("\"").append(",");
+    public String[] getRolesName() {
+        List<SysRole> roles = Lists.newArrayList(getRoles());
+        if (CollectionUtils.isEmpty(roles)){
+            return null;
         }
-        if (StringUtils.isNoneBlank(stringBuilder)) {
-            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        //return (String[]) roles.stream().map(SysRole::getName).collect(Collectors.toList()).toArray();
+        String[] rolesName = new String[roles.size()];
+//        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0;i< roles.size(); i++) {
+            SysRole role = roles.get(i);
+            rolesName[i] = "ROLE_" + role.getName();
         }
-        return stringBuilder.toString();
+        return rolesName;
+//        if (StringUtils.isNoneBlank(stringBuilder)) {
+//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+//        }
+//        return stringBuilder.toString();
     }
+
+//    public String getRolesName() {
+//        Set<SysRole> roles = getRoles();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (SysRole role : roles) {
+//            stringBuilder.append("\"").append(role.getName()).append("\"").append(",");
+//        }
+//        if (StringUtils.isNoneBlank(stringBuilder)) {
+//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+//        }
+//        return stringBuilder.toString();
+//    }
 }

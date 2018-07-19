@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.security.SysUserMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.security.SysUser">
+        <id property="id" column="id" javaType="Long"/>
+        <result property="id" column="id" javaType="Long"/>
+        <result property="username" column="username" javaType="String"/>
+        <result property="password" column="password" javaType="String"/>
+        <collection property="roles" ofType="cn.com.geasy.marketing.domain.security.SysRole">
+            <result property="name" column="name"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        su.id AS id,
+        su.username AS username,
+        su.password AS password,
+        sr.name
+    </sql>
+    <select id="findByUsername" resultMap="Base_Result_Map">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM sys_user su
+          LEFT JOIN sys_user_role sru on su.id=sru.user_id
+          LEFT JOIN sys_role sr on sru.role_id=sr.id
+        WHERE su.username = #{username}
+    </select>
+</mapper>

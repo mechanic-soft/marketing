@@ -47,15 +47,15 @@
         sr.name AS roleName,
         sr.description AS roleDescription
     </sql>
-    <select id="selectNamesByRolesId" resultType="String" resultMap="Base_Result_Map">
-        SELECT DISTINCT sp.name
+    <select id="selectNamesByRolesId" resultType="String">
+        SELECT DISTINCT sp.action
         FROM rele_role_permission rrp
         JOIN sys_permission sp ON rrp.permission_id=sp.id
-        WHERE rrp.role_id IN
+        WHERE sp.status = 1 AND rrp.status = 1 AND
+        rrp.role_id IN
         <foreach collection="rolesId" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
-        WHERE sp.status = 1 AND rrp.status = 1
     </select>
     <select id="selectAllCaseRole" resultMap="Case_SysRole_Result_Map">
         SELECT

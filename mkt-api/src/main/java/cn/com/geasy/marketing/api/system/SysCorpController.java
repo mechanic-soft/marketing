@@ -13,11 +13,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -29,6 +31,7 @@ import java.util.List;
 @Api(tags = "Corp", description = "公司接口")
 @Slf4j
 @RestController
+@RequestMapping(path = "/sys")
 public class SysCorpController {
     private final SysCorpService sysCorpService;
 
@@ -39,19 +42,21 @@ public class SysCorpController {
 
     @ApiOperation(value = "获取公司信息")
     @GetMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getCorps(@RequestParam(defaultValue = "0") int pageNume){
-        return ResponseUtils.result(this.sysCorpService.selectDtoPage(pageNume));
+    public ResponseEntity<ModelMap> getCorps(@RequestParam(defaultValue = "0") int pageNum,
+                                             @RequestParam List<Long> ids,
+                                             @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam() LocalDate callTime) {
+        return ResponseUtils.result(this.sysCorpService.selectDtoPage(pageNum));
     }
 
     @ApiOperation(value = "获取匹配ID的公司信息")
     @GetMapping(path = "/corps/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getCorp(@PathVariable Long id){
+    public ResponseEntity<ModelMap> getCorp(@PathVariable Long id) {
         return ResponseUtils.result(this.sysCorpService.selectDtoById(id));
     }
 
     @ApiOperation(value = "保存公司信息")
     @PostMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> save(@RequestBody SysCorpDto sysCorp){
+    public ResponseEntity<ModelMap> save(@RequestBody SysCorpDto sysCorp) {
         return ResponseUtils.result(this.sysCorpService.save(sysCorp));
     }
 
@@ -59,8 +64,8 @@ public class SysCorpController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "ids", value = "公司ID", paramType = "body")
     })
-    @DeleteMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> delete(@RequestBody List<Long> ids){
+    @DeleteMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> delete(@RequestBody List<Long> ids) {
         return ResponseUtils.result(this.sysCorpService.deleteBatchIds(ids));
     }
 

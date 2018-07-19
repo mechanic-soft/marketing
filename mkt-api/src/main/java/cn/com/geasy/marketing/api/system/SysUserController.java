@@ -5,6 +5,7 @@
 package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
+import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
@@ -15,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 系统用户API
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "User", description = "用户接口")
 @Slf4j
 @RestController
+@RequestMapping(path = "/sys")
 public class SysUserController {
 
     private final SysUserService sysUserService;
@@ -48,5 +48,17 @@ public class SysUserController {
     public ResponseEntity<ModelMap> getUser(@PathVariable(required = true) Long id){
         SysUserDto sysUserDto = SysUserMapstruct.getInstance.toDto(this.sysUserService.selectById(id));
         return ResponseUtils.result(sysUserDto);
+    }
+
+    @ApiOperation(value = "保存用户")
+    @PostMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> save(@RequestBody(required = false) SysUserDto sysUserDto){
+        if (sysUserDto == null){
+            ResponseUtils.result("空滴 POST");
+        }
+        SysUser sysUser = SysUserMapstruct.getInstance.toEntity(sysUserDto);
+        this.sysUserService.insertOrUpdate(sysUser);
+        SysUserDto savedUserDto = SysUserMapstruct.getInstance.toDto(sysUser);
+        return ResponseUtils.result(savedUserDto);
     }
 }

@@ -5,8 +5,8 @@ spring:
     #url: jdbc:log4jdbc:mysql://localhost:3306/trace?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
     username: sa
     password:
-    schema: classpath:sql/dev/schema.sql
-    data: classpath:sql/dev/data.sql
+    schema: classpath:sql/sec/schema.sql
+    data: classpath:sql/sec/data.sql
     initialization-mode: embedded
   h2:
     console:

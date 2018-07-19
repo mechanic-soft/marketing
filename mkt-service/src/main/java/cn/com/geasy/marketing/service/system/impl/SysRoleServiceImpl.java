@@ -18,4 +18,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
+
 }
