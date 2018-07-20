@@ -31,11 +31,13 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
         String nickname=customerDto.getNickname();
         ew.where("nickname = {0}",nickname);
+      //  SELECT id AS id FROM wx_contact WHERE `status`=1 AND (nickname = ?)
         List list = wxContactService.selectObjs(ew);
         //步骤二:更新该记录的微信联系人ID   设置关联
         if(!CollectionUtils.isEmpty(list)){
-            Long dbid = (Long) list.get(0);
-            Customer customer = new Customer();
+            Object dbid =  list.get(0);
+            System.out.println(dbid);
+            /*Customer customer = new Customer();
             customer.setWxContactId(dbid);
             customer.setId(customerDto.getId());
             Integer result = super.baseMapper.updateById(customer);
@@ -44,7 +46,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
             wxContact.setIsSync(Const.ONE);
             wxContact.setId(dbid);
             boolean rs = wxContactService.updateById(wxContact);
-            dbCustomerDto = super.baseMapper.findById(customerDto);
+            dbCustomerDto = super.baseMapper.findById(customerDto);*/
         }
         //返回记录
         return dbCustomerDto;
