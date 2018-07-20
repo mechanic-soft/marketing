@@ -301,7 +301,7 @@ CREATE TABLE chat_records
   id          BIGINT PRIMARY KEY               NOT NULL,
   customer_id BIGINT                           NOT NULL,
   wx_username VARCHAR(256)                     NULL,
-  msg_type    TINYINT DEFAULT 0                NULL, -- 消息类型(0=文本,1=图片,2=文件)
+  msg_type    TINYINT DEFAULT 0                NULL, -- 消息类型(0=文本,1=图片,2=表情,3=文件)
   content     VARCHAR(1024)                    NULL,
   url         VARCHAR(256)                     NULL,
   is_send     TINYINT                          NULL, -- 状态(0=接收,1=发送)

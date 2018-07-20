@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 客户信息实体
+ * 客户动态实体
  *
  * @author phil
  * @version 1.0.0
