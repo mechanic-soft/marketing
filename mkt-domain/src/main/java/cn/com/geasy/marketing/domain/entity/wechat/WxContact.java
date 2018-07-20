@@ -147,4 +147,9 @@ public class WxContact extends Entity implements Serializable {
      */
     private String wncryChatRoomId;
 
+    /**
+     * 是否同步
+     */
+    private Integer isSync;
+
 }

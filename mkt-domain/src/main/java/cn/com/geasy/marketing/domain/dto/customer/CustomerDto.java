@@ -21,7 +21,7 @@ public class CustomerDto implements Serializable {
     private String nickname;
 
     /**微信用户头像URL*/
-    private String wxHeadImgUrl;
+    private String headImgUrl;
 
     /**标签id*/
     private List<Long> tagIds;

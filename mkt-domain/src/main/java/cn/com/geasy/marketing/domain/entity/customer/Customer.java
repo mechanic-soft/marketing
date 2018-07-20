@@ -30,7 +30,7 @@ public class Customer extends Entity implements Serializable {
     /**
      * 微信联系人ID
      */
-    private String wxContactId;
+    private Long wxContactId;
     /**
      * 服务号用户ID
      */
