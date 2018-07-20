@@ -9,5 +9,5 @@ import com.gitee.mechanic.mybatis.base.SuperService;
  * 客户管理 Service
  */
 public interface CustomerService extends SuperService<Customer> {
-    public CustomerDto releWx(CustomerDto customerDto);
+    public CustomerDto releWechat(CustomerDto customerDto);
 }
