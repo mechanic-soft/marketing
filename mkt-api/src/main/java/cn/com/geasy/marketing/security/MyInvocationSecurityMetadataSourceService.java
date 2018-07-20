@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.security;
 
 import cn.com.geasy.marketing.dao.system.SysPermissionMapper;
 import cn.com.geasy.marketing.domain.entity.system.SysPermission;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -34,9 +35,20 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
+        AntPathRequestMatcher matcher;
+        List<String> permits = Lists.newArrayList();
+        permits.add("/swagger*/**");
+        permits.add("/v2/api-docs");
+        permits.add("/webjars/**");
+        permits.add("/*.ico*");
+        for (String p : permits){
+            matcher = new AntPathRequestMatcher(p);
+            if (matcher.matches(request)) {
+                return SecurityConfig.createList("ROLE_ANONYMOUS");
+            }
+        }
 
         List<SysPermission> permissions = permissionMapper.selectAllCaseRole();
-        AntPathRequestMatcher matcher;
         for(SysPermission p : permissions) {
             String endpoint = p.getEndpoint();
             String method = p.getAction();

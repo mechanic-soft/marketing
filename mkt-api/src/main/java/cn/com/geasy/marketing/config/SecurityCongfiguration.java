@@ -45,8 +45,11 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/h2*/**", "/swagger*/**", "/v2/api-docs", "/webjars/**", "/*.ico").permitAll()
-                .anyRequest().authenticated() //任何请求,登录后可以访问
+//                .antMatchers("/h2*/**",
+//                        "/swagger*/**",
+//                        "/v2/api-docs",
+//                        "/webjars/**",
+//                        "/*.ico").permitAll()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     public <O extends FilterSecurityInterceptor> O postProcess(
                             O filterSecurityInterceptor) {
@@ -55,6 +58,7 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                         return filterSecurityInterceptor;
                     }
                 })
+                .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()
                 .failureUrl("/login?error")
@@ -66,6 +70,10 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                 .failureHandler(myAuthenctiationFailureHandler())
                 .permitAll()
                 .and()
+//                .antMatcher("/swagger*/**")
+//                .antMatcher("/v2/api-docs")
+//                .antMatcher("/webjars/**")
+//                .antMatcher("/*.ico")
                 .logout().permitAll()
                 .and().csrf().disable();
     }
