@@ -79,7 +79,37 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll()
-                .and().logout().permitAll().and().csrf().disable();
+                .and()
+                .antMatcher("/h2*/**")
+                .antMatcher("/swagger*/**")
+                .antMatcher("/v2/api-docs")
+                .antMatcher("/webjars/**")
+                .antMatcher("/*.ico")
+                .logout().permitAll()
+                .and().csrf().disable();
+
+
+        //        //允许匿名访问微信公众平台认证接口
+//        chains.put("/mp_token", "anon");
+//
+//        //允许匿名访问 H2 DB Console
+//        chains.put("/h2*/**", "anon");
+//
+//        //允许匿名访问Swagger
+//        chains.put("/swagger*/**", "anon");
+//        chains.put("/v2/api-docs", "anon");
+//        chains.put("/webjars/**", "anon");
+//
+//        //静态资源过滤器
+//        chains.put("/*.ico", "anon");
+//
+//        //登录相关资源过滤器
+//        chains.put("/login", "anon");
+//        chains.put("/status", "anon");
+//        chains.put("/unauthor", "anon");
+//        chains.put("/forbidden", "anon");
+//        chains.put("/logout", "logout");
+////        chains.put("/wx/**", "anon");
     }
 
 
