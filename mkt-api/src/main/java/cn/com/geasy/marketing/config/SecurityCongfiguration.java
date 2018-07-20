@@ -44,52 +44,8 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-//        http.authorizeRequests()
-//                .anyRequest().authenticated()
-//                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//                    public <O extends FilterSecurityInterceptor> O postProcess(
-//                            O filterSecurityInterceptor) {
-//                        filterSecurityInterceptor.setSecurityMetadataSource(mySecurityMetadataSource());
-//                        filterSecurityInterceptor.setAccessDecisionManager(myAccessDecisionManager());
-//                        return filterSecurityInterceptor;
-//                    }
-//                })
-//
-//                .and()
-//                .formLogin()
-//                .failureUrl("/login?error")
-//                .loginPage("/unauthor")
-//                .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
-//                    httpServletResponse.setContentType("application/json;charset=utf-8");
-//                    PrintWriter out = httpServletResponse.getWriter();
-//                    out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
-//                    out.flush();
-//                    out.close();
-//                })
-//                .failureHandler((httpServletRequest, httpServletResponse, e) -> {
-//                    e.printStackTrace();
-//                    httpServletResponse.setContentType("application/json;charset=utf-8");
-//                    PrintWriter out = httpServletResponse.getWriter();
-//                    out.write("{\"status\":\"error\",\"msg\":\"登录失败\"}");
-//                    out.flush();
-//                    out.close();
-//                })
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .permitAll()
-//                .and()
-//                .antMatcher("/h2*/**")
-//                .antMatcher("/swagger*/**")
-//                .antMatcher("/v2/api-docs")
-//                .antMatcher("/webjars/**")
-//                .antMatcher("/*.ico")
-//                .logout().permitAll()
-//                .and().csrf().disable();
-
-
         http.authorizeRequests()
+                .antMatchers("/h2*/**", "/swagger*/**", "/v2/api-docs", "/webjars/**", "/*.ico").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     public <O extends FilterSecurityInterceptor> O postProcess(
@@ -108,18 +64,19 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .successHandler(myAuthenctiationSuccessHandler())
                 .failureHandler(myAuthenctiationFailureHandler())
-                .permitAll() //登录页面用户任意访问
+                .permitAll()
                 .and()
-                .logout().permitAll().and().csrf().disable();; //注销行为任意访问
+                .logout().permitAll()
+                .and().csrf().disable();
     }
 
     @Bean
-    MyAuthenctiationSuccessHandler myAuthenctiationSuccessHandler(){
+    MyAuthenctiationSuccessHandler myAuthenctiationSuccessHandler() {
         return new MyAuthenctiationSuccessHandler();
     }
 
     @Bean
-    MyAuthenctiationFailureHandler myAuthenctiationFailureHandler(){
+    MyAuthenctiationFailureHandler myAuthenctiationFailureHandler() {
         return new MyAuthenctiationFailureHandler();
     }
 
