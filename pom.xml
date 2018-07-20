@@ -11,6 +11,7 @@
         <module>mkt-domain</module>
         <module>mkt-service</module>
         <module>mkt-api</module>
+        <module>mkt-utils</module>
     </modules>
     <packaging>pom</packaging>
     <name>Marketing</name>

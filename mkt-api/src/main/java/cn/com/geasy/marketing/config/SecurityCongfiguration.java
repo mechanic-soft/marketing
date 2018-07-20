@@ -6,7 +6,7 @@ package cn.com.geasy.marketing.config;
 
 import cn.com.geasy.marketing.security.MyAccessDecisionManager;
 import cn.com.geasy.marketing.security.MyInvocationSecurityMetadataSourceService;
-import cn.com.geasy.marketing.service.security.SecurityUserService;
+import cn.com.geasy.marketing.service.security.MyUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -34,58 +34,13 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserDetailsService userService() {
-        return new SecurityUserService();
+        return new MyUserService();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService()).passwordEncoder(new BCryptPasswordEncoder());
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        http.authorizeRequests()
-//                .accessDecisionManager()
-//
-////                .antMatchers(HttpMethod.GET, "/sys/users").hasRole("ADMIN")
-////                .antMatchers(HttpMethod.POST, "/sys/users").hasRole("ADMIN")
-////                .antMatchers(HttpMethod.GET, "/sys/users/**").hasRole("USER")
-//                .anyRequest().permitAll()
-////                .authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/unauthor")
-//                .successHandler(new AuthenticationSuccessHandler() {
-//                    @Override
-//                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-//                        httpServletResponse.setContentType("application/json;charset=utf-8");
-////                        String message = ResponseUtils.result("用户【"  + authentication.getName() + "】登录成功").toString();
-//                        PrintWriter out = httpServletResponse.getWriter();
-//                        out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
-////                        out.write(message);
-//                        out.flush();
-//                        out.close();
-//                    }
-//                })
-//                .failureHandler(new AuthenticationFailureHandler() {
-//                    @Override
-//                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-//                        e.printStackTrace();
-//                        httpServletResponse.setContentType("application/json;charset=utf-8");
-//                        PrintWriter out = httpServletResponse.getWriter();
-//                        out.write("{\"status\":\"error\",\"msg\":\"登录失败\"}");
-//                        out.flush();
-//                        out.close();
-//                    }
-//                })
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .permitAll()
-//                .and().logout().permitAll().and().csrf().disable();
-//    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -107,10 +62,8 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/unauthor")
                 .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
-//                        String message = ResponseUtils.result("用户【"  + authentication.getName() + "】登录成功").toString();
                     PrintWriter out = httpServletResponse.getWriter();
                     out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
-//                        out.write(message);
                     out.flush();
                     out.close();
                 })
@@ -132,8 +85,7 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public FilterInvocationSecurityMetadataSource mySecurityMetadataSource() {
-        MyInvocationSecurityMetadataSourceService securityMetadataSource = new MyInvocationSecurityMetadataSourceService();
-        return securityMetadataSource;
+        return new MyInvocationSecurityMetadataSourceService();
     }
 
     @Bean

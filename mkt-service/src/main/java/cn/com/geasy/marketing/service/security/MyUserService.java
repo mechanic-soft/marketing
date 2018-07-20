@@ -12,7 +12,6 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +26,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @Service
-public class SecurityUserService implements UserDetailsService {
+public class MyUserService implements UserDetailsService {
 
     @Autowired
     private SysUserMapper userMapper;
@@ -45,10 +44,22 @@ public class SecurityUserService implements UserDetailsService {
         List<GrantedAuthority> authorities = Lists.newArrayList();
         for (SysRole role : roles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-//            System.out.println(role.getName());
         }
 
-        return new User(user.getUsername(),
-                user.getPassword(), authorities);
+        return new CurrentUser(
+                user.getUsername(),
+                user.getPassword(),
+                authorities,
+                user.getId(),
+                user.getRealName(),
+                user.getWxUin(),
+                user.getWxUsername(),
+                user.getWxNickname(),
+                user.getWxHeadImgUrl(),
+                user.getWxSex(),
+                user.getWxSignature(),
+                user.getMpOpenid(),
+                user.getMpUuid()
+        );
     }
 }
