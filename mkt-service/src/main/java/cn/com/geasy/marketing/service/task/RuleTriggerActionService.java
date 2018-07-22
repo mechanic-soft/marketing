@@ -5,47 +5,40 @@
 package cn.com.geasy.marketing.service.task;
 
 
-import cn.com.geasy.marketing.domain.dto.task.RuleDto;
-import cn.com.geasy.marketing.domain.entity.task.Rule;
+
+import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
 /**
- * 规则服务接口
+ * 规则触发行为服务接口
  *
  * @author gencheng.pan
  * @version 1.0.0
  */
-public interface RuleService extends SuperService<Rule> {
+public interface RuleTriggerActionService extends SuperService<RuleTriggerAction> {
     /**
      * 保存规则信息
      *
      * @param ruleDto
      * @return boolean
      */
-    boolean save(RuleDto ruleDto);
+    //boolean save(RuleDto ruleDto);
 
     /**
      * 修改任务信息
      *
-     * @param ruleDto
+     * @param RuleDto
      * @return boolean
      */
-    boolean update(RuleDto ruleDto);
+    //boolean update(TaskDto taskDto);
 
     /**
-     * 获取今日提醒
+     * 查找任务详细信息
      *
-     * @return RuleDto
+     * @param taskId
+     * @return TaskDto
      */
-    RuleDto getRemindings();
-
-    /**
-     * 获取规则详情
-     * @param ruleId
-     * @return RuleDto
-     */
-    RuleDto findRuleByRuleId(Long ruleId);
-
+   // TaskDto findTaskAndUsersByTaskId(Long taskId);
     /**
      * 返回所有待办任务的分页列表
      *
