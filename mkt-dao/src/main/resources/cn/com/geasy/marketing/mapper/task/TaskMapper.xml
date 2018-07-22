@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.system.SysCorpMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.task.Task">
+    <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
+    <result property="name" column="name" jdbcType="VARCHAR" javaType="String"/>
+    <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+</mapper>

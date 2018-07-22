@@ -1,5 +1,6 @@
 package cn.com.geasy.marketing.service.customer.impl;
 
+import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.dao.customer.CustomerMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
@@ -31,13 +32,11 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         String nickname=customerDto.getNickname();
         ew.where("nickname = {0}",nickname);
       //  SELECT id AS id FROM wx_contact WHERE `status`=1 AND (nickname = ?)
-//        List list = wxContactService.selectObjs(ew);
-        List<WxContact> wxContacts = wxContactService.selectList(ew);
+        List list = wxContactService.selectObjs(ew);
         //步骤二:更新该记录的微信联系人ID   设置关联
-        if(!CollectionUtils.isEmpty(wxContacts)){
-            Object dbid =  wxContacts.get(0);
+        if(!CollectionUtils.isEmpty(list)){
+            Object dbid =  list.get(0);
             System.out.println(dbid);
-
             /*Customer customer = new Customer();
             customer.setWxContactId(dbid);
             customer.setId(customerDto.getId());

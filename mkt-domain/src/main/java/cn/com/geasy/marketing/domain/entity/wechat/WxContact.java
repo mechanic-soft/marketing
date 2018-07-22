@@ -133,7 +133,7 @@ public class WxContact extends Entity implements Serializable {
     /**
      *
      */
-    private String DisplayName;
+    private String displayName;
     /**
      *
      */

@@ -1,9 +1,7 @@
 package cn.com.geasy.marketing.api.customer;
 
-import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
-import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
-import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
+import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
@@ -45,8 +43,20 @@ public class CustomerController {
     })*/
     @PatchMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ModelMap> releWx(@RequestBody CustomerDto customerDto){
-        System.out.println(customerDto);
         return ResponseUtils.result(customerSrv.releWechat(customerDto));
+    }
+
+    @ApiOperation(value = "微信好友列表")
+    //@ApiImplicitParams(value = {@ApiImplicitParam(name = "pageNum", value = "页数", paramType = "body")})
+    @GetMapping(path = "/wxcontacts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getWxContantByPage(@RequestParam(defaultValue = "1") int pageNum){
+        return ResponseUtils.result(customerSrv.getWxContantByPage(pageNum));
+    }
+
+    @ApiOperation(value = "同步客户")
+    @PostMapping(path = "/customers/wxContacts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> synchronizeCustomer(@RequestBody List<WxContact> list){
+        return ResponseUtils.result(customerSrv.synchronizeCustomer(list));
     }
 
 
