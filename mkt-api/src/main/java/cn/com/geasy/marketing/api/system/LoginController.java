@@ -74,9 +74,13 @@ public class LoginController {
                 new UsernamePasswordAuthenticationToken(username, password);
         try {
             Authentication authentication = authenticationManager.authenticate(authRequest);
-            SecurityContextHolder.getContext().setAuthentication(authRequest);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpSession session = request.getSession();
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+
+
+            System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
             return ResponseUtils.result("用户[" + username + "]已成功登录。");
 
         } catch (AuthenticationException ex) {

@@ -10,6 +10,8 @@ import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 系统用户API
@@ -27,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "User", description = "用户接口")
 @Slf4j
 @RestController
-@RequestMapping(path = "/sys")
+@RequestMapping(path = "/v1/sys")
 public class SysUserController {
 
     private final SysUserService sysUserService;
@@ -60,5 +64,14 @@ public class SysUserController {
         this.sysUserService.insertOrUpdate(sysUser);
         SysUserDto savedUserDto = SysUserMapstruct.getInstance.toDto(sysUser);
         return ResponseUtils.result(savedUserDto);
+    }
+
+    @ApiOperation(value = "删除用户")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "ids", value = "公司ID", paramType = "body")
+    })
+    @DeleteMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> delete(@RequestBody List<Long> ids) {
+        return ResponseUtils.result(this.sysUserService.remove(ids));
     }
 }

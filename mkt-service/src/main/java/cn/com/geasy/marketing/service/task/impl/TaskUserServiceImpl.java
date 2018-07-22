@@ -5,23 +5,14 @@
 package cn.com.geasy.marketing.service.task.impl;
 
 
-import cn.com.geasy.marketing.dao.task.TaskMapper;
 import cn.com.geasy.marketing.dao.task.TaskUserMapper;
-import cn.com.geasy.marketing.domain.dto.task.TaskDto;
-import cn.com.geasy.marketing.domain.entity.task.Task;
 import cn.com.geasy.marketing.domain.entity.task.TaskUser;
-import cn.com.geasy.marketing.mapstruct.task.TaskMapstruct;
-import cn.com.geasy.marketing.service.task.TaskService;
 import cn.com.geasy.marketing.service.task.TaskUserService;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
-import com.gitee.mechanic.mybatis.utils.PageUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户任务服务接口实现
