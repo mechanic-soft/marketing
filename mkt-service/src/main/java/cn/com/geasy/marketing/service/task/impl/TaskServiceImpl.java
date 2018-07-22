@@ -11,12 +11,7 @@ import cn.com.geasy.marketing.domain.entity.task.Task;
 import cn.com.geasy.marketing.domain.entity.task.TaskUser;
 import cn.com.geasy.marketing.service.task.TaskService;
 import cn.com.geasy.marketing.service.task.TaskUserService;
-import cn.com.geasy.marketing.utils.SessionUtils;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
-import com.gitee.mechanic.mybatis.utils.PageUtils;
-
-import org.h2.mvstore.type.ObjectDataType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,22 +31,22 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
     private TaskUserService taskUserService;
     @Override
     public boolean save(TaskDto taskDto) {
-        List<TaskUser> addTaskUserList = new ArrayList<TaskUser>();
+        List<TaskUser> taskUserList = new ArrayList<TaskUser>();
         Task task = new Task();
         task.setTitle(taskDto.getTitle());
         task.setContent(taskDto.getContent());
         //TODO 判断新建的任务重复问题
         //保存到task表
-        super.insertOrUpdateAllColumn(task);
+        super.insertOrUpdate(task);
         Long taskId = task.getId();
         taskDto.getUserId().forEach(i -> {
             TaskUser taskUser = new TaskUser();
             taskUser.setUserId(i);
             taskUser.setTaskId(taskId);
-            addTaskUserList.add(taskUser);
+            taskUserList.add(taskUser);
         });
         //保存到taskUser表
-        return taskUserService.insertOrUpdateAllColumnBatch(addTaskUserList);
+        return taskUserService.insertOrUpdateBatch(taskUserList);
     }
 
     @Override

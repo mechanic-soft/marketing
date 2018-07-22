@@ -6,7 +6,6 @@ package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.TaskDto;
 import cn.com.geasy.marketing.service.task.TaskService;
-import cn.com.geasy.marketing.utils.SessionUtils;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "tasks", description = "任务接口")
 @Slf4j
 @RestController
+@RequestMapping("/v1")
 public class TaskController {
 
     private final TaskService taskService;

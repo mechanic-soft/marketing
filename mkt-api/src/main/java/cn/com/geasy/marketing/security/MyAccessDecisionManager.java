@@ -5,7 +5,6 @@
 package cn.com.geasy.marketing.security;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -13,7 +12,6 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -27,13 +25,14 @@ import java.util.Collection;
  */
 @Service
 public class MyAccessDecisionManager implements AccessDecisionManager {
-    private MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
+
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
-            throws AccessDeniedException, InsufficientAuthenticationException {
+            throws AccessDeniedException, InsufficientAuthenticationException { //configAttributes.contains("ROLE_NOPERMS")
         if (CollectionUtils.isEmpty(configAttributes)) {
             throw new AccessDeniedException("not allow");
         }
+
         for (ConfigAttribute ca : configAttributes) {
             String needRole = ((SecurityConfig) ca).getAttribute();
             for (GrantedAuthority ga : authentication.getAuthorities()) {
@@ -44,8 +43,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
             }
         }
         //该url有配置权限,但是当然登录用户没有匹配到对应权限,则禁止访问
-        throw new AccessDeniedException(messages.getMessage(
-                "AbstractAccessDecisionManager.accessDenied", "Access is denied"));
+        throw new AccessDeniedException("Access is denied");
     }
 
     @Override
