@@ -19,4 +19,6 @@ public interface CustomerService extends SuperService<Customer> {
     public String synchronizeCustomer(List<WxContact> list);
     public String addCustomerTag(Long customerId,List<Long> tagIds);
     public List<CustomerLlifecycleEvent> customerLifecycleById(Long id);
+
+    public Page<CustomerDto>  selectDtoPage(int pageNum,int pageSize, CustomerDto customerDto);
 }

@@ -31,22 +31,22 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
     private TaskUserService taskUserService;
     @Override
     public boolean save(TaskDto taskDto) {
-        List<TaskUser> addTaskUserList = new ArrayList<TaskUser>();
+        List<TaskUser> taskUserList = new ArrayList<TaskUser>();
         Task task = new Task();
         task.setTitle(taskDto.getTitle());
         task.setContent(taskDto.getContent());
         //TODO 判断新建的任务重复问题
         //保存到task表
-        super.insertOrUpdateAllColumn(task);
+        super.insertOrUpdate(task);
         Long taskId = task.getId();
         taskDto.getUserId().forEach(i -> {
             TaskUser taskUser = new TaskUser();
             taskUser.setUserId(i);
             taskUser.setTaskId(taskId);
-            addTaskUserList.add(taskUser);
+            taskUserList.add(taskUser);
         });
         //保存到taskUser表
-        return taskUserService.insertOrUpdateAllColumnBatch(addTaskUserList);
+        return taskUserService.insertOrUpdateBatch(taskUserList);
     }
 
     @Override

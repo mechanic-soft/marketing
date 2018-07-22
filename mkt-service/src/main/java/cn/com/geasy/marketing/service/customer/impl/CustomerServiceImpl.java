@@ -5,10 +5,12 @@ import cn.com.geasy.marketing.dao.customer.CustomerMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
+import cn.com.geasy.marketing.domain.entity.customer.CustomerLifecycleEvent;
 import cn.com.geasy.marketing.domain.entity.customer.CustomerLlifecycleEvent;
 import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
+import cn.com.geasy.marketing.service.customer.CustomerLifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerLlifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
@@ -18,19 +20,27 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import com.gitee.mechanic.mybatis.utils.PageUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Customer> implements CustomerService {
 
     @Autowired
     private WxContactService wxContactService;
+    @Autowired
+    private CustomerLifecycleEventService cleSrv;
+    @Autowired
+    private ReleCustomerTagService rctSrv;
 
     @Autowired
     private ReleCustomerTagService releCustomerTagService;
@@ -122,6 +132,91 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         ew.orderBy("event_date",true);
         List<CustomerLlifecycleEvent> list = customerLlifecycleEventService.selectList(ew);
         return CollectionUtils.isEmpty(list) || !flag ?null:list;
+    }
+
+    @Override
+    public Page<CustomerDto> selectDtoPage(int pageNum, int pageSize,CustomerDto customerDto) {
+        Page<CustomerDto> page = new Page<>(pageNum,pageSize);
+        List<CustomerDto> customerDtos = baseMapper.selectDtoPage(page, customerDto);
+        initCustomerDto(customerDtos);
+        page.setRecords(customerDtos);
+        return page;
+    }
+
+    /**
+     * 设置是"否加微信"、"是否开户"、用户标签等信息
+     * TODO “最近联系”字段
+     * @param customerDtos
+     */
+    private void initCustomerDto(List<CustomerDto> customerDtos) {
+        List<Long> customerDtoIds =  new ArrayList<>();
+        for(CustomerDto customerDto:customerDtos) {
+            //wx_contact_id   null 就是未加微信
+
+            if (StringUtils.isBlank(customerDto.getWxContactId())) {
+                customerDto.setIsAddWechat(0);
+            } else {
+                customerDto.setIsAddWechat(1);
+            }
+
+            customerDtoIds.add(customerDto.getId());
+        }
+
+        /**加入标签id数组, 加入是否开户字段 */
+        Map<Long,List<Long>> tagReles = getReles(customerDtoIds);
+        Map<Long,Integer> openAccountMap = getOpenAccountMap(customerDtoIds);
+        for(CustomerDto customerDto:customerDtos){
+            List<Long> tags = tagReles.get(customerDto.getId());
+            customerDto.setTagIds(CollectionUtils.isEmpty(tags)?new ArrayList<Long>():tags);
+            customerDto.setIsOpenAccount(openAccountMap.containsKey(customerDto.getId())?1:0);
+        }
+
+
+    }
+
+    /**
+     * 根据客户id  查询当前查询页所需 “是否 开户” 数据集合
+     * @param customerDtoIds
+     * @return  Map<Long 客户id,Integer 开户值为3>
+     */
+    private Map<Long,Integer> getOpenAccountMap(List<Long> customerDtoIds) {
+        Map<Long,Integer> openAccountMap = new HashMap<>();
+        List<CustomerLifecycleEvent> customerLifecycleEvents = cleSrv.selectList(
+                new EntityWrapper<CustomerLifecycleEvent>()
+                        .where("event = {0}", "3")
+                        .in("customer_id",customerDtoIds.toArray())
+        );
+
+        if(CollectionUtils.isNotEmpty(customerLifecycleEvents)){
+            for(CustomerLifecycleEvent customerEvent:customerLifecycleEvents){
+                openAccountMap.put(customerEvent.getCustomerId(),customerEvent.getEvent());
+            }
+        }
+        return openAccountMap;
+    }
+
+    /***
+     * 组装当前查询页所需的标签数据集合
+     * @param customerDtoIds
+     * @return   Map<Long 客户id , List<Long> 对应标签集合>
+     */
+    private Map<Long,List<Long>> getReles(List<Long> customerDtoIds) {
+
+        List<ReleCustomerTag> releCustomerTags = rctSrv.selectList(new EntityWrapper<ReleCustomerTag>().in("customer_id",customerDtoIds.toArray()));
+        Map<Long,List<Long>> reles = new HashMap<>();
+        for(ReleCustomerTag releCustomerTag:releCustomerTags) {
+
+            Long customerId = releCustomerTag.getCustomerId();
+            List<Long> tagsArrayBycustomerId =  reles.get(customerId);
+            if(CollectionUtils.isEmpty(tagsArrayBycustomerId)){
+                tagsArrayBycustomerId = new ArrayList<>();
+
+            }
+            tagsArrayBycustomerId.add(releCustomerTag.getTagId());
+            reles.put(customerId,tagsArrayBycustomerId);
+
+        }
+        return reles;
     }
 
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.customer.CustomerMapper">
+
+
+
+
+
+
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.customer.CustomerDto">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="call_time" property="callTime" jdbcType="TIMESTAMP" />
+        <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="maturity" property="maturity" jdbcType="TINYINT" />
+        <result column="wx_contact_id" property="wxContactId" jdbcType="VARCHAR" />
+        <!--wx_contact-->
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR" />
+
+        <!--customer_lifecycle_event -->
+        <result column="isAddWechat" property="isAddWechat" jdbcType="TINYINT" />
+        <result column="isOpenAccount" property="isOpenAccount" jdbcType="TINYINT" />
+
+        <result column="lastContact" property="lastContact" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectDtoPage" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDto"
+            resultMap="Base_Result_Map">
+                SELECT DISTINCT (t1.id)
+                ,date_format(t1.call_time, '%Y-%m-%d') AS call_time
+                ,t1.wx_id
+                ,t1.remark
+                ,t1.phone
+                ,t1.maturity
+                ,t2.nickname
+                ,t2.head_img_url
+                ,t1.wx_contact_id
+                FROM customer t1
+                LEFT JOIN wx_contact t2 ON t1.wx_contact_id = t2.id
+                LEFT JOIN rele_customer_tag t3 ON t3.customer_id = t1.id
+                WHERE 1 = 1
+
+                <if test="customerDto.nickname != null and customerDto.nickname != ''">
+                    AND t2.nickname LIKE CONCAT('%',#{customerDto.nickname},'%')
+                </if>
+
+                <!--wx_contact_id   null 就是未加微信-->
+                <if test="customerDto.isAddWechat != null and customerDto.isAddWechat != ''">
+                    AND t1.wx_contact_id IS NOT NULL
+                </if>
+
+                <if test="customerDto.tagIds != null and customerDto.tagIds.size > 0 ">
+                    AND  t3.tag_id  in
+
+                    <foreach collection="customerDto.tagIds" item="item" open="(" close=")" separator=",">
+                        ${item}
+                    </foreach>
+                </if>
+
+                <if test="customerDto.callTimeStartStr != null and customerDto.callTimeStartStr != ''">
+                    AND t1.call_time  &gt;= '${customerDto.callTimeStartStr} 00:00:00'
+                </if>
+
+                <if test="customerDto.callTimeEndStr != null and customerDto.callTimeEndStr != ''">
+                    AND t1.call_time    &lt;=  '${customerDto.callTimeEndStr} 23:59:59'
+                </if>
+
+    </select>
+
+</mapper>
