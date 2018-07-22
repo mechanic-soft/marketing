@@ -9,5 +9,7 @@ public class Const {
     public static final String FAIL="失败";
     public static final String RELE_SUCCESS="关联成功";
     public static final String RELE_FAIL="关联失败";
+    public static final String SYNCHRONIZE_SUCCESS="同步成功";
+    public static final String SYNCHRONIZE_FAIL="同步失败";
     public static final Integer ONE = 1;
 }
