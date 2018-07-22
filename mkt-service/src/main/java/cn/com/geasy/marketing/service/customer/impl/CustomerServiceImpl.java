@@ -121,7 +121,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         }
         ew.orderBy("event_date",true);
         List<CustomerLlifecycleEvent> list = customerLlifecycleEventService.selectList(ew);
-        return CollectionUtils.isEmpty(list) || flag ?null:list;
+        return CollectionUtils.isEmpty(list) || !flag ?null:list;
     }
 
 }

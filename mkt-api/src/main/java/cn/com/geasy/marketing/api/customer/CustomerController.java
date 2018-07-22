@@ -59,6 +59,20 @@ public class CustomerController {
         return ResponseUtils.result(customerSrv.synchronizeCustomer(list));
     }
 
+    @ApiOperation(value = "新增客户标签")
+    @PostMapping(path = "/customers/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> addCustomerTag(@RequestParam Long customerId,@RequestBody List<Long> tagIds){
+        return ResponseUtils.result(customerSrv.addCustomerTag(customerId,tagIds));
+    }
+
+    @ApiOperation(value = "客户生命周期事件列表")
+    @PostMapping(path = "/customers/{id}/lifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> customerLifecycle(@RequestParam Long id){
+        return ResponseUtils.result(customerSrv.customerLifecycleById(id));
+    }
+
+
+
 
 
 
