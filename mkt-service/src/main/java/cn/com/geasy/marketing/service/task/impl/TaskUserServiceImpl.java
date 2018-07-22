@@ -5,13 +5,9 @@
 package cn.com.geasy.marketing.service.task.impl;
 
 
-import cn.com.geasy.marketing.dao.task.TaskMapper;
+
 import cn.com.geasy.marketing.dao.task.TaskUserMapper;
-import cn.com.geasy.marketing.domain.dto.task.TaskDto;
-import cn.com.geasy.marketing.domain.entity.task.Task;
 import cn.com.geasy.marketing.domain.entity.task.TaskUser;
-import cn.com.geasy.marketing.mapstruct.task.TaskMapstruct;
-import cn.com.geasy.marketing.service.task.TaskService;
 import cn.com.geasy.marketing.service.task.TaskUserService;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;

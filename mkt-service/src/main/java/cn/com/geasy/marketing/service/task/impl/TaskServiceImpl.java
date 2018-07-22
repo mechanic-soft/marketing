@@ -9,7 +9,6 @@ import cn.com.geasy.marketing.dao.task.TaskMapper;
 import cn.com.geasy.marketing.domain.dto.task.TaskDto;
 import cn.com.geasy.marketing.domain.entity.task.Task;
 import cn.com.geasy.marketing.domain.entity.task.TaskUser;
-import cn.com.geasy.marketing.mapstruct.task.TaskMapstruct;
 import cn.com.geasy.marketing.service.task.TaskService;
 import cn.com.geasy.marketing.service.task.TaskUserService;
 import cn.com.geasy.marketing.utils.SessionUtils;
@@ -37,22 +36,22 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
     private TaskUserService taskUserService;
     @Override
     public boolean save(TaskDto taskDto) {
-        List<TaskUser> taskUserList = new ArrayList<TaskUser>();
+        List<TaskUser> addTaskUserList = new ArrayList<TaskUser>();
         Task task = new Task();
         task.setTitle(taskDto.getTitle());
         task.setContent(taskDto.getContent());
         //TODO 判断新建的任务重复问题
         //保存到task表
-        super.insertOrUpdate(task);
+        super.insertOrUpdateAllColumn(task);
         Long taskId = task.getId();
         taskDto.getUserId().forEach(i -> {
             TaskUser taskUser = new TaskUser();
             taskUser.setUserId(i);
             taskUser.setTaskId(taskId);
-            taskUserList.add(taskUser);
+            addTaskUserList.add(taskUser);
         });
         //保存到taskUser表
-        return taskUserService.insertOrUpdateBatch(taskUserList);
+        return taskUserService.insertOrUpdateAllColumnBatch(addTaskUserList);
     }
 
     @Override
@@ -63,10 +62,11 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
             task.setContent(taskDto.getContent());
             if (taskDto.getId() !=null ){
                 task.setId(taskDto.getId());
+            }else{
+                return false;
             }
-            super.insertOrUpdateAllColumn(task);
-            List<TaskUser> updateTaskUserList = new ArrayList<TaskUser>();
-            List<TaskUser> addTaskUserList = new ArrayList<TaskUser>();
+            ArrayList<TaskUser> updateTaskUserList = new ArrayList<TaskUser>();
+            ArrayList<TaskUser> addTaskUserList = new ArrayList<TaskUser>();
             HashMap<String,Object> oldTaskUserMap = new HashMap<String,Object>();
             //根据任务的id，获取到之前的用户任务信息。
             List<TaskUser> taskUserByTaskIdList = taskUserService.findTaskUserByTaskId(task.getId());
@@ -93,6 +93,9 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
                 oldTaskUser.setStatus(0);
                 updateTaskUserList.add(oldTaskUser);
             });
+            //保存task表
+            super.insertOrUpdateAllColumn(task);
+            //保存任务用户表rele_rule_user
             if(addTaskUserList.size() >0){
                 taskUserService.insertOrUpdateAllColumnBatch(addTaskUserList);
             }
@@ -132,8 +135,8 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
 
     @Override
     public TaskDto findDailyTask() {
-        //Long userId = SessionUtils.getUserId();
-        Long userId  = 101L;
+        Long userId = SessionUtils.getUserId();
+        ///Long userId  = 101L;
         List<TaskUser> dailyTaskList = taskUserService.findDailyTask(userId);
         TaskUser taskUser = null;
         if(dailyTaskList.size() > 0){
