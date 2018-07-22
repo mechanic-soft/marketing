@@ -1,24 +1,22 @@
 package cn.com.geasy.marketing.api.customer;
-
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.service.customer.CustomerService;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.web.utils.ResponseUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDate;
 import java.util.List;
 
 /**
-客户管理
+ 客户管理
  */
 @Api(tags = "Customer", description = "客户管理接口")
 @Slf4j
@@ -37,6 +35,26 @@ public class CustomerController {
     public ResponseEntity<ModelMap> getUser(@RequestBody List<Long> ids){
         return ResponseUtils.result(customerSrv.deleteBatchIds(ids));
     }
+
+    @ApiOperation(value = "用户列表查询")
+    @GetMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> selectPage(
+            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) Integer isAddWechat,
+            @RequestParam(required = false) List<Long> tagIds,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false) LocalDate callTimeStart,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false) LocalDate callTimeEnd,
+            @RequestParam(required = true) int pageNum,
+            @RequestParam(required = true) int pageSize)
+    {
+
+        //localDateToStr(callTimeStart);
+        CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd);
+        return ResponseUtils.result(customerSrv.selectDtoPage(pageNum,pageSize,customerDto));
+    }
+
 
     @ApiOperation(value = "关联微信")
     /*@ApiImplicitParams(value = {@ApiImplicitParam(name = "nickname", value = "微信昵称", paramType = "body")
@@ -71,8 +89,6 @@ public class CustomerController {
     public ResponseEntity<ModelMap> customerLifecycle(@RequestParam Long id){
         return ResponseUtils.result(customerSrv.customerLifecycleById(id));
     }
-
-
 
 
 
