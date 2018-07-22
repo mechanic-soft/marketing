@@ -6,12 +6,10 @@ import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
 import cn.com.geasy.marketing.domain.entity.customer.CustomerLifecycleEvent;
-import cn.com.geasy.marketing.domain.entity.customer.CustomerLlifecycleEvent;
 import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
 import cn.com.geasy.marketing.service.customer.CustomerLifecycleEventService;
-import cn.com.geasy.marketing.service.customer.CustomerLlifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
 import cn.com.geasy.marketing.service.wechat.WxContactService;
@@ -46,7 +44,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     private ReleCustomerTagService releCustomerTagService;
 
     @Autowired
-    private CustomerLlifecycleEventService customerLlifecycleEventService;
+    private CustomerLifecycleEventService customerLifecycleEventService;
 
     //设置为事务的操作
     @Transactional
@@ -65,11 +63,15 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
             customer.setWxContactId(dbWxContact.getId());
             customer.setWxId(dbWxContact.getUsername());
             customer.setId(customerDto.getId());
+            //设置修改为当前用户
+            customer.setUpdateUser(SessionUtils.getUserId());
             super.baseMapper.updateById(customer);
             //设置为已经同步，及关联
             WxContact wxContact = new WxContact();
             wxContact.setIsSync(Const.ONE);
             wxContact.setId(dbWxContact.getId());
+            //设置修改为当前用户
+            wxContact.setUpdateUser(SessionUtils.getUserId());
             wxContactService.updateById(wxContact);
             dbCustomerDto = super.baseMapper.findById(customerDto);
         }
@@ -93,6 +95,10 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     @Transactional
     @Override
     public String synchronizeCustomer(List<WxContact> list) {
+        //设置修改为当前用户
+        for (WxContact item:list) {
+            item.setUpdateUser(SessionUtils.getUserId());
+        }
         boolean flag = wxContactService.updateBatchById(list);
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
     }
@@ -106,6 +112,8 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
             ReleCustomerTag releCustomerTag = new ReleCustomerTag();
             releCustomerTag.setCustomerId(customerId);
             releCustomerTag.setTagId(item);
+            //设置为当前用户ID
+            releCustomerTag.setCreateUser(SessionUtils.getUserId());
             //加入List集合中
             list.add(releCustomerTag);
         }
@@ -117,10 +125,10 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     }
 
     @Override
-    public List<CustomerLlifecycleEvent> customerLifecycleById(Long id) {
+    public List<CustomerLifecycleEvent> customerLifecycleById(Long id) {
         boolean flag = false;
         //步骤一：自定义查询接口
-        EntityWrapper<CustomerLlifecycleEvent> ew=new EntityWrapper<CustomerLlifecycleEvent>();
+        EntityWrapper<CustomerLifecycleEvent> ew=new EntityWrapper<CustomerLifecycleEvent>();
         //获取当前登录用户
         Long userId = SessionUtils.getUserId();
         //默认升序
@@ -130,7 +138,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
             ew.andNew("customer_id={0}",id);
         }
         ew.orderBy("event_date",true);
-        List<CustomerLlifecycleEvent> list = customerLlifecycleEventService.selectList(ew);
+        List<CustomerLifecycleEvent> list = customerLifecycleEventService.selectList(ew);
         return CollectionUtils.isEmpty(list) || !flag ?null:list;
     }
 

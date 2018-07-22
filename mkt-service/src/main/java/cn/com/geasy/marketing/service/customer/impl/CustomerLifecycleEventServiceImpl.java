@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 /**
  * 客户生命周期事件实体ServiceImpl
  */
+/**
+ * 客户生命周期事件 Service 实现
+ *
+ * @author yml
+ * @version 1.0.0
+ */
 @Slf4j
 @Service
 public class CustomerLifecycleEventServiceImpl extends SuperServiceImpl<CustomerLifecycleEventMapper, CustomerLifecycleEvent> implements CustomerLifecycleEventService {
