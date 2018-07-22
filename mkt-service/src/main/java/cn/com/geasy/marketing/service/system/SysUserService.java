@@ -7,6 +7,8 @@ package cn.com.geasy.marketing.service.system;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
+import java.util.List;
+
 /**
  * 系统用户服务接口
  *
@@ -21,4 +23,6 @@ public interface SysUserService extends SuperService<SysUser> {
      * @return SysUser 用户
      */
     SysUser findByUsername(String username);
+
+    Boolean remove(List<Long> ids);
 }

@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import java.io.IOException;
  * @version 1.0.0
  */
 @Slf4j
-@Component
 public class MyAuthenctiationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override

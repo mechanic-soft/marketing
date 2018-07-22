@@ -6,14 +6,13 @@ package cn.com.geasy.marketing.security;
 
 import cn.com.geasy.marketing.dao.system.SysPermissionMapper;
 import cn.com.geasy.marketing.domain.entity.system.SysPermission;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -25,7 +24,7 @@ import java.util.List;
  * @author phil
  * @version 1.0.0
  */
-@Component
+@Service
 public class MyInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
 
     @Autowired
@@ -36,18 +35,6 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
         AntPathRequestMatcher matcher;
-        List<String> permits = Lists.newArrayList();
-        permits.add("/swagger*/**");
-        permits.add("/v2/api-docs");
-        permits.add("/webjars/**");
-        permits.add("/*.ico*");
-        for (String p : permits){
-            matcher = new AntPathRequestMatcher(p);
-            if (matcher.matches(request)) {
-                return SecurityConfig.createList("ROLE_ANONYMOUS");
-            }
-        }
-
         List<SysPermission> permissions = permissionMapper.selectAllCaseRole();
         for(SysPermission p : permissions) {
             String endpoint = p.getEndpoint();
@@ -58,8 +45,8 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
                 return SecurityConfig.createList(rolesName);
             }
         }
-
-        return SecurityConfig.createList("ROLE_UNAUTHOR");
+        return null;
+//        return SecurityConfig.createList("ROLE_ANONYMOUS");
     }
 
     @Override
