@@ -5,9 +5,13 @@ import cn.com.geasy.marketing.dao.customer.CustomerMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
+import cn.com.geasy.marketing.domain.entity.customer.CustomerLlifecycleEvent;
+import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
+import cn.com.geasy.marketing.service.customer.CustomerLlifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
+import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
 import cn.com.geasy.marketing.service.wechat.WxContactService;
 import cn.com.geasy.marketing.utils.SessionUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +31,12 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
 
     @Autowired
     private WxContactService wxContactService;
+
+    @Autowired
+    private ReleCustomerTagService releCustomerTagService;
+
+    @Autowired
+    private CustomerLlifecycleEventService customerLlifecycleEventService;
 
     //设置为事务的操作
     @Transactional
@@ -74,6 +85,43 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     public String synchronizeCustomer(List<WxContact> list) {
         boolean flag = wxContactService.updateBatchById(list);
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
+    }
+
+    @Transactional
+    @Override
+    public String addCustomerTag(Long customerId, List<Long> tagIds) {
+        List<ReleCustomerTag> list = new ArrayList<ReleCustomerTag>();
+        boolean result = false;
+        for (Long item:tagIds) {
+            ReleCustomerTag releCustomerTag = new ReleCustomerTag();
+            releCustomerTag.setCustomerId(customerId);
+            releCustomerTag.setTagId(item);
+            //加入List集合中
+            list.add(releCustomerTag);
+        }
+        if(!CollectionUtils.isEmpty(list)){
+            //保存数据库表
+            result = releCustomerTagService.insertBatch(list);
+        }
+        return result?Const.SAVE_SUCCESS:Const.SAVE_FAIL;
+    }
+
+    @Override
+    public List<CustomerLlifecycleEvent> customerLifecycleById(Long id) {
+        boolean flag = false;
+        //步骤一：自定义查询接口
+        EntityWrapper<CustomerLlifecycleEvent> ew=new EntityWrapper<CustomerLlifecycleEvent>();
+        //获取当前登录用户
+        Long userId = SessionUtils.getUserId();
+        //默认升序
+        ew.where("user_id = {0}",userId);
+        if(null != id){
+            flag = true;
+            ew.andNew("customer_id={0}",id);
+        }
+        ew.orderBy("event_date",true);
+        List<CustomerLlifecycleEvent> list = customerLlifecycleEventService.selectList(ew);
+        return CollectionUtils.isEmpty(list) || flag ?null:list;
     }
 
 }
