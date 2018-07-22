@@ -59,4 +59,9 @@ public class SysUserServiceTest {
 
         assertThat(actual).isEqualTo(expect);
     }
+
+    @Test
+    public void testRemove(){
+
+    }
 }
