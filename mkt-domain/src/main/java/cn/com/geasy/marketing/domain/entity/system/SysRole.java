@@ -27,7 +27,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_role")
 public class SysRole  extends Entity implements Serializable {
-    private static final long serialVersionUID = -854434094539614531L;
+    private static final long serialVersionUID = 5901693123941715728L;
     /**
      * 角色名称
      */

@@ -342,7 +342,7 @@ CREATE TABLE customer
   call_time          TIMESTAMP          NULL, -- 呼叫时间(同步)
   customer_code      VARCHAR(256)       NULL, -- 用户编码(同步)
   is_agree_add_wx    TINYINT            NULL, -- 是否同意添加微信(同步)
-  wx_id              VARCHAR(64)        NULL, -- 微信号(同步)
+  wx_id              VARCHAR(128)       NULL, -- 微信号(同步)
   phone              VARCHAR(32)        NULL, -- 手机号(同步)
   remark             VARCHAR(256)       NULL, -- 备注(同步)
   maturity           TINYINT            NULL, -- 客户成熟度
@@ -565,7 +565,7 @@ CREATE TABLE wx_contact
   star_friend         TINYINT,
   app_account_flag    TINYINT,
   statues             TINYINT,
-  attrStatus          TINYINT,
+  attr_status          TINYINT,
   province            VARCHAR(256),
   city                VARCHAR(256),
   alias               VARCHAR(256),
