@@ -23,6 +23,7 @@ import java.util.List;
 @Api(tags = "Customer", description = "客户管理接口")
 @Slf4j
 @RestController
+@RequestMapping("/v1")
 public class CustomerController {
 
     @Autowired

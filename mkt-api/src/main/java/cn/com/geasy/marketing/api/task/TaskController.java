@@ -6,7 +6,6 @@ package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.TaskDto;
 import cn.com.geasy.marketing.service.task.TaskService;
-import cn.com.geasy.marketing.utils.SessionUtils;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "task", description = "任务接口")
 @Slf4j
 @RestController
+@RequestMapping("/v1")
 public class TaskController {
 
     private final TaskService taskService;
@@ -37,7 +37,7 @@ public class TaskController {
     }
 
     @ApiOperation(value = "任务列表信息")
-    @GetMapping(path = "/task", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getTasks(@RequestParam(defaultValue = "0") int pageNume){
         //this.taskService.selectDtoPage(pageNume);
         return ResponseUtils.result("");
@@ -47,24 +47,24 @@ public class TaskController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "userId", value = "客户ID", paramType = "body"),
     })
-    @PostMapping(path = "/task", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody TaskDto taskDto){
         return ResponseUtils.result(this.taskService.save(taskDto));
     }
 
     @ApiOperation(value = "修改任务信息")
-    @PutMapping(path = "/task/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody TaskDto taskDto){
         return ResponseUtils.result(this.taskService.update(taskDto));
     }
     @ApiOperation(value = "获取任务详细信息")
-    @GetMapping(path = "/task/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getTask(@RequestParam Long taskId){
-        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(taskId));
+    @GetMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getTask(@PathVariable Long id){
+        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(id));
     }
 
     @ApiOperation(value = "获取今日任务信息")
-    @GetMapping(path = "task/today", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "tasks/today", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> dailyTask(){
         return ResponseUtils.result(this.taskService.findDailyTask());
     }
