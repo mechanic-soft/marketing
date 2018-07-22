@@ -24,4 +24,9 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     public List<Tag> findTagByArticleId(Long articleId) {
         return baseMapper.findTagByArticleId(articleId);
     }
+
+    @Override
+    public String addTag(Tag tag) {
+        return null;
+    }
 }

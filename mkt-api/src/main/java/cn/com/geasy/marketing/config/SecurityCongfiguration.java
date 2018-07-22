@@ -48,73 +48,23 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//                    public <O extends FilterSecurityInterceptor> O postProcess(
-//                            O filterSecurityInterceptor) {
-//                        filterSecurityInterceptor.setSecurityMetadataSource(mySecurityMetadataSource());
-//                        filterSecurityInterceptor.setAccessDecisionManager(myAccessDecisionManager());
-//                        return filterSecurityInterceptor;
-//                    }
-//                })
-//                .formLogin()
-//                .failureUrl("/login?error")
-//                .loginPage("/unauthor")
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .successHandler(myAuthenctiationSuccessHandler())
-//                .failureHandler(myAuthenctiationFailureHandler())
-//                .and()
-//                .antMatcher("/swagger*/**")
-//                .antMatcher("/v2/api-docs")
-//                .antMatcher("/webjars/**")
-//                .antMatcher("/*.ico")
                 .authorizeRequests()
-                .antMatchers("/swagger*/**", "/v2/api-docs", "/webjars/**", "/*.ico", "/login", "/unauthor").permitAll()
+                .antMatchers("/swagger*/**",
+                        "/v2/api-docs",
+                        "/webjars/**",
+                        "/*.ico",
+                        "/login",
+                        "/unauthor").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()
                 .loginPage("/unauthor")
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .successHandler(myAuthenctiationSuccessHandler())
-//                .failureHandler(myAuthenctiationFailureHandler())
-//                .successForwardUrl("/swagger-ui.html")
                 .and()
                 .logout().permitAll()
                 .and().csrf().disable();
 
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//                    public <O extends FilterSecurityInterceptor> O postProcess(
-//                            O filterSecurityInterceptor) {
-//                        filterSecurityInterceptor.setSecurityMetadataSource(mySecurityMetadataSource());
-//                        filterSecurityInterceptor.setAccessDecisionManager(myAccessDecisionManager());
-//                        return filterSecurityInterceptor;
-//                    }
-//                })
-//                .anyRequest().authenticated() //任何请求,登录后可以访问
-//                .and()
-//                .formLogin()
-//                .failureUrl("/login?error")
-//                .loginPage("/unauthor")
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .successHandler(myAuthenctiationSuccessHandler())
-//                .failureHandler(myAuthenctiationFailureHandler())
-//                .permitAll()
-//                .and()
-//                .logout().permitAll()
-//                .and().csrf().disable();
-//    }
-
 
     @Bean
     MyAuthenctiationSuccessHandler myAuthenctiationSuccessHandler() {
@@ -125,16 +75,6 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
     MyAuthenctiationFailureHandler myAuthenctiationFailureHandler() {
         return new MyAuthenctiationFailureHandler();
     }
-
-//    @Bean
-//    public FilterInvocationSecurityMetadataSource mySecurityMetadataSource() {
-//        return new MyInvocationSecurityMetadataSourceService();
-//    }
-//
-//    @Bean
-//    public AccessDecisionManager myAccessDecisionManager() {
-//        return new MyAccessDecisionManager();
-//    }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override

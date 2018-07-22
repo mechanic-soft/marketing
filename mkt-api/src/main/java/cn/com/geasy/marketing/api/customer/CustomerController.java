@@ -23,6 +23,7 @@ import java.util.List;
 @Api(tags = "Customer", description = "客户管理接口")
 @Slf4j
 @RestController
+@RequestMapping("/v1")
 public class CustomerController {
 
     @Autowired
@@ -58,6 +59,20 @@ public class CustomerController {
     public ResponseEntity<ModelMap> synchronizeCustomer(@RequestBody List<WxContact> list){
         return ResponseUtils.result(customerSrv.synchronizeCustomer(list));
     }
+
+    @ApiOperation(value = "新增客户标签")
+    @PostMapping(path = "/customers/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> addCustomerTag(@RequestParam Long customerId,@RequestBody List<Long> tagIds){
+        return ResponseUtils.result(customerSrv.addCustomerTag(customerId,tagIds));
+    }
+
+    @ApiOperation(value = "客户生命周期事件列表")
+    @PostMapping(path = "/customers/{id}/lifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> customerLifecycle(@RequestParam Long id){
+        return ResponseUtils.result(customerSrv.customerLifecycleById(id));
+    }
+
+
 
 
 

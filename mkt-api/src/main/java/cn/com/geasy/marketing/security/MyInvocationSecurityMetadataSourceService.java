@@ -47,6 +47,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         }
         return null;
 //        return SecurityConfig.createList("ROLE_ANONYMOUS");
+//        return SecurityConfig.createList("ROLE_NOPERMS");
     }
 
     @Override

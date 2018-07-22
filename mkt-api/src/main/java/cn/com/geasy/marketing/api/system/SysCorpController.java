@@ -31,7 +31,7 @@ import java.util.List;
 @Api(tags = "Corp", description = "公司接口")
 @Slf4j
 @RestController
-@RequestMapping(path = "/sys")
+@RequestMapping(path = "/v1/sys")
 public class SysCorpController {
     private final SysCorpService sysCorpService;
 
