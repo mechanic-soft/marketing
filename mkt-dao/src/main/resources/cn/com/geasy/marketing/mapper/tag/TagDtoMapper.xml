@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.geasy.marketing.dao.tag.TagDtoMapper">
+
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.tag.TagDto">
+        <result property="tagId" column="tagId" javaType="Long"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="subTypeId" column="subTypeId" javaType="Long"/>
+        <result property="subTypeName" column="subTypeName" javaType="String"/>
+        <result property="typeId" column="typeId" javaType="Long"/>
+        <result property="typeName" column="typeName" javaType="String"/>
+        <result property="customerId" column="customerId" javaType="Long"/>
+        <result property="tagSrc" column="tagSrc" javaType="String"/>
+    </resultMap>
+
+    <select id="selectTagDtoList" resultMap="Base_Result_Map" parameterType="cn.com.geasy.marketing.domain.dto.tag.TagDto">
+       SELECT
+        t1.id as tagId,t1.name,t3.id as subTypeId,t3.name as subTypeName,t4.id as typeId,t4.name as typeName ,t1.tag_src as tagSrc
+        FROM tag t1
+        LEFT JOIN rele_customer_tag t2 ON t2.tag_id = t1.id
+        LEFT JOIN tag_type t3 ON t3.id = t1.tag_type
+        LEFT JOIN tag_type t4 ON t3.parent_id = t4.id
+        WHERE t2.customer_id = #{tagDto.customerId}
+    </select>
+</mapper>
