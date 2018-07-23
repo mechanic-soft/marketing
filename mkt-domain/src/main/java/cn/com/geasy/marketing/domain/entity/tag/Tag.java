@@ -3,7 +3,10 @@
  */
 package cn.com.geasy.marketing.domain.entity.tag;
 
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +32,7 @@ public class Tag extends Entity implements Serializable {
     /**
      * 主键
      */
+    //@TableId(value="id",type= IdType.INPUT)
     private Long id;
 
     /**
@@ -44,5 +48,22 @@ public class Tag extends Entity implements Serializable {
     /**
      * 类别：1：文章标签，2：人的标签
      */
-    private Integer type;
+    private Integer tagTypeId;
+
+    /**
+     * 标签来源 (0=微信,1=外呼)
+     */
+    private Integer tagSrc;
+
+    /**
+     * 是否系统标签(0=系统标签，1=自定义标签)
+     */
+    private Integer isSys;
+
+    /**
+     *
+     */
+    private String path;
+
+
 }
