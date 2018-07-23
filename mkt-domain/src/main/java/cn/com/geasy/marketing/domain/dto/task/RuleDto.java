@@ -5,13 +5,17 @@
 package cn.com.geasy.marketing.domain.dto.task;
 
 import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -45,12 +49,14 @@ public class RuleDto implements Serializable {
     /**
      * 开始日期
      */
-    private BigInteger startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     /**
      * 结束日期
      */
-    private BigInteger endTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
 
     /**
      * 标签
@@ -61,24 +67,19 @@ public class RuleDto implements Serializable {
      * 行为
      */
     List<RuleTriggerAction> triggers;
+
     /**
-     * 用户id
+     * 创建人
      */
-   //private List<Long> userId;
-/*    *//**
-     * 创建记录的用户id
-     *//*
-    private BigInteger createUserId;
-    *//**
-     * 创建记的时间
-     *//*
-    private LocalDateTime createTime;
-    *//**
-     * 记录最后一次更新的用户id
-     *//*
-    private BigInteger updateUserId;
-    *//**
-     * 更改记录的时间
-     *//*
-    private LocalDateTime updateTime;*/
+    private String createUserName ;
+
+    /**
+     * 创建时间
+     */
+    private LocalDate createTime;
+
+    @JsonIgnore
+    public String getCreateTimeStr(){
+        return null!=createTime?createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")):null;
+    }
 }

@@ -7,6 +7,7 @@ package cn.com.geasy.marketing.service.task;
 
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.domain.entity.task.Rule;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
 /**
@@ -46,6 +47,14 @@ public interface RuleService extends SuperService<Rule> {
      */
     RuleDto findRuleByRuleId(Long ruleId);
 
+    /**
+     * 返回规则的分页列表
+     *
+     * @param pageNum 页码
+     * @param pageSize 页大小
+     * @return Page&lt;RuleDto&gt; 待办任务分页列表
+     */
+    Page<RuleDto> selectDtoPage(int pageNum, int pageSize, RuleDto ruleDto);
     /**
      * 返回所有待办任务的分页列表
      *

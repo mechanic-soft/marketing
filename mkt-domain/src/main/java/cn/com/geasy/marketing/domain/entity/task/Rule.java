@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDate;
 
 /**
  * 规则实体
@@ -48,11 +49,11 @@ public class Rule extends Entity implements Serializable {
     /**
      * 开始日期
      */
-    private BigInteger startDate;
+    private LocalDate startDate;
     /**
      * 结束日期
      */
-    private BigInteger endDate;
+    private LocalDate endDate;
     /**
      * 创建记录的用户id
      *//*

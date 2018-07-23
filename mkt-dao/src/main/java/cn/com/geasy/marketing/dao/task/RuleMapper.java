@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.dao.task;
 
+import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.domain.dto.task.TaskDto;
 import cn.com.geasy.marketing.domain.entity.task.Rule;
 import cn.com.geasy.marketing.domain.entity.task.Task;
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 规则数据访问接口
@@ -30,9 +33,9 @@ public interface RuleMapper extends SuperMapper<Rule> {
 //    List<ArticleReadRecordDto> findRecentReadRecord(@Param("userId") Long userId);
     /**
      * 分页查询待办任务信息
-     * @param taskDto 查询条件
-     * @param pagination 分页信息
-     * @return List&lt;TaskDto&gt; 待办任务信息
+     * @param ruleDto 查询条件
+     * @param page 分页对象
+     * @return List&lt;RuleDto&gt; 待办任务信息
      */
-     //Page<Task> selectAllPage(@Param("td") TaskDto taskDto, Pagination pagination);
+    List<RuleDto> selectDtoPage(Page page , @Param("ruleDto") RuleDto ruleDto);
 }

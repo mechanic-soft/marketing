@@ -13,10 +13,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 /**
  * 请在此写下该类的说明
@@ -38,9 +41,16 @@ public class TaskController {
 
     @ApiOperation(value = "任务列表信息")
     @GetMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getTasks(@RequestParam(defaultValue = "0") int pageNume){
-        //this.taskService.selectDtoPage(pageNume);
-        return ResponseUtils.result("");
+    public ResponseEntity<ModelMap> selectPage(
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false) LocalDate createTime,
+            @RequestParam(required = true) int pageNum,
+            @RequestParam(required = true) int pageSize)
+    {
+        //localDateToStr(callTimeStart);callTimeStart,callTimeEnd
+        TaskDto customerDto = new TaskDto();
+        customerDto.setCreateTime(createTime);
+        return ResponseUtils.result(taskService.selectDtoPage(pageNum,pageSize,customerDto));
     }
 
     @ApiOperation(value = "新建任务信息")
@@ -70,3 +80,4 @@ public class TaskController {
     }
 
 }
+

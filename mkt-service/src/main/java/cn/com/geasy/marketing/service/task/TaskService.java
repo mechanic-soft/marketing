@@ -53,9 +53,10 @@ public interface TaskService extends SuperService<Task> {
      * 返回所有待办任务的分页列表
      *
      * @param pageNum 页码
+     * @param pageSize 页大小
      * @return Page&lt;TaskDto&gt; 待办任务分页列表
      */
-    //Page<TaskDto> selectDtoPage(int pageNum);
+    Page<TaskDto> selectDtoPage(int pageNum,int pageSize, TaskDto taskDto);
     //Article saveArticle(Article article, Long wechatUserId);
 
     //Page<ArticleListDto> findByUserIdPage(Page page, String title, Long currentMpUserId);
