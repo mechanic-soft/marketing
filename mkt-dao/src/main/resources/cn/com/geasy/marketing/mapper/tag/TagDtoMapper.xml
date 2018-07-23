@@ -28,9 +28,6 @@
         <if test="tagDto.isSys != null">
             and t1.is_sys = #{tagDto.isSys}
         </if>
-        <if test="tagDto.userId != null">
-            and t1.create_user = #{tagDto.userId}
-        </if>
         order by t4.name,t3.name
     </sql>
 
