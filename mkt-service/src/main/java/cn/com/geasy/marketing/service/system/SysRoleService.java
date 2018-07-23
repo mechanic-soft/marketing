@@ -21,7 +21,7 @@ public interface SysRoleService extends SuperService<SysRole> {
     /**
      * 删除角色，同时删除角色与权限、角色与用户关联信息
      *
-     * @param ids 用户ID
+     * @param ids 权限ID
      * @return Integer
      */
     Integer remove(List<Long> ids);

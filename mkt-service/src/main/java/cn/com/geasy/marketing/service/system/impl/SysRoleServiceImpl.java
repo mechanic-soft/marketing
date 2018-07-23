@@ -83,27 +83,6 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
         return baseMapper.findDto(wrapper);
     }
 
-//    @Override
-//    public Page<SysRoleDto> findDtoPage(int pageNum) {
-//        //查询角色
-//        Page<SysRole> rolePage = super.selectPage(pageNum);
-//        List<SysRole> roles = rolePage.getRecords();
-//
-//        List<SysRoleDto> sysRoleDtos = Lists.newArrayList();
-//        for (SysRole role : roles){
-//            sysRoleDtos.add(findPermissions(role));
-//        }
-//
-//        return PageUtils.getPage(rolePage, sysRoleDtos);
-//    }
-
-//    @Override
-//    public SysRoleDto findDtoById(Long id) {
-//        //查询角色
-//        SysRole role = super.selectById(id);
-//        return findPermissions(role);
-//    }
-
     /**
      * 返回将包含关联权限的角色
      * @param role 角色信息
