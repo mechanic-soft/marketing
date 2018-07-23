@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @author phil
  * @version 1.0.0
  */
-@Api(tags = "task", description = "任务接口")
+@Api(tags = "tasks", description = "任务接口")
 @Slf4j
 @RestController
 @RequestMapping("/v1")
@@ -53,18 +53,18 @@ public class TaskController {
     }
 
     @ApiOperation(value = "修改任务信息")
-    @PutMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody TaskDto taskDto){
         return ResponseUtils.result(this.taskService.update(taskDto));
     }
     @ApiOperation(value = "获取任务详细信息")
     @GetMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getTask(@PathVariable Long id){
-        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(id));
+    public ResponseEntity<ModelMap> getTask(@RequestParam Long taskId){
+        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(taskId));
     }
 
     @ApiOperation(value = "获取今日任务信息")
-    @GetMapping(path = "tasks/today", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/tasks/today", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> dailyTask(){
         return ResponseUtils.result(this.taskService.findDailyTask());
     }

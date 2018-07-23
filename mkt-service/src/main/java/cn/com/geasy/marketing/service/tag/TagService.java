@@ -17,4 +17,5 @@ import java.util.List;
  */
 public interface TagService extends SuperService<Tag> {
     List<Tag> findTagByArticleId(Long articleId);
+    public String addTag(Tag tag);
 }

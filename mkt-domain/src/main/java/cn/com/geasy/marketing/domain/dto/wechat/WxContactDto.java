@@ -4,17 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by yml on 2018/7/20.
- */
+import java.io.Serializable;
 
 /**
- * 微信联系人DTO
+ * 微信联系人Dto
+ *
+ * @author yml
+ * @version 1.0.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WxContactDto {
+public class WxContactDto implements Serializable{
+
+    private static final long serialVersionUID = 5458432260549192749L;
     /**
      *
      */

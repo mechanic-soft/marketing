@@ -5,7 +5,6 @@
 package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
-import cn.com.geasy.marketing.service.system.SysUserService;
 import cn.com.geasy.marketing.service.task.RuleService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
@@ -17,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 规则
@@ -28,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author gencheng.pan
  * @version 1.0.0
  */
-@Api(tags = "rule", description = "规则接口")
+@Api(tags = "rules", description = "规则接口")
 @Slf4j
 @RestController
 public class RuleController {
@@ -40,10 +36,34 @@ public class RuleController {
         this.ruleService = ruleService;
     }
 
+    @ApiOperation(value = "规则列表")
+    @GetMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getRules(@RequestParam(defaultValue = "0") int pageNume){
+        return ResponseUtils.result("");
+    }
+
+    @ApiOperation(value = "今日提醒")
+    @GetMapping(path = "/rules/remindings", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getRemindings(){
+        return ResponseUtils.result("");
+    }
+
     @ApiOperation(value = "新建规则")
-    @PutMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody RuleDto ruleDto){
         return ResponseUtils.result(this.save(ruleDto));
+    }
+
+    @ApiOperation(value = "修改规则")
+    @PutMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> update(@RequestBody RuleDto ruleDto){
+        return ResponseUtils.result(this.ruleService.update(ruleDto));
+    }
+
+    @ApiOperation(value = "获取规则详情")
+    @GetMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getRule(@RequestParam Long ruleId){
+        return ResponseUtils.result(this.ruleService.findRuleByRuleId(ruleId));
     }
 /*
     @ApiOperation(value = "获取匹配用户ID的用户")

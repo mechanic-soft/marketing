@@ -484,6 +484,7 @@ CREATE TABLE tag_type
 (
   id          BIGINT PRIMARY KEY                 NOT NULL,
   parent_id   BIGINT default '0'                 NULL, -- 父级ID
+  path        VARCHAR(256)                       NULL, -- 层级路径
   name        VARCHAR(256)                       NULL, -- 标签名称
   status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                             NULL, -- 创建记录的用户编号

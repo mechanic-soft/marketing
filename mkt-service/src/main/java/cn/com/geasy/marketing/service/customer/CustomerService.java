@@ -3,7 +3,7 @@ package cn.com.geasy.marketing.service.customer;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
-import cn.com.geasy.marketing.domain.entity.customer.CustomerLlifecycleEvent;
+import cn.com.geasy.marketing.domain.entity.customer.CustomerLifecycleEvent;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperService;
@@ -18,5 +18,7 @@ public interface CustomerService extends SuperService<Customer> {
     public Page<WxContactDto> getWxContantByPage(int pageNum);
     public String synchronizeCustomer(List<WxContact> list);
     public String addCustomerTag(Long customerId,List<Long> tagIds);
-    public List<CustomerLlifecycleEvent> customerLifecycleById(Long id);
+    public List<CustomerLifecycleEvent> customerLifecycleById(Long id);
+
+    public Page<CustomerDto>  selectDtoPage(int pageNum,int pageSize, CustomerDto customerDto);
 }

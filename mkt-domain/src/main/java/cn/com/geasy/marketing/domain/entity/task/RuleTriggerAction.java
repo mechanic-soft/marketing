@@ -2,70 +2,62 @@
  * Copyright 2016-2018 the original author or authors.
  * Created on 2018/7/12 下午5:06
  */
-package cn.com.geasy.marketing.domain.dto.task;
+package cn.com.geasy.marketing.domain.entity.task;
 
-import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
- * 规则Dto
+ * 规则触发行为实体
  *
  * @author gencheng.pan
  * @version 1.0.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class RuleDto implements Serializable {
-    private static final long serialVersionUID = -1112793586133713118L;
+@TableName("rule_trigger_action")
+public class RuleTriggerAction extends Entity implements Serializable {
+
+    private static final long serialVersionUID = 571814800879835098L;
     /**
      * 主键
      */
     private Long id;
+
     /**
-     * 标题
+     * 规则外键
      */
-    private String title;
+    private Long ruleId;
+
     /**
-     * 内容
+     * 行为(0=阅读,1=订阅,3=聊天)
      */
-    private String content;
+    private Integer action;
+
+    /**
+     * 条件(0= >,1= < ,2= >=,3= <=,4= =)
+     */
+    private Integer condition;
+
+    /**
+     * 次数
+     */
+    private Integer frequency;
 
     /**
      * 状态(0=删除,1=正常)
      */
     private Integer status;
-    /**
-     * 开始日期
-     */
-    private BigInteger startTime;
 
     /**
-     * 结束日期
-     */
-    private BigInteger endTime;
-
-    /**
-     * 标签
-     */
-    List<Long> customerTags;
-
-    /**
-     * 行为
-     */
-    List<RuleTriggerAction> triggers;
-    /**
-     * 用户id
-     */
-   //private List<Long> userId;
-/*    *//**
      * 创建记录的用户id
      *//*
     private BigInteger createUserId;

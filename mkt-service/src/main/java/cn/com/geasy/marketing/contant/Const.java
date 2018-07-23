@@ -14,4 +14,6 @@ public class Const {
     public static final String SYNCHRONIZE_SUCCESS="同步成功";
     public static final String SYNCHRONIZE_FAIL="同步失败";
     public static final Integer ONE = 1;
+    public static final String DELETE_SUCCESS="删除成功";
+    public static final String DELETE_FAIL="删除失败";
 }
