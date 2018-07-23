@@ -101,7 +101,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     @Override
     public List findTagType() {
         TagDto tagDto = new TagDto();
-        List<TagDto> result = tagDtoService.selectTagDtoList(tagDto);;
+        List<TagDto> result = tagDtoService.selectTagDtoList(tagDto);
         return null;
     }
 }
