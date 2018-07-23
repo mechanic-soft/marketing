@@ -22,28 +22,26 @@
         LEFT JOIN tag_type t3 ON t3.id = t1.tag_type
         LEFT JOIN tag_type t4 ON t3.parent_id = t4.id
         WHERE 1=1
+        <if test="tagDto.customerId != null">
+            and t2.customer_id = #{tagDto.customerId}
+        </if>
+        <if test="tagDto.isSys != null">
+            and t1.is_sys = #{tagDto.isSys}
+        </if>
+        <if test="tagDto.userId != null">
+            and t1.create_user = #{tagDto.userId}
+        </if>
+        order by t4.name,t3.name
     </sql>
 
     <!--列表查询-->
     <select id="selectTagDtoList" resultMap="Base_Result_Map" parameterType="cn.com.geasy.marketing.domain.dto.tag.TagDto">
         <include refid="Base_sql"/>
-
-        <if test="tagDto.customerId != null">
-            and t2.customer_id = #{tagDto.customerId}
-        </if>
-
-
-        order by t4.name,t3.name
     </select>
 
     <!--分页查询-->
     <select id="selectDtoPage" resultMap="Base_Result_Map" parameterType="cn.com.geasy.marketing.domain.dto.tag.TagDto">
         <include refid="Base_sql"/>
-
-        <if test="tagDto.customerId != null">
-            and t2.customer_id = #{tagDto.customerId}
-        </if>
-        order by t4.name,t3.name
     </select>
 
 

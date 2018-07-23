@@ -1,5 +1,6 @@
 package cn.com.geasy.marketing.api.customer;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
+import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
@@ -98,8 +99,9 @@ public class CustomerController {
     @ApiOperation(value = "客户标签列表查询")
     @GetMapping(path = "/customers/{customerId}/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> selectTagList(@RequestParam(required = true) Long customerId) {
-
-        return ResponseUtils.result(tagDtoSrv.selectTagDtoList(customerId));
+        TagDto tagDto = new TagDto();
+        tagDto.setCustomerId(customerId);
+        return ResponseUtils.result(tagDtoSrv.selectTagDtoList(tagDto));
     }
 
 }

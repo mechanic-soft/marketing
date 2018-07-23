@@ -24,6 +24,6 @@ public interface TagService extends SuperService<Tag> {
     public String addTagType(TagType tagType);
     public String removeTag(List<Long> ids);
     public String updateTag(Tag tag,Integer tagarentsTypeId);
-    public Page<TagDto> findSystemTagListBycustomerId(Integer pageNum, Long customerId);
-    public List<Object>  findTagListByUserId();
+    public Page<TagDto> findSystemTagList(Integer pageNum);
+    public List findTagType();
 }

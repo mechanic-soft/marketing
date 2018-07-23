@@ -9,7 +9,6 @@ import cn.com.geasy.marketing.dao.tag.TagMapper;
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.domain.entity.tag.TagType;
-import cn.com.geasy.marketing.mapstruct.tag.TagMapstruct;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
 import cn.com.geasy.marketing.service.tag.TagService;
 import cn.com.geasy.marketing.service.tag.TagTypeService;
@@ -24,7 +23,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 请在此写下该类的说明
@@ -93,15 +92,16 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     }
 
     @Override
-    public Page<TagDto> findSystemTagListBycustomerId(Integer pageNum, Long customerId) {
+    public Page<TagDto> findSystemTagList(Integer pageNum) {
         TagDto tagDto = new TagDto();
-        tagDto.setCustomerId(customerId);
-        //return tagDtoService.selectDtoPage(pageNum,tagDto);
-        return null;
+        tagDto.setIsSys(0);
+        return tagDtoService.selectDtoPage(pageNum,tagDto);
     }
 
     @Override
-    public List<Object> findTagListByUserId() {
+    public List findTagType() {
+        TagDto tagDto = new TagDto();
+        List<TagDto> result = tagDtoService.selectTagDtoList(tagDto);;
         return null;
     }
 }

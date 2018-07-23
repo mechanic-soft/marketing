@@ -55,15 +55,15 @@ public class TagController {
     }
 
     @ApiOperation(value = "标签列表")
-    @GetMapping(path = "/tags/{customerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ModelMap> getTagsList(@RequestParam Integer pageNum,@PathVariable("customerId")  Long customerId){
-        return ResponseUtils.result(tagService.findSystemTagListBycustomerId(pageNum,customerId));
+    @GetMapping(path = "/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ModelMap> getTagsList(@RequestParam Integer pageNum){
+        return ResponseUtils.result(tagService.findSystemTagList(pageNum));
     }
 
-    /*@ApiOperation(value = "标签类别")
-    @GetMapping(path = "/tagTyPes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "标签类别")
+    @GetMapping(path = "/tagTyPes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getTagsTypeList(){
-        return ResponseUtils.result(tagService.findTagListBycustomerId());
-    }*/
+        return ResponseUtils.result(tagService.findTagType());
+    }
 
 }
