@@ -73,7 +73,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "删除角色")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "ids", value = "公司ID", paramType = "body")
+            @ApiImplicitParam(name = "ids", value = "角色ID", paramType = "body")
     })
     @DeleteMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> delete(@RequestBody List<Long> ids) {
