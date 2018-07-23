@@ -25,13 +25,12 @@ public class TagDtoServiceImpl extends SuperServiceImpl<TagDtoMapper, TagDto> im
 
     /**
      * 根据客户id 查询TagDto 全部列表数据
-     * @param customerId
+     * @param tagDto
      * @return
      */
     @Override
-    public List<TagDto> selectTagDtoList(Long customerId) {
-        TagDto tagDto = new TagDto();
-        tagDto.setCustomerId(customerId);
+    public List<TagDto> selectTagDtoList(TagDto tagDto) {
+
         return baseMapper.selectTagDtoList(tagDto);
     }
 

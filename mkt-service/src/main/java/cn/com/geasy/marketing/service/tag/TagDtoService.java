@@ -19,10 +19,10 @@ import java.util.List;
 public interface TagDtoService extends SuperService<TagDto> {
    /**
     * 根据客户id 查询TagDto 全部列表数据
-    * @param customerId
+    * @param tagDto
     * @return
     */
-   public List<TagDto> selectTagDtoList(Long customerId);
+   public List<TagDto> selectTagDtoList(TagDto tagDto);
 
    /**
     * 分页查询TagDto 列表
