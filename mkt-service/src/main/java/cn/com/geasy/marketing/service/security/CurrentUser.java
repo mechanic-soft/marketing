@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.service.security;
 
+import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 请在此写下该类的说明
@@ -68,6 +70,8 @@ public class CurrentUser extends User implements Serializable {
      */
     private String mpUuid;
 
+    private List<SysRoleDto> roles;
+
     public CurrentUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
@@ -84,7 +88,8 @@ public class CurrentUser extends User implements Serializable {
                        Integer wxSex,
                        String wxSignature,
                        String mpOpenid,
-                       String mpUuid
+                       String mpUuid,
+                       List<SysRoleDto> roles
     ) {
         this(username, password, authorities);
         this.id = id;
@@ -97,6 +102,7 @@ public class CurrentUser extends User implements Serializable {
         this.wxSignature = wxSignature;
         this.mpOpenid = mpOpenid;
         this.mpUuid = mpUuid;
+        this.roles = roles;
     }
 
     public CurrentUser(String username, String password, boolean enabled, boolean accountNonExpired,

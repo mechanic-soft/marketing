@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 系统模块实体
+ * 系统菜单实体
  *
  * @author phil
  * @version 1.0.0
@@ -24,21 +24,25 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_module")
-public class SysModule extends Entity implements Serializable {
+@TableName("sys_menu")
+public class SysMenu extends Entity implements Serializable {
     private static final long serialVersionUID = -2512166677542096840L;
 
     /**
-     * 父级id
+     * 父级ID
      */
     @TableField("parent_id")
     private Long parentId;
     /**
-     * 模块名
+     * 菜单名
      */
     private String name;
     /**
      * 模块标签
      */
     private String url;
+    /**
+     * 权限ID
+     */
+    private Long permissionId;
 }

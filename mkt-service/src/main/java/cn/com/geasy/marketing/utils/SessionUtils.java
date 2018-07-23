@@ -4,8 +4,12 @@
  */
 package cn.com.geasy.marketing.utils;
 
+import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import cn.com.geasy.marketing.service.security.CurrentUser;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Session 工具类
@@ -29,10 +33,14 @@ public class SessionUtils {
      * @return Long 当前登录用户ID
      */
     public static Long getUserId() {
-        CurrentUser user = getUser();
-        if (user == null) {
-            return null;
-        }
-        return user.getId();
+        return getUser().getId();
+    }
+
+    /**
+     * 获取当前登录用户的角色ID
+     */
+    public static Long getRoleId(){
+        List<Long> roleIds = getUser().getRoles().stream().map(SysRoleDto::getId).collect(Collectors.toList());
+        return roleIds.get(0);
     }
 }

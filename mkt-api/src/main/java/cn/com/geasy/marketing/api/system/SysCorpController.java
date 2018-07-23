@@ -40,7 +40,7 @@ public class SysCorpController {
         this.sysCorpService = sysCorpService;
     }
 
-    @ApiOperation(value = "获取公司信息")
+    @ApiOperation(value = "公司列表")
     @GetMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getCorps(@RequestParam(defaultValue = "0") int pageNum,
                                              @RequestParam List<Long> ids,
@@ -48,19 +48,27 @@ public class SysCorpController {
         return ResponseUtils.result(this.sysCorpService.selectDtoPage(pageNum));
     }
 
-    @ApiOperation(value = "获取匹配ID的公司信息")
+    @ApiOperation(value = "公司详情")
     @GetMapping(path = "/corps/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getCorp(@PathVariable Long id) {
         return ResponseUtils.result(this.sysCorpService.selectDtoById(id));
     }
 
-    @ApiOperation(value = "保存公司信息")
+    @ApiOperation(value = "新增公司")
     @PostMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> save(@RequestBody SysCorpDto sysCorp) {
+    public ResponseEntity<ModelMap> insert(@RequestBody SysCorpDto sysCorp) {
+        //TODO：将更新和保存拆分
         return ResponseUtils.result(this.sysCorpService.save(sysCorp));
     }
 
-    @ApiOperation(value = "删除公司信息")
+    @ApiOperation(value = "更新公司")
+    @PutMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> update(@RequestBody SysCorpDto sysCorp) {
+        //TODO：将更新和保存拆分
+        return ResponseUtils.result(this.sysCorpService.save(sysCorp));
+    }
+
+    @ApiOperation(value = "删除公司")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "ids", value = "公司ID", paramType = "body")
     })

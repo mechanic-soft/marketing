@@ -46,7 +46,7 @@ public class SysRoleController {
         return ResponseUtils.result(this.sysRoleService.findDtoPage(pageNum));
     }
 
-    @ApiOperation(value = "获取匹配角色ID的角色")
+    @ApiOperation(value = "角色详情")
     @GetMapping(path = "/roles/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> get(@PathVariable(required = true) Long id){
         return ResponseUtils.result(this.sysRoleService.findDtoById(id));
