@@ -465,6 +465,7 @@ CREATE TABLE rule_trigger_action
 CREATE TABLE tag
 (
   id          BIGINT PRIMARY KEY                     NOT NULL,
+  path        VARCHAR(256)                       NULL, -- 层级路径
   name        VARCHAR(64)                            NULL, -- 名称
   tag_type_id BIGINT                                 NOT NULL, -- 类型ID
   tag_src     TINYINT DEFAULT 0                      NULL, -- 标签来源(0=微信,1=外呼)
@@ -484,7 +485,6 @@ CREATE TABLE tag_type
 (
   id          BIGINT PRIMARY KEY                 NOT NULL,
   parent_id   BIGINT default '0'                 NULL, -- 父级ID
-  path        VARCHAR(256)                       NULL, -- 层级路径
   name        VARCHAR(256)                       NULL, -- 标签名称
   status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                             NULL, -- 创建记录的用户编号
