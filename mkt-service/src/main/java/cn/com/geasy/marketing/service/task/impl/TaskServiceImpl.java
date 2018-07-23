@@ -11,6 +11,7 @@ import cn.com.geasy.marketing.domain.entity.task.Task;
 import cn.com.geasy.marketing.domain.entity.task.TaskUser;
 import cn.com.geasy.marketing.service.task.TaskService;
 import cn.com.geasy.marketing.service.task.TaskUserService;
+import cn.com.geasy.marketing.utils.SessionUtils;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

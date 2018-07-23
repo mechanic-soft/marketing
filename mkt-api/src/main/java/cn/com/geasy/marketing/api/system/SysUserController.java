@@ -54,18 +54,24 @@ public class SysUserController {
         return ResponseUtils.result(sysUserDto);
     }
 
-    @ApiOperation(value = "保存用户")
+    @ApiOperation(value = "新增用户")
     @PostMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> save(@RequestBody(required = false) SysUserDto sysUserDto){
-        if (sysUserDto == null){
-            ResponseUtils.result("空滴 POST");
-        }
+    public ResponseEntity<ModelMap> save(@RequestBody(required = true) SysUserDto sysUserDto){
         SysUser sysUser = SysUserMapstruct.getInstance.toEntity(sysUserDto);
-        this.sysUserService.insertOrUpdate(sysUser);
+        this.sysUserService.insert(sysUser);
         SysUserDto savedUserDto = SysUserMapstruct.getInstance.toDto(sysUser);
         return ResponseUtils.result(savedUserDto);
     }
-
+    
+    @ApiOperation(value = "更新用户")
+    @PatchMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysUserDto sysUserDto){
+        SysUser sysUser = SysUserMapstruct.getInstance.toEntity(sysUserDto);
+        this.sysUserService.updateById(sysUser);
+        SysUserDto savedUserDto = SysUserMapstruct.getInstance.toDto(sysUser);
+        return ResponseUtils.result(savedUserDto);
+    }
+    
     @ApiOperation(value = "删除用户")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "ids", value = "公司ID", paramType = "body")

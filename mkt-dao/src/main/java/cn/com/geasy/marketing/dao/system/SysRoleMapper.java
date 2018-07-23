@@ -4,9 +4,14 @@
  */
 package cn.com.geasy.marketing.dao.system;
 
+import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import cn.com.geasy.marketing.domain.entity.system.SysRole;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -40,4 +45,22 @@ public interface SysRoleMapper extends SuperMapper<SysRole> {
      * @return List&lt;SysRole&gt; 角色
      */
     List<SysRole> selectByPermissionsId(@Param("permissionsId") List<Long> permissionsId);
+
+    /**
+     * 返回及联权限的角色分页信息
+     *
+     * @param page 分页参数
+     * @return Page&lt;SysRole&gt;
+     */
+    List<SysRoleDto> findDtoPage(@Param("ew") Wrapper<SysRoleDto> wrapper, Pagination pagination);
+
+
+    /**
+     * 返回及联权限的角色分页信息
+     *
+     * @param page 分页参数
+     * @return Page&lt;SysRole&gt;
+     */
+//    SysRoleDto findDto(Long id);
+    SysRoleDto findDto(@Param("ew") Wrapper<SysRoleDto> wrapper);
 }

@@ -79,7 +79,7 @@ CREATE TABLE sys_permission
   id          BIGINT PRIMARY KEY NOT NULL, -- 权限ID
   name        VARCHAR(256)       NOT NULL, -- 权限名称
   endpoint    VARCHAR(1024)      NULL, -- 资源地址
-  action      VARCHAR(16)        NULL, -- HTTP事件
+  method      VARCHAR(16)        NULL, -- HTTP事件
   description VARCHAR(1024)      NULL, -- 描述
   status      TINYINT            NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT             NULL, -- 创建记录的用户编号

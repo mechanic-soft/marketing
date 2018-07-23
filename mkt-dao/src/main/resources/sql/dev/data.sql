@@ -76,44 +76,44 @@ INSERT INTO sys_role (id, name, description, status, create_user, create_time, u
 VALUES (3, 'USER', '理财经理', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
 
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (1, 'add_user', '/v1/sys/users', 'POST', '新增用户', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (2, 'update_user', '/v1/sys/users', 'PUT', '更新用户', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (3, 'delete_user', '/v1/sys/users', 'DELETE', '删除用户', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (4, 'get_user', '/v1/sys/users', 'GET', '获取多个用户', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (5, 'get_sign_user', '/v1/sys/users/{id}', 'GET', '获取单个用户', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (6, 'add_corp', '/v1/sys/corps', 'POST', '新增公司', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (7, 'update_corp', '/v1/sys/corps', 'PUT', '更新公司', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (8, 'delete_corp', '/v1/sys/corps', 'DELETE', '删除公司', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (9, 'get_sign_corp', '/v1/sys/corps/{id}', 'GET', '获取公司', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (10, 'get_task', '/v1/tasks', 'GET', '任务列表信息', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (11, 'get_sign_task', '/v1/tasks/{id}', 'GET', '获取任务详细信息', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (12, 'add_task', '/v1/tasks', 'POST', '新建任务信息', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (13, 'update_task', '/v1/tasks', 'PUT', '修改任务信息', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (14, 'task_today', '/v1/tasks/today', 'DELETE', '获取今日任务信息', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (15, 'get_wxcontacts', '/v1/wxcontacts', 'GET', '微信好友列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (16, 'sync_wxContacts', '/v1/customers/wxContacts', 'POST', '同步客户', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (17, 'rele_customers', '/v1/customers', 'PATCH', '关联微信', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, action, description, status, create_user, create_time, update_user, update_time)
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (18, 'delete_customers', '/v1/customers', 'DELETE', '删除客户信息', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
 

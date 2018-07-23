@@ -5,6 +5,7 @@
 package cn.com.geasy.marketing.service.system.impl;
 
 import cn.com.geasy.marketing.dao.system.SysPermissionMapper;
+import cn.com.geasy.marketing.domain.dto.system.SysPermissionDto;
 import cn.com.geasy.marketing.domain.entity.system.SysPermission;
 import cn.com.geasy.marketing.service.system.SysPermissionService;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 public class SysPermissionServiceImpl extends SuperServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
     @Override
-    public List<SysPermission> selectAllCaseRole() {
-        return super.baseMapper.selectAllCaseRole();
+    public List<SysPermissionDto> findAllCaseRole() {
+        return super.baseMapper.findAllCaseRole();
     }
 }

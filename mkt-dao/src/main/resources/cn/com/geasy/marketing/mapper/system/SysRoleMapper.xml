@@ -3,7 +3,6 @@
 <mapper namespace="cn.com.geasy.marketing.dao.system.SysRoleMapper">
     <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysRole">
         <id property="id" column="id" javaType="Long"/>
-        <result property="id" column="id" javaType="Long"/>
         <result property="name" column="name" javaType="String"/>
         <result property="description" column="description" javaType="String"/>
         <result property="status" column="status" javaType="Integer"/>
@@ -11,6 +10,21 @@
         <result property="createTime" column="create_time" javaType="Integer"/>
         <result property="updateUser" column="update_user" javaType="Integer"/>
         <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+    <resultMap id="Case_Permission_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysRoleDto">
+        <id property="id" column="id" javaType="Long"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="description" column="description" javaType="String"/>
+        <collection property="permissions" column="id"
+                    ofType="cn.com.geasy.marketing.domain.dto.system.SysPermissionDto"
+                    select="cn.com.geasy.marketing.dao.system.SysPermissionMapper.findDtoByRoleId"/>
+        <!--<collection property="permissions" ofType="cn.com.geasy.marketing.domain.dto.system.SysPermissionDto">-->
+        <!--<id property="id" column="sp_id" javaType="Long"/>-->
+        <!--<result property="name" column="sp_name" javaType="String"/>-->
+        <!--<result property="endpoint" column="sp_endpoint" javaType="String"/>-->
+        <!--<result property="method" column="sp_method" javaType="String"/>-->
+        <!--<result property="description" column="sp_description" javaType="String"/>-->
+        <!--</collection>-->
     </resultMap>
     <sql id="Base_Column_List">
         sr.id AS id,
@@ -22,31 +36,72 @@
         sr.update_user AS updateUser,
         sr.update_time AS updateTime
     </sql>
+    <sql id="Case_Permission_Column_List">
+        sr.id AS id,
+        sr.name AS name,
+        sr.description AS description,
+        sp.id AS sp_id,
+        sp.name AS sp_name,
+        sp.endpoint AS sp_endpoint,
+        sp.method AS sp_method,
+        sp.description AS sp_description
+    </sql>
     <select id="selectByUserId" resultMap="Base_Result_Map" parameterType="Long">
         SELECT
-          <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM sys_role sr
-            JOIN rele_user_role rur ON rur.role_id = sr.id
-        WHERE rur.user_id = #{userId}
+        JOIN rele_user_role rur ON rur.role_id = sr.id
+        WHERE sr.status = 1 AND rur.status = 1 AND
+        rur.user_id = #{userId}
         ORDER BY sr.id
     </select>
     <select id="selectByPermissionId" resultMap="Base_Result_Map" parameterType="Long">
         SELECT
-          <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM sys_role sr
-          JOIN rele_role_permission rrp ON sr.id = rrp.role_id
-        WHERE rrp.permission_id = #{permissionId}
+        JOIN rele_role_permission rrp ON sr.id = rrp.role_id
+        WHERE sr.status = 1 AND rrp.status = 1 AND
+        rrp.permission_id = #{permissionId}
         ORDER BY sr.id
     </select>
     <select id="selectByPermissionsId" resultMap="Base_Result_Map">
         SELECT DISTINCT
-          <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM sys_role sr
-          JOIN rele_role_permission rrp ON sr.id=rrp.role_id
-        WHERE rrp.permission_id IN
+        JOIN rele_role_permission rrp ON sr.id = rrp.role_id
+        WHERE sr.status = 1 AND rrp.status = 1 AND
+        rrp.permission_id IN
         <foreach collection="permissionsId" index="index" item="item" open="(" separator="," close=")">
-          #{item}
+            #{item}
         </foreach>
         ORDER BY sr.id
+    </select>
+    <select id="selectCasePermission" resultMap="Case_Permission_Result_Map">
+        SELECT
+        <include refid="Case_Permission_Column_List"/>
+        FROM sys_role sr
+        LEFT OUTER JOIN rele_role_permission rrp ON sr.id = rrp.role_id
+        LEFT OUTER JOIN sys_permission sp ON sp.id = rrp.permission_id
+        WHERE sr.status = 1 AND rrp.status = 1 AND sp.status = 1
+        ORDER BY sr.id
+    </select>
+    <select id="findDtoPage" resultMap="Case_Permission_Result_Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role sr
+        <where>
+            <if test="ew != null and ew != ''">
+                ${ew.sqlSegment}
+            </if>
+        </where>
+    </select>
+    <select id="findDto" resultMap="Case_Permission_Result_Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role sr
+        <!--WHERE sr.id = #{id}-->
+        <where>
+            ${ew.sqlSegment}
+        </where>
     </select>
 </mapper>

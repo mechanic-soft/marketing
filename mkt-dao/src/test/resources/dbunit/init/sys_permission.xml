@@ -4,7 +4,7 @@
         <column>id</column>
         <column>name</column>
         <column>endpoint</column>
-        <column>action</column>
+        <column>method</column>
         <column>description</column>
         <column>status</column>
         <column>create_user</column>

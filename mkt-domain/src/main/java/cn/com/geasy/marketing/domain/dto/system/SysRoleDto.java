@@ -2,21 +2,17 @@
  * Copyright 2016-2018 the original author or authors.
  * Created on 2018/7/10 下午10:31
  */
-package cn.com.geasy.marketing.domain.entity.system;
+package cn.com.geasy.marketing.domain.dto.system;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * 系统角色实体
+ * 系统角色DTO
  *
  * @author phil
  * @version 1.0.0
@@ -24,10 +20,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@TableName("sys_role")
-public class SysRole  extends Entity implements Serializable {
+public class SysRoleDto implements Serializable {
     private static final long serialVersionUID = 5901693123941715728L;
+    /**
+     * ID
+     */
+    private Long id;
     /**
      * 角色名称
      */
@@ -39,6 +37,5 @@ public class SysRole  extends Entity implements Serializable {
     /**
      * 权限
      */
-    @TableField(exist = false)
-    private List<SysPermission> permissions;
+    private List<SysPermissionDto> permissions;
 }

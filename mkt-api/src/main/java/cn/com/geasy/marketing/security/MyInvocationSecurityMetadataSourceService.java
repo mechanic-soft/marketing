@@ -5,7 +5,8 @@
 package cn.com.geasy.marketing.security;
 
 import cn.com.geasy.marketing.dao.system.SysPermissionMapper;
-import cn.com.geasy.marketing.domain.entity.system.SysPermission;
+import cn.com.geasy.marketing.domain.dto.system.SysPermissionDto;
+import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -35,19 +36,34 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 
         HttpServletRequest request = ((FilterInvocation) object).getRequest();
         AntPathRequestMatcher matcher;
-        List<SysPermission> permissions = permissionMapper.selectAllCaseRole();
-        for(SysPermission p : permissions) {
+
+        List<SysPermissionDto> permissions = permissionMapper.findAllCaseRole();
+        for(SysPermissionDto p : permissions) {
             String endpoint = p.getEndpoint();
-            String method = p.getAction();
-            String[] rolesName = p.getRolesName();
+            String method = p.getMethod();
+            List<SysRoleDto> roles = p.getRoles();
+            String[] rolesName = new String[roles.size()];
+            for (int i=0; i < roles.size(); i++){
+                rolesName[i] = roles.get(i).getName();
+            }
             matcher = new AntPathRequestMatcher(endpoint, method);
             if (matcher.matches(request)) {
                 return SecurityConfig.createList(rolesName);
             }
         }
+
+
+//        List<SysPermission> permissions = permissionMapper.findAllCaseRole();
+//        for(SysPermission p : permissions) {
+//            String endpoint = p.getEndpoint();
+//            String method = p.getMethod();
+//            String[] rolesName = p.getRolesName();
+//            matcher = new AntPathRequestMatcher(endpoint, method);
+//            if (matcher.matches(request)) {
+//                return SecurityConfig.createList(rolesName);
+//            }
+//        }
         return null;
-//        return SecurityConfig.createList("ROLE_ANONYMOUS");
-//        return SecurityConfig.createList("ROLE_NOPERMS");
     }
 
     @Override

@@ -4,7 +4,12 @@
  */
 package cn.com.geasy.marketing.dao.system;
 
+import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import cn.com.geasy.marketing.domain.entity.system.SysRole;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.gitee.mechanic.mybatis.utils.PageUtils;
 import com.gitee.mechanic.test.AbstractTransSpringBootDbunitTests;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseSetups;
@@ -23,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test for {@link SysRoleMapper}
+ *
  * @author phil
  * @version 1.0.0
  */
@@ -39,7 +45,7 @@ public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
             @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
     })
     @Test
-    public void testSelectByUserId(){
+    public void testSelectByUserId() {
         List<SysRole> sysRoles = roleMapper.selectByUserId(2L);
 
         assertThat(sysRoles).isNotNull();
@@ -65,7 +71,7 @@ public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
             @DatabaseSetup(value = "/dbunit/init/rele_role_permission.xml")
     })
     @Test
-    public void testSelectByPermissionId(){
+    public void testSelectByPermissionId() {
         List<SysRole> sysRoles = roleMapper.selectByPermissionId(1L);
         assertThat(sysRoles).isNotNull();
         assertThat(sysRoles.size()).isEqualTo(3);
@@ -90,7 +96,7 @@ public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
             @DatabaseSetup(value = "/dbunit/init/rele_role_permission.xml")
     })
     @Test
-    public void testSelectByPermissionsId(){
+    public void testSelectByPermissionsId() {
         List<Long> permissionsId = Lists.newArrayList(1L, 2L);
 
         List<SysRole> sysRoles = roleMapper.selectByPermissionsId(permissionsId);
@@ -115,7 +121,48 @@ public class SysRoleMapperTest extends AbstractTransSpringBootDbunitTests {
 
     @ExpectedDatabase(value = "/dbunit/delete/sys_role.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     @Test
-    public void testDelete(){
+    public void testDelete() {
         this.roleMapper.deleteById(3L);
     }
+
+    @DatabaseSetups(value = {
+            @DatabaseSetup(value = "/dbunit/init/rele_role_permission.xml"),
+            @DatabaseSetup(value = "/dbunit/init/sys_permission.xml")
+    })
+    @Test
+    public void testSelectCasePermission() {
+        Page<SysRoleDto> roleDtoPage = PageUtils.getPage(2, 2);
+
+        Wrapper<SysRoleDto> wrapper = new EntityWrapper<>();
+        wrapper.eq("id", 1L);
+        List<SysRoleDto> roleDtoList = roleMapper.findDtoPage(wrapper, roleDtoPage);
+
+        roleDtoPage.setRecords(roleDtoList);
+
+        assertThat(roleDtoPage.getTotal()).isEqualTo(7);
+        assertThat(roleDtoPage.getCurrent()).isEqualTo(2);
+        assertThat(roleDtoPage.getSize()).isEqualTo(2);
+        assertThat(roleDtoPage.getRecords().size()).isEqualTo(2);
+
+
+//        assertThat(sysRoles).isNotNull();
+//        assertThat(sysRoles.size()).isEqualTo(3);
+//
+//        assertThat(sysRoles.get(0).getId()).isEqualTo(1);
+//        assertThat(sysRoles.get(0).getName()).isEqualTo("系统管理");
+//        assertThat(sysRoles.get(0).getDescription()).isEqualTo("拥有所有权限的系统管理员");
+//        assertThat(sysRoles.get(0).getStatus()).isEqualTo(1);
+//
+//        assertThat(sysRoles.get(1).getId()).isEqualTo(2);
+//        assertThat(sysRoles.get(1).getName()).isEqualTo("理财经理");
+//        assertThat(sysRoles.get(1).getDescription()).isEqualTo("理财经理");
+//        assertThat(sysRoles.get(1).getStatus()).isEqualTo(1);
+//
+//        assertThat(sysRoles.get(2).getId()).isEqualTo(3);
+//        assertThat(sysRoles.get(2).getName()).isEqualTo("管理者");
+//        assertThat(sysRoles.get(2).getDescription()).isEqualTo("理财经理的上级管理人员");
+//        assertThat(sysRoles.get(2).getStatus()).isEqualTo(1);
+    }
+
+
 }

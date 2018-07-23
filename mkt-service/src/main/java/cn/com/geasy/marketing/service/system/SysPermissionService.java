@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.service.system;
 
+import cn.com.geasy.marketing.domain.dto.system.SysPermissionDto;
 import cn.com.geasy.marketing.domain.entity.system.SysPermission;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
@@ -21,5 +22,5 @@ public interface SysPermissionService extends SuperService<SysPermission> {
      *
      * @return List&lt;SysPermission&gt; 权限及其所关联角色名称
      */
-    List<SysPermission> selectAllCaseRole();
+    List<SysPermissionDto> findAllCaseRole();
 }

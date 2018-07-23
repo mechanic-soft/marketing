@@ -24,5 +24,11 @@ public interface SysUserService extends SuperService<SysUser> {
      */
     SysUser findByUsername(String username);
 
-    Boolean remove(List<Long> ids);
+    /**
+     * 删除用户，同时删除用户与角色关联信息
+     *
+     * @param ids 用户ID
+     * @return Boolean
+     */
+    Integer remove(List<Long> ids);
 }

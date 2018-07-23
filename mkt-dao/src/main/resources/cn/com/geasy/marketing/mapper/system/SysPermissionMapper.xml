@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.geasy.marketing.dao.system.SysPermissionMapper">
-    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysPermission">
+    <!--<resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysPermission">-->
+    <!--<id property="id" column="id" javaType="Long"/>-->
+    <!--<result property="name" column="name" javaType="String"/>-->
+    <!--<result property="endpoint" column="endpoint" javaType="String"/>-->
+    <!--<result property="method" column="method" javaType="String"/>-->
+    <!--<result property="description" column="description" javaType="String"/>-->
+    <!--<result property="status" column="status" javaType="Integer"/>-->
+    <!--<result property="createUser" column="create_user" javaType="date"/>-->
+    <!--<result property="createTime" column="create_time" javaType="Integer"/>-->
+    <!--<result property="updateUser" column="update_user" javaType="Integer"/>-->
+    <!--<result property="updateTime" column="update_time" javaType="Integer"/>-->
+    <!--</resultMap>-->
+    <resultMap id="DTO_Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysPermissionDto">
         <id property="id" column="id" javaType="Long"/>
         <result property="name" column="name" javaType="String"/>
         <result property="endpoint" column="endpoint" javaType="String"/>
-        <result property="action" column="action" javaType="String"/>
+        <result property="method" column="method" javaType="String"/>
         <result property="description" column="description" javaType="String"/>
-        <result property="status" column="status" javaType="Integer"/>
-        <result property="createUser" column="create_user" javaType="date"/>
-        <result property="createTime" column="create_time" javaType="Integer"/>
-        <result property="updateUser" column="update_user" javaType="Integer"/>
-        <result property="updateTime" column="update_time" javaType="Integer"/>
     </resultMap>
-    <resultMap id="Case_SysRole_Result_Map" type="cn.com.geasy.marketing.domain.entity.system.SysPermission">
+    <resultMap id="DTO_Case_SysRole_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysPermissionDto">
         <id property="id" column="id" javaType="Long"/>
-        <result property="id" column="id" javaType="Long"/>
         <result property="name" column="name" javaType="String"/>
         <result property="endpoint" column="endpoint" javaType="String"/>
-        <result property="action" column="action" javaType="String"/>
+        <result property="method" column="method" javaType="String"/>
         <result property="description" column="description" javaType="String"/>
-        <result property="status" column="status" javaType="Integer"/>
-        <result property="createUser" column="create_user" javaType="date"/>
-        <result property="createTime" column="create_time" javaType="Integer"/>
-        <result property="updateUser" column="update_user" javaType="Integer"/>
-        <result property="updateTime" column="update_time" javaType="Integer"/>
-        <collection property="roles" ofType="cn.com.geasy.marketing.domain.entity.system.SysRole">
-            <id property="id" column="roleId"/>
+        <collection property="roles" column="id" ofType="cn.com.geasy.marketing.domain.dto.system.SysRoleDto"
+                    javaType="ArrayList">
+            <id property="id" column="roleId" jdbcType="TINYINT"/>
             <result property="name" column="roleName"/>
             <result property="description" column="roleDescription"/>
         </collection>
@@ -35,46 +37,61 @@
         sp.id AS id,
         sp.name AS name,
         sp.endpoint AS endpoint,
-        sp.action AS action,
-        sp.description AS description,
+        sp.method AS method,
+        sp.description AS description
+        <!--,
         sp.status AS status,
         sp.create_user AS createUser,
         sp.create_time AS createTime,
         sp.update_user AS updateUser,
-        sp.update_time AS updateTime,
+        sp.update_time AS updateTime -->
+    </sql>
+    <sql id="Case_SysRole_Column_List">
+        sp.id AS id,
+        sp.name AS name,
+        sp.endpoint AS endpoint,
+        sp.method AS method,
+        sp.description AS description,
         sr.id AS roleId,
         sr.name AS roleName,
         sr.description AS roleDescription
     </sql>
-    <select id="selectNamesByRolesId" resultType="String">
-        SELECT DISTINCT sp.action
-        FROM rele_role_permission rrp
-        JOIN sys_permission sp ON rrp.permission_id=sp.id
-        WHERE sp.status = 1 AND rrp.status = 1 AND
-        rrp.role_id IN
-        <foreach collection="rolesId" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </select>
-    <select id="selectAllCaseRole" resultMap="Case_SysRole_Result_Map">
+    <select id="findAllCaseRole" resultMap="DTO_Case_SysRole_Result_Map">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="Case_SysRole_Column_List"/>
         FROM sys_permission sp
-          LEFT OUTER JOIN rele_role_permission rrp ON sp.id = rrp.permission_id
-          LEFT OUTER JOIN sys_role sr ON rrp.role_id = sr.id
+        LEFT OUTER JOIN rele_role_permission rrp ON sp.id = rrp.permission_id
+        LEFT OUTER JOIN sys_role sr ON rrp.role_id = sr.id
         WHERE sp.status = 1 AND rrp.status = 1 AND sr.status = 1
         ORDER BY sp.id
     </select>
-    <!--<select id="selectAllCaseRole" resultMap="Case_SysRole_Result_Map">-->
+    <!--<select id="findPageCaseRole" resultMap="DTO_Case_SysRole_Result_Map">-->
     <!--SELECT-->
     <!--<include refid="Base_Column_List"/>-->
-    <!--FROM-->
-    <!--sys_permission sp,-->
-    <!--rele_role_permission rrp,-->
-    <!--sys_role sr-->
-    <!--WHERE-->
-    <!--sp.id = rrp.permission_id-->
-    <!--AND rrp.role_id=sr.id-->
+    <!--FROM sys_permission sp-->
+    <!--LEFT OUTER JOIN rele_role_permission rrp ON sp.id = rrp.permission_id-->
+    <!--LEFT OUTER JOIN sys_role sr ON rrp.role_id = sr.id-->
+    <!--WHERE sp.status = 1 AND rrp.status = 1 AND sr.status = 1-->
     <!--ORDER BY sp.id-->
     <!--</select>-->
+    <!--<select id="findDtoByRoleId" resultMap="DTO_Base_Result_Map">-->
+    <!--SELECT-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--FROM sys_permission sp-->
+    <!--LEFT OUTER JOIN rele_role_permission rrp ON sp.id = rrp.permission_id-->
+    <!--WHERE sp.status = 1 AND rrp.status = 1-->
+
+    <!--&lt;!&ndash; AND rrp.role_id=#{roleId} &ndash;&gt;-->
+    <!--ORDER BY sp.id-->
+    <!--</select>-->
+
+    <select id="findDtoByRoleId" resultMap="DTO_Base_Result_Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rele_role_permission rrp
+            LEFT OUTER JOIN sys_permission sp ON sp.id = rrp.permission_id
+        WHERE sp.status = 1 AND rrp.status = 1
+              AND rrp.role_id = #{roleId}
+        ORDER BY sp.id
+    </select>
 </mapper>

@@ -30,7 +30,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_permission")
 public class SysPermission extends Entity implements Serializable {
-    private static final long serialVersionUID = -5640366819272273166L;    /**
+    private static final long serialVersionUID = -5640366819272273166L;
+    /**
      * 端点资源地址
      */
     private String name;
@@ -41,7 +42,7 @@ public class SysPermission extends Entity implements Serializable {
     /**
      * HTTP 事件
      */
-    private String action;
+    private String method;
     /**
      * 描述
      */
@@ -57,29 +58,11 @@ public class SysPermission extends Entity implements Serializable {
         if (CollectionUtils.isEmpty(roles)){
             return null;
         }
-        //return (String[]) roles.stream().map(SysRole::getName).collect(Collectors.toList()).toArray();
         String[] rolesName = new String[roles.size()];
-//        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0;i< roles.size(); i++) {
             SysRole role = roles.get(i);
             rolesName[i] = "ROLE_" + role.getName();
         }
         return rolesName;
-//        if (StringUtils.isNoneBlank(stringBuilder)) {
-//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-//        }
-//        return stringBuilder.toString();
     }
-
-//    public String getRolesName() {
-//        Set<SysRole> roles = getRoles();
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (SysRole role : roles) {
-//            stringBuilder.append("\"").append(role.getName()).append("\"").append(",");
-//        }
-//        if (StringUtils.isNoneBlank(stringBuilder)) {
-//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-//        }
-//        return stringBuilder.toString();
-//    }
 }

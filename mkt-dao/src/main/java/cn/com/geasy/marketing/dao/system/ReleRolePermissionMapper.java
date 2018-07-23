@@ -4,14 +4,14 @@
  */
 package cn.com.geasy.marketing.dao.system;
 
-import cn.com.geasy.marketing.domain.entity.system.ReleUserRole;
+import cn.com.geasy.marketing.domain.entity.system.ReleRolePermission;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 
 /**
- * 用户与角色关联数据访问接口
+ * 角色与权限关联数据访问接口
  *
  * @author phil
  * @version 1.0.0
  */
-public interface ReleUserRoleMapper extends SuperMapper<ReleUserRole> {
+public interface ReleRolePermissionMapper extends SuperMapper<ReleRolePermission> {
 }

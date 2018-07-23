@@ -13,6 +13,9 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,10 +41,11 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
-    public Boolean remove(List<Long> ids) {
-        super.baseMapper.deleteBatchIds(ids);
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    public Integer remove(List<Long> ids) {
         EntityWrapper<ReleUserRole> userRoleEntityWrapper = new EntityWrapper<>();
         userRoleEntityWrapper.in("user_id", ids);
-        return this.userRoleService.delete(userRoleEntityWrapper);
+        this.userRoleService.delete(userRoleEntityWrapper);
+        return super.baseMapper.deleteBatchIds(ids);
     }
 }

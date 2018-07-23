@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.api.system;
 
+
 import cn.com.geasy.marketing.api.AbstractWebMvcTest;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import cn.com.geasy.marketing.service.system.SysUserService;
@@ -15,12 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 /**
  * Test for {@link SysUserController}
  *
