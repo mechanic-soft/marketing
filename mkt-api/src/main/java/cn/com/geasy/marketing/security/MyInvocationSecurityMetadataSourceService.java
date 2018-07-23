@@ -44,7 +44,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
             List<SysRoleDto> roles = p.getRoles();
             String[] rolesName = new String[roles.size()];
             for (int i=0; i < roles.size(); i++){
-                rolesName[i] = roles.get(i).getName();
+                rolesName[i] = "ROLE_" + roles.get(i).getName();
             }
             matcher = new AntPathRequestMatcher(endpoint, method);
             if (matcher.matches(request)) {

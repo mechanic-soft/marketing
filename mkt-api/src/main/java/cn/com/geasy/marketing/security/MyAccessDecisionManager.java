@@ -35,8 +35,12 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 
         for (ConfigAttribute ca : configAttributes) {
             String needRole = ((SecurityConfig) ca).getAttribute();
+//            if ("ROLE_ADMIN".equals(needRole)) {
+//                return;
+//            }
             for (GrantedAuthority ga : authentication.getAuthorities()) {
-                if (ga.getAuthority().equals(needRole)) {
+                String role = ga.getAuthority();
+                if ("ROLE_ADMIN".equals(role) || role.equals(needRole)) {
                     //匹配到有对应角色,则允许通过
                     return;
                 }
