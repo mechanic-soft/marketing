@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.task.TaskMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.task.TaskDto">
+        <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
+        <result property="title" column="title" jdbcType="VARCHAR" javaType="String"/>
+        <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
+        <!-- create user -->
+        <result property="createUserName" column="createUserName" jdbcType="VARCHAR" javaType="String"/>
+        <result  property="createTime" column="createTime"  jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="selectDtoPage" parameterType="cn.com.geasy.marketing.domain.dto.task.TaskDto"
+            resultMap="Base_Result_Map">
+                SELECT DISTINCT (t1.id)
+                ,DATE_FORMAT(t1.create_time, '%Y-%m-%d') AS createTime
+                ,t1.title
+                ,t1.content
+                ,t2.username AS createUserName
+                FROM task t1
+                LEFT JOIN sys_user t2 ON t1.create_user = t2.id
+                WHERE 1 = 1
+                <if test="taskDto.createTimeStr != null and taskDto.createTimeStr != ''">
+                    AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') = '${taskDto.createTimeStr}'
+                </if>
+    </select>
+
+</mapper>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "task", description = "用户任务接口")
 @Slf4j
 @RestController
+@RequestMapping(path = "/v1")
 public class TaskUserController {
 
     private final TaskUserService taskUserService;
