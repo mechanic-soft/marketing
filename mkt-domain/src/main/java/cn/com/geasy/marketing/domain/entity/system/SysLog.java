@@ -4,7 +4,6 @@
  */
 package cn.com.geasy.marketing.domain.entity.system;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
@@ -29,8 +28,7 @@ public class SysLog extends Entity implements Serializable {
     /**
      * 真实姓名
      */
-    @TableField("real_name")
-    private String realName;
+    private String username;
 
     /**
      * 菜单

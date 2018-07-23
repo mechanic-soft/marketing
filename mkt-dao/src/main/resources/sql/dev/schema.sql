@@ -163,7 +163,7 @@ CREATE TABLE sys_corp (
 /*==============================================================*/
 CREATE TABLE sys_log (
   id          BIGINT PRIMARY KEY NOT NULL, -- ID
-  real_name   TINYINT            NOT NULL, -- 用户姓名
+  username   TINYINT            NOT NULL, -- 用户名
   menu        VARCHAR(64)        NULL, -- 菜单
   url         VARCHAR(2048)      NULL, -- URL
   remark      VARCHAR(2048)      NULL, -- 备注

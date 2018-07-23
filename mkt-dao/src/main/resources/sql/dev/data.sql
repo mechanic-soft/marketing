@@ -73,18 +73,6 @@ VALUES (1205, 'delete_permissions', '/v1/sys/permissions', 'DELETE', '删除权�
 
 -- 公司
 INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
-VALUES (2001, 'get_logs', '/v1/sys/logs', 'GET', '日志列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
-VALUES (2002, 'get_logs_id', '/v1/sys/logs/{id}', 'GET', '日志详情', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
-VALUES (2003, 'post_logs', '/v1/sys/logs', 'POST', '新增日志', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
-VALUES (2004, 'put_logs', '/v1/sys/logs', 'PUT', '更新日志', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
-VALUES (2005, 'delete_logs', '/v1/sys/logs', 'DELETE', '删除日志', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-
--- 公司
-INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (1301, 'get_corp', '/v1/sys/corps', 'GET', '公司列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (1302, 'get_corp_id', '/v1/sys/corps/{id}', 'GET', '公司详情', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
@@ -184,6 +172,32 @@ VALUES (1905, 'delete_tags', '/v1/tags', 'DELETE', '删除标签', 1, 1, CURRENT
 INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (1906, 'get_tagsTypes', '/v1/tagTypes', 'GET', '标签类别', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
+-- 日志
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (2001, 'get_logs', '/v1/sys/logs', 'GET', '日志列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (2002, 'get_logs_id', '/v1/sys/logs/{id}', 'GET', '日志详情', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (2003, 'post_logs', '/v1/sys/logs', 'POST', '新增日志', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (2004, 'put_logs', '/v1/sys/logs', 'PUT', '更新日志', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (2005, 'delete_logs', '/v1/sys/logs', 'DELETE', '删除日志', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+
+-- 菜单
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (3001, 'get_menus', '/v1/sys/menus/', 'GET', '菜单列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (3002, 'get_menus_id', '/v1/sys/menus/{id}', 'GET', '菜单详情', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (3003, 'post_menus', '/v1/sys/menus', 'POST', '新增菜单', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (3004, 'put_menus', '/v1/sys/menus', 'PUT', '更新菜单', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (3005, 'delete_menus', '/v1/sys/menus/{id}', 'DELETE', '删除菜单', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+VALUES (3001, 'get_menus_user_menus', '/v1/sys/menus/user_menus', 'GET', '当前用户菜单列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+
 /*==============================================================*/
 /* Data: 用户角色关联                                              */
 /*==============================================================*/
@@ -249,6 +263,14 @@ INSERT INTO rele_role_permission VALUES (1050, 1, 1905, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (1051, 1, 1906, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1052, 1, 2001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1053, 1, 2002, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1054, 1, 2003, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1055, 1, 2004, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1056, 1, 2005, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1052, 1, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1053, 1, 3002, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1054, 1, 3003, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1055, 1, 3004, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1056, 1, 3005, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 -- manager(客户经理上级)
 INSERT INTO rele_role_permission VALUES (2001, 2, 1401, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (2002, 2, 1402, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
@@ -266,6 +288,7 @@ INSERT INTO rele_role_permission VALUES (2013, 2, 1903, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (2014, 2, 1904, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (2015, 2, 1905, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (2016, 2, 1906, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (2017, 2, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 -- user(客户经理)
 INSERT INTO rele_role_permission VALUES (3001, 3, 1402, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3002, 3, 1403, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
@@ -285,6 +308,7 @@ INSERT INTO rele_role_permission VALUES (3015, 3, 1705, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (3016, 3, 1801, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3017, 3, 1802, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3018, 3, 1803, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (2019, 3, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
 /*==============================================================*/
 /* Data: 系统菜单                                                */

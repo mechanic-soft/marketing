@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 请在此写下该类的说明
+ * 菜单数据接口
  *
  * @author phil
  * @version 1.0.0
@@ -26,7 +26,4 @@ public interface SysMenuMapper extends SuperMapper<SysMenu> {
      * @return List&lt;SysMenuDto&gt;
      */
     List<SysMenuDto> findByRolesId(@Param("id") Long id, @Param("roleId") Long roleId);
-
-//    SysMenuDto findDtoById(@Param("id") Long id);
-//    List<SysMenuDto> findDtoById(@Param("id") Long id);
 }
