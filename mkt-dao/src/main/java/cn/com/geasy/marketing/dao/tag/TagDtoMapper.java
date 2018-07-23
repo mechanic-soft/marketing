@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.dao.tag;
 
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,6 @@ import java.util.List;
 public interface TagDtoMapper extends SuperMapper<TagDto> {
 
     List<TagDto> selectTagDtoList(@Param("tagDto") TagDto tagDto);
+
+    List<TagDto> selectDtoPage(Page<TagDto> page,@Param("tagDto")  TagDto tagDto);
 }

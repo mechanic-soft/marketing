@@ -10,7 +10,9 @@ import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
 import cn.com.geasy.marketing.service.tag.TagService;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
+import com.gitee.mechanic.mybatis.utils.PageUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +23,29 @@ import java.util.List;
 @Service
 public class TagDtoServiceImpl extends SuperServiceImpl<TagDtoMapper, TagDto> implements TagDtoService {
 
+    /**
+     * 根据客户id 查询TagDto 全部列表数据
+     * @param customerId
+     * @return
+     */
     @Override
     public List<TagDto> selectTagDtoList(Long customerId) {
         TagDto tagDto = new TagDto();
         tagDto.setCustomerId(customerId);
         return baseMapper.selectTagDtoList(tagDto);
+    }
+
+    /**
+     * 分页查询TagDto 列表
+     * @param pageNum
+     * @param tagDto
+     * @return
+     */
+    @Override
+    public Page<TagDto> selectDtoPage(int pageNum, TagDto tagDto) {
+        Page<TagDto> page = PageUtils.getPage(pageNum);
+        List<TagDto> tagDtos = baseMapper.selectDtoPage(page, tagDto);
+        page.setRecords(tagDtos);
+        return page;
     }
 }
