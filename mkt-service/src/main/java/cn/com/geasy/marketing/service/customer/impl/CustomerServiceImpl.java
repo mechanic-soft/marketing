@@ -23,6 +23,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,14 +49,17 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     private CustomerLifecycleEventService customerLifecycleEventService;
 
     //设置为事务的操作
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public CustomerDto releWechat(CustomerDto customerDto) {
         CustomerDto dbCustomerDto = null;
         //步骤一:根据微信昵称匹配对应的微信联系人记录
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
         String nickname=customerDto.getNickname();
-        ew.where("nickname = {0}",nickname);
+        ew.where("user_id = {0}",SessionUtils.getUserId());
+        if(StringUtils.isNotBlank(nickname)){
+            ew.andNew("nickname = {0}",nickname);
+        }
         List<WxContact> list = wxContactService.selectList(ew);
         //步骤二:更新该记录的微信联系人ID   设置关联
         if(!CollectionUtils.isEmpty(list)){
@@ -92,7 +97,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return PageUtils.getPage(page, corpDtos);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public String synchronizeCustomer(List<WxContact> list) {
         //设置修改为当前用户
@@ -103,7 +108,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public String addCustomerTag(Long customerId, List<Long> tagIds) {
         List<ReleCustomerTag> list = new ArrayList<ReleCustomerTag>();
@@ -117,7 +122,12 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
             //加入List集合中
             list.add(releCustomerTag);
         }
+
         if(!CollectionUtils.isEmpty(list)){
+            //根据客户ID删除客户标签
+            EntityWrapper<ReleCustomerTag> ew=new EntityWrapper<ReleCustomerTag>();
+            ew.where("customer_id = {0}",customerId);
+            releCustomerTagService.delete(ew);
             //保存数据库表
             result = releCustomerTagService.insertBatch(list);
         }

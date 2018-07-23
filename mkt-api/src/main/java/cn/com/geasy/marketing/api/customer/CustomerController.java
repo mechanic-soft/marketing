@@ -1,7 +1,9 @@
 package cn.com.geasy.marketing.api.customer;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
+import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.service.customer.CustomerService;
+import cn.com.geasy.marketing.service.tag.TagDtoService;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.*;
@@ -23,6 +25,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1")
 public class CustomerController {
+    @Autowired
+    private TagDtoService tagDtoSrv;
 
     @Autowired
     private CustomerService customerSrv;
@@ -79,18 +83,25 @@ public class CustomerController {
     }
 
     @ApiOperation(value = "新增客户标签")
-    @PostMapping(path = "/customers/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> addCustomerTag(@RequestParam Long customerId,@RequestBody List<Long> tagIds){
+    @PostMapping(path = "/customers/{customerId}/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> addCustomerTag(@PathVariable("customerId") Long customerId,@RequestBody List<Long> tagIds){
         return ResponseUtils.result(customerSrv.addCustomerTag(customerId,tagIds));
     }
 
     @ApiOperation(value = "客户生命周期事件列表")
     @PostMapping(path = "/customers/{id}/lifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> customerLifecycle(@RequestParam Long id){
+    public ResponseEntity<ModelMap> customerLifecycle(@PathVariable("id") Long id){
         return ResponseUtils.result(customerSrv.customerLifecycleById(id));
     }
 
 
 
+    @ApiOperation(value = "客户标签列表查询")
+    @GetMapping(path = "/customers/{customerId}/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> selectTagList(@RequestParam(required = true) Long customerId) {
+        TagDto tagDto = new TagDto();
+        tagDto.setCustomerId(customerId);
+        return ResponseUtils.result(tagDtoSrv.selectTagDtoList(tagDto));
+    }
 
 }

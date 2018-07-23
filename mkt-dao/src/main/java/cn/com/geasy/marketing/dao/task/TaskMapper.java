@@ -20,6 +20,13 @@ import java.util.List;
  * @version 1.0.0
  */
 public interface TaskMapper extends SuperMapper<Task> {
+    /**
+     * 分页查询待办任务信息
+     * @param taskDto 查询条件
+     * @param page 分页对象
+     * @return List&lt;TaskDto&gt; 待办任务信息
+     */
+    List<TaskDto> selectDtoPage(Page page , @Param("taskDto") TaskDto taskDto);
     //List<Task> findByUserIdPage(@Param("title")String title, @Param("userId") Long userId);
 
 //    List<ArticleHotDto> findByHotArticlePage();
@@ -28,12 +35,7 @@ public interface TaskMapper extends SuperMapper<Task> {
 
     //List<Article> findByLikePage(@Param("userId") Long userId);
 
-//    List<ArticleReadRecordDto> findRecentReadRecord(@Param("userId") Long userId);
-    /**
-     * 分页查询待办任务信息
-     * @param taskDto 查询条件
-     * @param pagination 分页信息
-     * @return List&lt;TaskDto&gt; 待办任务信息
-     */
-     Page<Task> selectAllPage(@Param("td") TaskDto taskDto, Pagination pagination);
+    //List<ArticleReadRecordDto> findRecentReadRecord(@Param("userId") Long userId);
+
+     //Page<Task> selectAllPage(@Param("td") TaskDto taskDto, Pagination pagination);
 }

@@ -13,10 +13,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 /**
  * 规则
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "rules", description = "规则接口")
 @Slf4j
 @RestController
+@RequestMapping(path = "/v1")
 public class RuleController {
 
     private final RuleService ruleService;
@@ -38,20 +42,26 @@ public class RuleController {
 
     @ApiOperation(value = "规则列表")
     @GetMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getRules(@RequestParam(defaultValue = "0") int pageNume){
-        return ResponseUtils.result("");
+    public ResponseEntity<ModelMap> selectPage(
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false) LocalDate createTime,
+            @RequestParam(required = true) int pageNum,
+            @RequestParam(required = true) int pageSize){
+        RuleDto ruleDto = new RuleDto();
+        ruleDto.setCreateTime(createTime);
+        return ResponseUtils.result(ruleService.selectDtoPage(pageNum,pageSize,ruleDto));
     }
 
     @ApiOperation(value = "今日提醒")
     @GetMapping(path = "/rules/remindings", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getRemindings(){
-        return ResponseUtils.result("");
+        return ResponseUtils.result(this.ruleService.getRemindings());
     }
 
     @ApiOperation(value = "新建规则")
     @PostMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody RuleDto ruleDto){
-        return ResponseUtils.result(this.save(ruleDto));
+        return ResponseUtils.result(this.ruleService.save(ruleDto));
     }
 
     @ApiOperation(value = "修改规则")
@@ -65,11 +75,5 @@ public class RuleController {
     public ResponseEntity<ModelMap> getRule(@RequestParam Long ruleId){
         return ResponseUtils.result(this.ruleService.findRuleByRuleId(ruleId));
     }
-/*
-    @ApiOperation(value = "获取匹配用户ID的用户")
-    @GetMapping(path = "/users/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getUser(@PathVariable(required = true) Long id){
-        SysUserDto sysUserDto = SysUserMapstruct.getInstance.toDto(this.sysUserService.selectById(id));
-        return ResponseUtils.result(sysUserDto);
-    }*/
+
 }
