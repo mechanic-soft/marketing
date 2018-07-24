@@ -2,7 +2,7 @@
  * Copyright 2016-2018 the original author or authors.
  * Created on 2018/7/16 下午7:13
  */
-package cn.com.geasy.marketing.domain.entity.wechat;
+package cn.com.geasy.marketing.domain.dto.wechat;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.gitee.mechanic.mybatis.base.Entity;
@@ -12,22 +12,19 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 聊天记录实体
+ * 聊天记录Dto
  *
  * @author gencheng.pan
  * @version 1.0.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("chat_records")
-public class ChatRecords extends Entity implements Serializable {
-    private static final long serialVersionUID = 5204041401821317970L;
+public class ChatRecordsDto implements Serializable {
+    private static final long serialVersionUID = 3800368759247477028L;
     /**
      * 聊天记录ID
      */

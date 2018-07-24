@@ -4,8 +4,8 @@
  */
 package cn.com.geasy.marketing.service.wechat;
 
+import cn.com.geasy.marketing.domain.dto.wechat.ChatRecordsDto;
 import cn.com.geasy.marketing.domain.entity.wechat.ChatRecords;
-import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
 /**
@@ -15,4 +15,5 @@ import com.gitee.mechanic.mybatis.base.SuperService;
  * @version 1.0.0
  */
 public interface ChatRecordsService extends SuperService<ChatRecords> {
+    public String save(ChatRecordsDto chatRecordsDto);
 }
