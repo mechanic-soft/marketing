@@ -75,4 +75,9 @@ public class Customer extends Entity implements Serializable {
      * 公司ID
      */
     private String corpId;
+
+    /**
+     * 用户ID
+     */
+    private Long userId;
 }
