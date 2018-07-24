@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.wechat.ChatRecordsMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.wechat.ChatRecords">
+        <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
+        <result property="customerId" column="customerId" javaType="Integer"/>
+        <result property="wxUsername" column="wxUsername" jdbcType="VARCHAR" javaType="String"/>
+        <result property="msgType" column="msgType" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
+        <result property="url" column="url" jdbcType="VARCHAR" javaType="String"/>
+        <result property="isSend" column="isSend" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="sendTime" column="sendTime" jdbcType="TIMESTAMP" javaType="Integer"/>
+        <result property="status" column="status" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="Integer"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+</mapper>

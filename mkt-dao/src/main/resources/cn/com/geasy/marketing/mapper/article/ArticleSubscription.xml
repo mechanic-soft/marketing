@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.article.ArticleSubscriptionMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.article.ArticleSubscription">
+        <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
+        <result property="subscriptionUserId" column="subscriptionUserId" javaType="Integer"/>
+        <result property="userId" column="userId" javaType="Integer"/>
+        <result property="subscription" column="subscription" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="status" column="status" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="Integer"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+</mapper>
