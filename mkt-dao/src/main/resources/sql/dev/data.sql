@@ -196,7 +196,7 @@ VALUES (3004, 'put_menus', '/v1/sys/menus', 'PUT', '更新菜单', 1, 1, CURRENT
 INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (3005, 'delete_menus', '/v1/sys/menus/{id}', 'DELETE', '删除菜单', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
-VALUES (3001, 'get_menus_user_menus', '/v1/sys/menus/user_menus', 'GET', '当前用户菜单列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+VALUES (3006, 'get_menus_user_menus', '/v1/sys/menus/user_menus', 'GET', '当前用户菜单列表', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
 /*==============================================================*/
 /* Data: 用户角色关联                                              */
@@ -266,11 +266,12 @@ INSERT INTO rele_role_permission VALUES (1053, 1, 2002, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (1054, 1, 2003, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1055, 1, 2004, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1056, 1, 2005, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (1052, 1, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (1053, 1, 3002, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (1054, 1, 3003, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (1055, 1, 3004, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (1056, 1, 3005, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1057, 1, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1058, 1, 3002, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1059, 1, 3003, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1060, 1, 3004, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1061, 1, 3005, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (1062, 1, 3006, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 -- manager(客户经理上级)
 INSERT INTO rele_role_permission VALUES (2001, 2, 1401, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (2002, 2, 1402, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
@@ -288,7 +289,7 @@ INSERT INTO rele_role_permission VALUES (2013, 2, 1903, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (2014, 2, 1904, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (2015, 2, 1905, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (2016, 2, 1906, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (2017, 2, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (2017, 2, 3006, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 -- user(客户经理)
 INSERT INTO rele_role_permission VALUES (3001, 3, 1402, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3002, 3, 1403, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
@@ -308,7 +309,7 @@ INSERT INTO rele_role_permission VALUES (3015, 3, 1705, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (3016, 3, 1801, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3017, 3, 1802, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3018, 3, 1803, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (2019, 3, 3001, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+INSERT INTO rele_role_permission VALUES (2019, 3, 3006, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
 /*==============================================================*/
 /* Data: 系统菜单                                                */

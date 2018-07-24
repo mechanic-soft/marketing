@@ -12,6 +12,7 @@ import cn.com.geasy.marketing.service.system.SysLogService;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import com.gitee.mechanic.mybatis.utils.PageUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * @author phil
  * @version 1.0.0
  */
+@Service
 public class SysLogServiceImpl extends SuperServiceImpl<SysLogMapper, SysLog> implements SysLogService {
     public Page<SysLogDto> selectDtoPage(int pageNum) {
         Page<SysLog> page = PageUtils.getPage(pageNum);

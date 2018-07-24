@@ -11,6 +11,7 @@ import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.domain.entity.tag.TagType;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
 import cn.com.geasy.marketing.service.tag.TagService;
+import cn.com.geasy.marketing.service.tag.TagTreeDtoService;
 import cn.com.geasy.marketing.service.tag.TagTypeService;
 import cn.com.geasy.marketing.utils.SessionUtils;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -23,7 +24,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 请在此写下该类的说明
@@ -40,6 +41,8 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     @Autowired
     private TagDtoService tagDtoService;
 
+    @Autowired
+    private TagTreeDtoService TagTreeDtoSrv;
     @Override
     public List<Tag> findTagByArticleId(Long articleId) {
         return baseMapper.findTagByArticleId(articleId);
@@ -54,7 +57,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
             Integer rows = super.baseMapper.insert(tag);
             if(rows > 0){
                 //表示已经插入成功
-                tag.setPath(tagarentsTypeId+ Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
+                tag.setPath(tagarentsTypeId+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
                 rs = super.baseMapper.updateById(tag);
             }
         }
@@ -100,8 +103,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
 
     @Override
     public List findTagType() {
-        TagDto tagDto = new TagDto();
-        List<TagDto> result = tagDtoService.selectTagDtoList(tagDto);
-        return null;
+
+        return TagTreeDtoSrv.findTagTree();
     }
 }

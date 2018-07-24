@@ -19,7 +19,7 @@ spring:
 logging:
   register-shutdown-hook: false
   level:
-    ROOT: off
+    ROOT: info
     com.baomidou: off
     org.apache.ibatis: off
     cn.com.geasy.marketing: off
