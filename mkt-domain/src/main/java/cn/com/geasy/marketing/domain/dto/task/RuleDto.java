@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.domain.dto.task;
 
+import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,9 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -72,7 +71,10 @@ public class RuleDto implements Serializable {
      * 创建人
      */
     private String createUserName ;
-
+    /**
+     * 返回联系人
+     */
+    List<WxContactDto> wxContactDtos;
     /**
      * 创建时间
      */
