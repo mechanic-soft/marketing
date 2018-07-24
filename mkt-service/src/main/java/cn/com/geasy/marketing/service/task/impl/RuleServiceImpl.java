@@ -78,239 +78,247 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
 
     @Override
     public RuleDto getRemindings() {
-        Long userId = SessionUtils.getUserId();
-        LocalDate newLocalDate = LocalDate.now();
-        EntityWrapper<Rule> ew=new EntityWrapper<Rule>();
-        ew.where("status = {0}",Const.ONE);
-        ew.orderBy("end_date",false);
-        List<Rule> ruleList = this.selectList(ew);
         RuleDto returnRuleDto = new RuleDto();
-        List<RuleCustomerLabel> returnRuleCustomerLabelList = new ArrayList<RuleCustomerLabel>();
-        List<RuleTriggerAction> returnRuleTriggerActionList = new ArrayList<RuleTriggerAction>();
-        if(ruleList.size() > 0 ){
-            Rule rule = ruleList.get(0);
-            Long ruleId = rule.getId();
-            LocalDate endDate = rule.getEndDate();
-            if(newLocalDate.isBefore(endDate) || newLocalDate.isEqual(endDate)){
-                HashMap<String,Object> columnRuleCustomerLabelMap = new HashMap<String,Object>(2);
-                columnRuleCustomerLabelMap.put("rule_id",ruleId);
-                columnRuleCustomerLabelMap.put("status",Const.ONE);
-                returnRuleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnRuleCustomerLabelMap);
+        try{
+            Long userId = SessionUtils.getUserId();
+            LocalDate newLocalDate = LocalDate.now();
+            EntityWrapper<Rule> ew=new EntityWrapper<Rule>();
+            ew.where("status = {0}",Const.ONE);
+            ew.orderBy("end_date",false);
+            List<Rule> ruleList = this.selectList(ew);
+            List<RuleCustomerLabel> returnRuleCustomerLabelList = new ArrayList<RuleCustomerLabel>();
+            List<RuleTriggerAction> returnRuleTriggerActionList = new ArrayList<RuleTriggerAction>();
+            if(ruleList.size() > 0 ){
+                Rule rule = ruleList.get(0);
+                Long ruleId = rule.getId();
+                LocalDate endDate = rule.getEndDate();
+                if(newLocalDate.isBefore(endDate) || newLocalDate.isEqual(endDate)){
+                    HashMap<String,Object> columnRuleCustomerLabelMap = new HashMap<String,Object>(2);
+                    columnRuleCustomerLabelMap.put("rule_id",ruleId);
+                    columnRuleCustomerLabelMap.put("status",Const.ONE);
+                    returnRuleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnRuleCustomerLabelMap);
 
-                HashMap<String,Object> columnRuleTriggerActionMap = new HashMap<String,Object>(2);
-                columnRuleTriggerActionMap.put("rule_id",ruleId);
-                columnRuleTriggerActionMap.put("status", Const.ONE);
-                returnRuleTriggerActionList = ruleTriggerActionService.selectByMap(columnRuleTriggerActionMap);
+                    HashMap<String,Object> columnRuleTriggerActionMap = new HashMap<String,Object>(2);
+                    columnRuleTriggerActionMap.put("rule_id",ruleId);
+                    columnRuleTriggerActionMap.put("status", Const.ONE);
+                    returnRuleTriggerActionList = ruleTriggerActionService.selectByMap(columnRuleTriggerActionMap);
 
-                //组合条件之标签条件
-                List<Long> tagList = new ArrayList<Long>();
-                for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
-                    RuleCustomerLabel ruleCustomerLabel = returnRuleCustomerLabelList.get(i);
-                    tagList.add(ruleCustomerLabel.getTagId());
-                }
-                //根据标签主键关联客户标签关联表，拿到客户信息
-                EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
-                ewByReleCustomerTag.where("status = {0}",Const.ONE);
-                ewByReleCustomerTag.in("tag_id",tagList);
-                List<ReleCustomerTag> releCustomerTagList = releCustomerTagService.selectList(ewByReleCustomerTag);
+                    //组合条件之标签条件
+                    List<Long> tagList = new ArrayList<Long>();
+                    for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
+                        RuleCustomerLabel ruleCustomerLabel = returnRuleCustomerLabelList.get(i);
+                        tagList.add(ruleCustomerLabel.getTagId());
+                    }
+                    //根据标签主键关联客户标签关联表，拿到客户信息
+                    EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
+                    ewByReleCustomerTag.where("status = {0}",Const.ONE);
+                    ewByReleCustomerTag.in("tag_id",tagList);
+                    List<ReleCustomerTag> releCustomerTagList = releCustomerTagService.selectList(ewByReleCustomerTag);
 
-                List<ChatRecords> chatRecordsList = new ArrayList<ChatRecords>();
-                List<ArticleSubscription> articleSubscriptionList = new ArrayList<ArticleSubscription>();
-                List<ArticleRead> articleReadList = new ArrayList<ArticleRead>();
-                //组合条件之行为条件
-                for (int i = 0; i < returnRuleTriggerActionList.size(); i++) {
-                    RuleTriggerAction ruleTriggerAction = returnRuleTriggerActionList.get(i);
-                    //行为(0=阅读,1=订阅,2=聊天)
-                    Integer action = ruleTriggerAction.getAction();
-                    //(0= >,1= < ,2= >=,3= <=,4= =)
-                    Integer condition = ruleTriggerAction.getCondition();
-                    //次数
-                    Integer frequency = ruleTriggerAction.getFrequency();
-                    switch(action){
-                        case 0:
-                            //去文章阅读表中，根据阅读次数是否满足。
-                            EntityWrapper<ArticleRead> ewByArticleRead = new EntityWrapper<ArticleRead>();
-                            ewByArticleRead.where("status = {0}",Const.ONE);
-                            ewByArticleRead.groupBy("customer_id");
-                            String conditionStrByAR = "";
-                            if(condition ==0){
-                                conditionStrByAR = ">";
-                            }else if(condition ==1){
-                                conditionStrByAR = "<";
-                            }else if(condition == 2){
-                                conditionStrByAR = ">=";
-                            }else if(condition == 3){
-                                conditionStrByAR = "<=";
+                    List<ChatRecords> chatRecordsList = new ArrayList<ChatRecords>();
+                    List<ArticleSubscription> articleSubscriptionList = new ArrayList<ArticleSubscription>();
+                    List<ArticleRead> articleReadList = new ArrayList<ArticleRead>();
+                    //组合条件之行为条件
+                    for (int i = 0; i < returnRuleTriggerActionList.size(); i++) {
+                        RuleTriggerAction ruleTriggerAction = returnRuleTriggerActionList.get(i);
+                        //行为(0=阅读,1=订阅,2=聊天)
+                        Integer action = ruleTriggerAction.getAction();
+                        //(0= >,1= < ,2= >=,3= <=,4= =)
+                        Integer condition = ruleTriggerAction.getCondition();
+                        //次数
+                        Integer frequency = ruleTriggerAction.getFrequency();
+                        switch(action){
+                            case 0:
+                                //去文章阅读表中，根据阅读次数是否满足。
+                                EntityWrapper<ArticleRead> ewByArticleRead = new EntityWrapper<ArticleRead>();
+                                ewByArticleRead.where("status = {0}",Const.ONE);
+                                ewByArticleRead.groupBy("customer_id");
+                                String conditionStrByAR = "";
+                                if(condition ==0){
+                                    conditionStrByAR = ">";
+                                }else if(condition ==1){
+                                    conditionStrByAR = "<";
+                                }else if(condition == 2){
+                                    conditionStrByAR = ">=";
+                                }else if(condition == 3){
+                                    conditionStrByAR = "<=";
+                                }else{
+                                    conditionStrByAR = "=";
+                                }
+                                ewByArticleRead.having("count(customer_id) "+conditionStrByAR+" "+frequency+"");
+                                articleReadList = articleReadService.selectList(ewByArticleRead);
+                                break;
+                            case 1:
+                                //去文章订阅表中，根据订阅次数是否满足。
+                                EntityWrapper<ArticleSubscription> ewByArticleSubscription = new EntityWrapper<ArticleSubscription>();
+                                ewByArticleSubscription.where("status = {0}",Const.ONE);
+                                ewByArticleSubscription.groupBy("user_id");
+                                String conditionStrByAS = "";
+                                if(condition ==0){
+                                    conditionStrByAS = ">";
+                                }else if(condition ==1){
+                                    conditionStrByAS = "<";
+                                }else if(condition == 2){
+                                    conditionStrByAS = ">=";
+                                }else if(condition == 3){
+                                    conditionStrByAS = "<=";
+                                }else{
+                                    conditionStrByAS = "=";
+                                }
+                                ewByArticleSubscription.having("count(user_id) "+conditionStrByAS+" "+frequency+"");
+                                articleSubscriptionList = articleSubscriptionService.selectList(ewByArticleSubscription);
+                                break;
+                            case 2:
+                                //去聊天记录表中，根据聊天次数是否满足。
+                                EntityWrapper<ChatRecords> ewByChatRecords = new EntityWrapper<ChatRecords>();
+                                ewByChatRecords.where("status = {0}",Const.ONE);
+                                ewByChatRecords.groupBy("customer_id");
+                                String conditionStr = "";
+                                if(condition ==0){
+                                    conditionStr = ">";
+                                }else if(condition ==1){
+                                    conditionStr = "<";
+                                }else if(condition == 2){
+                                    conditionStr = ">=";
+                                }else if(condition == 3){
+                                    conditionStr = "<=";
+                                }else{
+                                    conditionStr = "=";
+                                }
+                                ewByChatRecords.having(" count(customer_id) "+conditionStr+" "+frequency+"");
+                                chatRecordsList = chatRecordsService.selectList(ewByChatRecords);
+                                break;
+                            default:
+                        }
+                    }
+                    //判断
+                    int chatRecordsListSize = chatRecordsList.size();
+                    int releCustomerTagSize = releCustomerTagList.size();
+                    int articleSubscriptionSize = articleSubscriptionList.size();
+                    int articleReadSize = articleReadList.size();
+                    int[] maxIndexArray = {chatRecordsListSize,releCustomerTagSize,articleSubscriptionSize,articleReadSize};
+                    Arrays.sort(maxIndexArray);
+                    int maxIndex = maxIndexArray[0];
+                    Long luckUserId = null;
+                    ArrayList<Long> luckUserList = new ArrayList<Long>();
+                    if(chatRecordsListSize ==maxIndex){
+                        for (int i = 0; i < chatRecordsList.size(); i++) {
+                            ChatRecords chatRecords = chatRecordsList.get(i);
+                            Long customerId = chatRecords.getCustomerId();
+                            boolean breakFalg = false;
+                            if(releCustomerTagList.contains(customerId)){
+                                breakFalg = true;
                             }else{
-                                conditionStrByAR = "=";
+                                breakFalg = false;
                             }
-                            ewByArticleRead.having("customer_id "+conditionStrByAR+" "+frequency+"");
-                            articleReadList = articleReadService.selectList(ewByArticleRead);
-                            break;
-                        case 1:
-                            //去文章订阅表中，根据订阅次数是否满足。
-                            EntityWrapper<ArticleSubscription> ewByArticleSubscription = new EntityWrapper<ArticleSubscription>();
-                            ewByArticleSubscription.where("status = {0}",Const.ONE);
-                            ewByArticleSubscription.groupBy("customer_id");
-                            String conditionStrByAS = "";
-                            if(condition ==0){
-                                conditionStrByAS = ">";
-                            }else if(condition ==1){
-                                conditionStrByAS = "<";
-                            }else if(condition == 2){
-                                conditionStrByAS = ">=";
-                            }else if(condition == 3){
-                                conditionStrByAS = "<=";
+                            if(articleSubscriptionList.contains(customerId)){
+                                breakFalg = true;
                             }else{
-                                conditionStrByAS = "=";
+                                breakFalg = false;
                             }
-                            ewByArticleSubscription.having("customer_id "+conditionStrByAS+" "+frequency+"");
-                            articleSubscriptionList = articleSubscriptionService.selectList(ewByArticleSubscription);
-                            break;
-                        case 2:
-                            //去聊天记录表中，根据聊天次数是否满足。
-                            EntityWrapper<ChatRecords> ewByChatRecords = new EntityWrapper<ChatRecords>();
-                            ewByChatRecords.where("status = {0}",Const.ONE);
-                            ewByChatRecords.groupBy("customer_id");
-                            String conditionStr = "";
-                            if(condition ==0){
-                                conditionStr = ">";
-                            }else if(condition ==1){
-                                conditionStr = "<";
-                            }else if(condition == 2){
-                                conditionStr = ">=";
-                            }else if(condition == 3){
-                                conditionStr = "<=";
+                            if(articleReadList.contains(customerId)){
+                                breakFalg = true;
                             }else{
-                                conditionStr = "=";
+                                breakFalg = false;
                             }
-                            ewByChatRecords.having("customer_id "+conditionStr+" "+frequency+"");
-                            chatRecordsList = chatRecordsService.selectList(ewByChatRecords);
-                            break;
-                        default:
-                    }
-                }
-                //判断
-                int chatRecordsListSize = chatRecordsList.size();
-                int releCustomerTagSize = releCustomerTagList.size();
-                int articleSubscriptionSize = articleSubscriptionList.size();
-                int articleReadSize = articleReadList.size();
-                int[] maxIndexArray = {chatRecordsListSize,releCustomerTagSize,articleSubscriptionSize,articleReadSize};
-                Arrays.sort(maxIndexArray);
-                int maxIndex = maxIndexArray[0];
-                Long luckUserId = null;
-                ArrayList<Long> luckUserList = new ArrayList<Long>();
-                if(chatRecordsListSize ==maxIndex){
-                    for (int i = 0; i < chatRecordsList.size(); i++) {
-                        ChatRecords chatRecords = chatRecordsList.get(i);
-                        Long customerId = chatRecords.getCustomerId();
-                        boolean breakFalg = false;
-                        if(releCustomerTagList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
+                            if(breakFalg){
+                                luckUserList.add(customerId);
+                            }
                         }
-                        if(articleSubscriptionList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
+                    }else if(maxIndex == releCustomerTagSize){
+                        for (int i = 0; i < releCustomerTagList.size(); i++) {
+                            Long customerId = releCustomerTagList.get(i).getCustomerId();
+                            boolean breakFalg = false;
+                            if(chatRecordsList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(articleReadList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(articleSubscriptionList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(breakFalg){
+                                luckUserList.add(customerId);
+                            }
                         }
-                        if(articleReadList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
+                    }else if(maxIndex == articleSubscriptionSize){
+                        for (int i = 0; i < articleSubscriptionList.size(); i++) {
+                            Long customerId = articleSubscriptionList.get(i).getUserId();
+                            boolean breakFalg = false;
+                            if(chatRecordsList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(articleReadList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(releCustomerTagList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(breakFalg){
+                                luckUserList.add(customerId);
+                            }
                         }
-                        if(breakFalg){
-                            luckUserList.add(customerId);
-                        }
-                    }
-                }else if(maxIndex == releCustomerTagSize){
-                    for (int i = 0; i < releCustomerTagList.size(); i++) {
-                        Long customerId = releCustomerTagList.get(i).getCustomerId();
-                        boolean breakFalg = false;
-                        if(chatRecordsList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(articleReadList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(articleSubscriptionList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(breakFalg){
-                            luckUserList.add(customerId);
-                        }
-                    }
-                }else if(maxIndex == articleSubscriptionSize){
-                    for (int i = 0; i < articleSubscriptionList.size(); i++) {
-                        Long customerId = articleSubscriptionList.get(i).getUserId();
-                        boolean breakFalg = false;
-                        if(chatRecordsList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(articleReadList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(releCustomerTagList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(breakFalg){
-                            luckUserList.add(customerId);
+                    }else{
+                        for (int i = 0; i < articleReadList.size(); i++) {
+                            Long customerId = articleReadList.get(i).getUserId();
+                            boolean breakFalg = false;
+                            if(chatRecordsList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(articleSubscriptionList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(releCustomerTagList.contains(customerId)){
+                                breakFalg = true;
+                            }else{
+                                breakFalg = false;
+                            }
+                            if(breakFalg){
+                                luckUserList.add(customerId);
+                            }
                         }
                     }
+                    //查找用户
+                    EntityWrapper<Customer> ewByCustomer = new EntityWrapper<Customer>();
+                    ewByCustomer.where("status = {0}",Const.ONE);
+                    ewByCustomer.in("id",luckUserList);
+                    List<Customer> customersList = customerService.selectList(ewByCustomer);
+                    List<Long> wxContactIdList = new ArrayList<Long>();
+                    customersList.forEach(customer -> {
+                        wxContactIdList.add(customer.getWxContactId());
+                    });
+                    List<WxContactDto> wxContactDtoList = new ArrayList<WxContactDto>();
+                    if(wxContactIdList.size() > 0){
+                        List<WxContact> wxContactList = wxContactService.selectList(new EntityWrapper<WxContact>().where("status ={0}", Const.ONE).in("id", wxContactIdList));
+                        wxContactDtoList = WxContactMapstruct.getInstance.toDtoList(wxContactList);
+                    }
+                    returnRuleDto.setTitle(rule.getTitle());
+                    returnRuleDto.setContent(rule.getContent());
+                    returnRuleDto.setWxContactDtos(wxContactDtoList);
                 }else{
-                    for (int i = 0; i < articleReadList.size(); i++) {
-                        Long customerId = articleReadList.get(i).getUserId();
-                        boolean breakFalg = false;
-                        if(chatRecordsList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(articleSubscriptionList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(releCustomerTagList.contains(customerId)){
-                            breakFalg = true;
-                        }else{
-                            breakFalg = false;
-                        }
-                        if(breakFalg){
-                            luckUserList.add(customerId);
-                        }
-                    }
-                }
-                //查找用户
-                EntityWrapper<Customer> ewByCustomer = new EntityWrapper<Customer>();
-                ewByCustomer.where("status = {0}",Const.ONE);
-                ewByCustomer.in("id",luckUserList);
-                List<Customer> customersList = customerService.selectList(ewByCustomer);
-                List<Long> wxContactIdList = new ArrayList<Long>();
-                customersList.forEach(customer -> {
-                    wxContactIdList.add(customer.getWxContactId());
-                });
-                List<WxContact> wxContactList = wxContactService.selectList(new EntityWrapper<WxContact>().where("status ={0}", Const.ONE).in("id", wxContactIdList));
-                List<WxContactDto> wxContactDtoList = WxContactMapstruct.getInstance.toDtoList(wxContactList);
-                returnRuleDto.setTitle(rule.getTitle());
-                returnRuleDto.setContent(rule.getContent());
-                returnRuleDto.setWxContactDtos(wxContactDtoList);
-            }else{
                     return  returnRuleDto;
+                }
             }
+            return returnRuleDto;
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return returnRuleDto;
     }
