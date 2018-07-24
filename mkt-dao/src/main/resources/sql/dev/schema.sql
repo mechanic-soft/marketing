@@ -163,7 +163,7 @@ CREATE TABLE sys_corp (
 /*==============================================================*/
 CREATE TABLE sys_log (
   id          BIGINT PRIMARY KEY NOT NULL, -- ID
-  username   TINYINT            NOT NULL, -- 用户名
+  username    TINYINT            NOT NULL, -- 用户名
   menu        VARCHAR(64)        NULL, -- 菜单
   url         VARCHAR(2048)      NULL, -- URL
   remark      VARCHAR(2048)      NULL, -- 备注
@@ -348,6 +348,7 @@ CREATE TABLE customer (
   maturity           TINYINT            NULL, -- 客户成熟度
   is_open_account    TINYINT            NULL, -- 是否开户
   callcenter_user_id VARCHAR(64)        NULL, -- 外呼平台用户ID
+  user_id            BIGINT             NULL, --
   corp_id            BIGINT             NULL, -- 公司ID
   status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
   create_user        BIGINT             NULL, -- 创建记录的用户编号
@@ -478,6 +479,7 @@ CREATE TABLE tag_type (
   id          BIGINT PRIMARY KEY                 NOT NULL,
   parent_id   BIGINT default '0'                 NULL, -- 父级ID
   name        VARCHAR(256)                       NULL, -- 标签名称
+  code        VARCHAR(256)                       NULL, -- 标签编码(仅数据处理用)
   status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                             NULL, -- 创建记录的用户编号
   create_time TIMESTAMP                          NULL, -- 创建记录的时间
