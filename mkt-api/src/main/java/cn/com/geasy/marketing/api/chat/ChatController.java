@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping(path = "/v1")
-public class ChatSessionController {
+public class ChatController {
 
 
 
