@@ -69,5 +69,5 @@ public class ChatRecords extends Entity implements Serializable {
     /**
      *状态
      */
-    private Integer statues;
+    private Integer status;
 }
