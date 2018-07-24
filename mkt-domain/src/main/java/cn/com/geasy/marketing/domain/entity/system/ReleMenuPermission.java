@@ -1,6 +1,6 @@
 /*
  * Copyright 2016-2018 the original author or authors.
- * Created on 2018/7/16 上午11:25
+ * Created on 2018/7/23 上午11:56
  */
 package cn.com.geasy.marketing.domain.entity.system;
 
@@ -14,33 +14,24 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 日志实体
+ * 请在此写下该类的说明
  *
  * @author phil
  * @version 1.0.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("sys_log")
-public class SysLog extends Entity implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@TableName("rele_menu_permission")
+public class ReleMenuPermission extends Entity implements Serializable {
+    private static final long serialVersionUID = 5840166973258897586L;
     /**
-     * 真实姓名
+     * 菜单ID
      */
-    private String username;
-
+    private Long menuId;
     /**
-     * 菜单
+     * 权限ID
      */
-    private String menu;
-
-    /**
-     * URL
-     */
-    private String url;
-    /**
-     * 备注
-     */
-    private String remark;
+    private Long permission_id;
 }

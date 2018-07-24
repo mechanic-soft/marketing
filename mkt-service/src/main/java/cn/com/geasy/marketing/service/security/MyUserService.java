@@ -8,6 +8,7 @@ import cn.com.geasy.marketing.dao.system.SysRoleMapper;
 import cn.com.geasy.marketing.dao.system.SysUserMapper;
 import cn.com.geasy.marketing.domain.entity.system.SysRole;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import cn.com.geasy.marketing.mapstruct.system.SysRoleMapstruct;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -59,7 +60,8 @@ public class MyUserService implements UserDetailsService {
                 user.getWxSex(),
                 user.getWxSignature(),
                 user.getMpOpenid(),
-                user.getMpUuid()
+                user.getMpUuid(),
+                SysRoleMapstruct.getInstance.toDtoList(roles)
         );
     }
 }

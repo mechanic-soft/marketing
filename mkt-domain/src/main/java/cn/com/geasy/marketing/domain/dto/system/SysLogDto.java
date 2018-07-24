@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 日志实体
+ * 日志DTO
  *
  * @author phil
  * @version 1.0.0
@@ -27,7 +27,7 @@ public class SysLogDto implements Serializable {
     /**
      * 真实姓名
      */
-    private String realName;
+    private String username;
 
     /**
      * 菜单

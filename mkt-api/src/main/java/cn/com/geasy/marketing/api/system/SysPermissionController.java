@@ -46,7 +46,7 @@ public class SysPermissionController {
         return ResponseUtils.result(this.sysPermissionService.findDtoPage(pageNum));
     }
 
-    @ApiOperation(value = "获取匹配权限ID的权限")
+    @ApiOperation(value = "权限详情")
     @GetMapping(path = "/permissions/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> get(@PathVariable(required = true) Long id){
         return ResponseUtils.result(this.sysPermissionService.findDtoById(id));

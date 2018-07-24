@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.system.SysMenuMapper">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysMenuDto">
+        <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT" javaType="Long"/>
+        <result property="name" column="name" jdbcType="VARCHAR" javaType="String"/>
+        <result property="url" column="url" jdbcType="VARCHAR" javaType="String"/>
+        <result property="permissionId" column="permission_id" jdbcType="BIGINT" javaType="Long"/>
+        <collection property="subItems" ofType="cn.com.geasy.marketing.domain.dto.system.SysMenuDto"
+                    select="findByRolesId" column="{id=id, roleId=role_id}"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        sm.id, sm.parent_id, sm.name, sm.url, sm.permission_id, rrp.role_id
+    </sql>
+
+    <select id="findByRolesId" resultMap="Base_Result_Map">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM sys_menu sm
+        LEFT OUTER JOIN rele_role_permission rrp ON rrp.permission_id = sm.permission_id
+        WHERE sm.parent_id = #{id}
+        AND rrp.role_id = #{roleId}
+        AND sm.status = 1 AND rrp.status = 1
+        ORDER BY sm.sort ASC
+    </select>
+
+</mapper>

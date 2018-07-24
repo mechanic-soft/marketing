@@ -53,6 +53,8 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs",
                         "/webjars/**",
                         "/*.ico",
+                        "/h2**",
+                        "/h2/**",
                         "/login",
                         "/unauthor").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
