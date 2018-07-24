@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.geasy.marketing.dao.tag.TagTreeDtoMapper">
+
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.tag.TagTreeDto">
+        <result property="id" column="id" javaType="Long"/>
+        <result property="name" column="name" javaType="String"/>
+    </resultMap>
+
+
+
+    <select id="findTagType" resultMap="Base_Result_Map" parameterType="cn.com.geasy.marketing.domain.dto.tag.TagTreeDto">
+       select id,name from tag_type t1 where 1=1
+        <if test="tagTreeDto.parentId != null">
+            and t1.parent_Id = #{tagTreeDto.parentId}
+        </if>
+    </select>
+
+    <select id="findTag" resultMap="Base_Result_Map" parameterType="cn.com.geasy.marketing.domain.dto.tag.TagTreeDto">
+        select id,name from tag t1 where 1=1
+        <if test="tagTreeDto.parentId != null">
+            and t1.tag_type_id = #{tagTreeDto.parentId}
+        </if>
+    </select>
+
+
+</mapper>

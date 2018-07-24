@@ -33,7 +33,7 @@ public class TagController {
     @ApiOperation(value = "新增标签")
     @PostMapping(path = "/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ModelMap> addTag(@RequestBody Tag tag,@RequestParam Integer tagarentsTypeId){
-        return ResponseUtils.result(tagService.addTag(tag,tagarentsTypeId));
+       return ResponseUtils.result(tagService.addTag(tag,tagarentsTypeId));
     }
 
     @ApiOperation(value = "新增标签类别")
