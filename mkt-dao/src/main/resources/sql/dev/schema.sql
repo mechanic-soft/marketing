@@ -348,7 +348,7 @@ CREATE TABLE customer (
   maturity           TINYINT            NULL, -- 客户成熟度
   is_open_account    TINYINT            NULL, -- 是否开户
   callcenter_user_id VARCHAR(64)        NULL, -- 外呼平台用户ID
-  user_id            BIGINT             NULL, --
+  user_id            BIGINT             NULL, -- 客户id
   corp_id            BIGINT             NULL, -- 公司ID
   status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
   create_user        BIGINT             NULL, -- 创建记录的用户编号

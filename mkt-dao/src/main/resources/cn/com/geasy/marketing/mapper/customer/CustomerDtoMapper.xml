@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.geasy.marketing.dao.customer.CustomerMapper">
-
-
-
-
-
-
     <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.customer.CustomerDto">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="call_time" property="callTime" jdbcType="TIMESTAMP" />
@@ -51,6 +45,12 @@
                     AND t1.wx_contact_id IS NOT NULL
                 </if>
 
+                <!--查询当前用户下的客户信息-->
+                <if test="customerDto.userId != null">
+                    AND t1.user_Id = #{customerDto.userId}
+                </if>
+
+
                 <if test="customerDto.tagIds != null and customerDto.tagIds.size > 0 ">
                     AND  t3.tag_id  in
 
@@ -67,6 +67,20 @@
                     AND t1.call_time    &lt;=  '${customerDto.callTimeEndStr} 23:59:59'
                 </if>
 
+    </select>
+
+    <select id="findOpenAccountCustomerDtoIds"  parameterType="java.util.ArrayList"
+            resultMap="Base_Result_Map">
+        select t1.customer_id as id from rele_customer_tag t1
+        left join tag t2 on t1.tag_id = t2.id
+        where 1=1
+        and t2.name = '已开户'
+        <if test="ids != null and ids.size > 0 ">
+            and t1.customer_id in
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">
+                ${item}
+            </foreach>
+        </if>
     </select>
 
 </mapper>

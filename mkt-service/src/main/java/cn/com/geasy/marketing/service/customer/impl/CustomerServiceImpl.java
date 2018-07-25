@@ -197,26 +197,25 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
 
     }
 
+
     /**
      * 根据客户id  查询当前查询页所需 “是否 开户” 数据集合
+     * (已开户获取方式，从标签表去拿   "已开户"  标签)
      * @param customerDtoIds
      * @return  Map<Long 客户id,Integer 开户值为3>
      */
     private Map<Long,Integer> getOpenAccountMap(List<Long> customerDtoIds) {
         Map<Long,Integer> openAccountMap = new HashMap<>();
-        List<CustomerLifecycleEvent> customerLifecycleEvents = cleSrv.selectList(
-                new EntityWrapper<CustomerLifecycleEvent>()
-                        .where("event = {0}", "3")
-                        .in("customer_id",customerDtoIds.toArray())
-        );
+        List<CustomerDto> customersDtos = this.baseMapper.findOpenAccountCustomerDtoIds(customerDtoIds);
 
-        if(CollectionUtils.isNotEmpty(customerLifecycleEvents)){
-            for(CustomerLifecycleEvent customerEvent:customerLifecycleEvents){
-                openAccountMap.put(customerEvent.getCustomerId(),customerEvent.getEvent());
+        if(CollectionUtils.isNotEmpty(customersDtos)){
+            for(CustomerDto customersDto:customersDtos){
+                openAccountMap.put(customersDto.getId(),1);
             }
         }
         return openAccountMap;
     }
+
 
     /***
      * 组装当前查询页所需的标签数据集合

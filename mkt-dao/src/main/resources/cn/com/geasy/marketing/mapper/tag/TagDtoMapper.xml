@@ -18,8 +18,8 @@
         SELECT
         t1.id as tagId,t1.name,t3.id as subTypeId,t3.name as subTypeName,t4.id as typeId,t4.name as typeName ,t1.tag_src as tagSrc
         FROM tag t1
-        LEFT JOIN rele_customer_tag t2 ON t2.tag_type_id = t1.id
-        LEFT JOIN tag_type t3 ON t3.id = t1.tag_type
+        LEFT JOIN rele_customer_tag t2 ON t2.tag_id = t1.id
+        LEFT JOIN tag_type t3 ON t3.id = t1.tag_type_id
         LEFT JOIN tag_type t4 ON t3.parent_id = t4.id
         WHERE 1=1
         <if test="tagDto.customerId != null">

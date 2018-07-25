@@ -1,5 +1,6 @@
 package cn.com.geasy.marketing.domain.dto.customer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -44,12 +45,15 @@ public class CustomerDto implements Serializable {
     /**主键*/
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private LocalDate callTime;
 
     /**外呼时间 开始*/
+    @JsonIgnore
     private LocalDate callTimeStart;
 
     /**外呼时间  结束*/
+    @JsonIgnore
     private LocalDate callTimeEnd;
 
     /**微信号*/
@@ -67,12 +71,17 @@ public class CustomerDto implements Serializable {
     /**微信联系人ID*/
     private String wxContactId;
 
-    public CustomerDto(String nickname, Integer isAddWechat, List<Long> tagIds, LocalDate callTimeStart, LocalDate callTimeEnd) {
+    /**用户id*/
+    private Long userId;
+
+
+    public CustomerDto(String nickname, Integer isAddWechat, List<Long> tagIds, LocalDate callTimeStart, LocalDate callTimeEnd,Long userId) {
         this.nickname = nickname;
         this.tagIds = tagIds;
         this.isAddWechat = isAddWechat;
         this.callTimeStart = callTimeStart;
         this.callTimeEnd = callTimeEnd;
+        this.userId = userId;
     }
     @JsonIgnore
     public String getCallTimeStartStr(){

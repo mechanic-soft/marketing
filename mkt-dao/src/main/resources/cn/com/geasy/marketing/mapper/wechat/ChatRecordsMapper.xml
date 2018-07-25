@@ -15,18 +15,17 @@
     </resultMap>
 
     <select id="findUncontactCustomer" resultMap="Base_Result_Map" parameterType="java.util.Map">
-        SELECT t.* FROM (
-        SELECT cr.id,customer_id,wx_username,head_img_url,nickname,msg_type,content,url, is_send,send_time FROM
-        chat_records cr INNER JOIN wx_contact wc ON cr.wx_username = wc.username
+        SELECT * FROM (SELECT r.*,wc.head_img_url,wc.nickname FROM wx_contact wc INNER JOIN  (SELECT a.id,a.customer_id,a.wx_username, a.msg_type,a.content,a.url, a.is_send,a.send_time
+        FROM chat_records a LEFT JOIN chat_records b ON a.wx_username = b.wx_username  AND a.send_time <![CDATA[ < ]]> b.send_time
         <where>
             <if test="userId!=null">
-                cr.create_user= ${userId}
+                a.create_user= ${userId}
             </if>
         </where>
-        GROUP BY wx_username
+        GROUP BY a.wx_username, a.send_time HAVING COUNT(b.id) <![CDATA[ < ]]> 1
         <if test="isSort==1">
-            ORDER BY send_time DESC
+            ORDER BY a.send_time DESC
         </if>
-        ) t ORDER BY t.send_time ASC
+        ) r ON wc.username=r.wx_username) t ORDER BY t.send_time ASC
     </select>
 </mapper>
