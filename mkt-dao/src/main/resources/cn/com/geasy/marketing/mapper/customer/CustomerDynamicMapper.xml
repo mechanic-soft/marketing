@@ -65,7 +65,7 @@
             ${ew.sqlSegment}
         </where>
     </select>
-    
+
     <select id="getCustomerInteractionDynamicStatistics" resultMap="Customer_Interaction_Dynamic_Statistics_Map">
         SELECT
           cd.customer_id,
