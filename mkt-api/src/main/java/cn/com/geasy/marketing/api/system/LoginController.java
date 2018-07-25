@@ -26,7 +26,6 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,26 +62,21 @@ public class LoginController {
 //            @ApiImplicitParam(name = "pass", value = "登录密码", required = true, dataType = "String", paramType = "form")
     })
     @ApiOperation(value = "用户登录")
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> login(HttpServletRequest request,
                                           HttpServletResponse response,
-                                          @RequestParam String username,
-                                          @RequestParam String password
+                                          String username,
+                                          String password
     ) throws IOException {
 
-        UsernamePasswordAuthenticationToken authRequest =
-                new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
         try {
             Authentication authentication = authenticationManager.authenticate(authRequest);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpSession session = request.getSession();
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-
-
-            System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-
+            log.debug("用户[" + username + "]已成功登录。");
             return ResponseUtils.result("用户[" + username + "]已成功登录。");
-
         } catch (AuthenticationException ex) {
             return ResponseUtils.result(ex.getMessage());
         }

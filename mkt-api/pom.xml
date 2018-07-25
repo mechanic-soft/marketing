@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mkt-api</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Marketing API</name>
     <dependencies>
         <dependency>
@@ -20,12 +20,23 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-log4j2</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
-            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +57,13 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox.version}</version>
         </dependency>
+
+        <!--Databases-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
+        </dependency>
         <dependency>
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
             <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
@@ -53,11 +71,6 @@
         </dependency>
 
         <!--Dev tools-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
-            <!--<optional>true</optional>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -73,6 +86,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <!--<scope>test</scope>-->
         </dependency>
 
         <dependency>
@@ -80,6 +94,19 @@
             <artifactId>imech-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--全局依赖排除-->
+        <!--<dependency>-->
+        <!--<groupId></groupId>-->
+        <!--<artifactId>log</artifactId>-->
+        <!--<version>2.0.3.RELEASE</version>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<groupId>*</groupId>-->
+        <!--<artifactId>*</artifactId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
+        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>
@@ -104,5 +131,26 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>config/application-dev.yml</exclude>
+                    <exclude>config/application-test.yml</exclude>
+                    <exclude>config/application-prod.yml</exclude>
+                    <exclude>config/application.yml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>config/application-${environment}.yml</include>
+                    <include>config/application.yml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
+
 </project>
