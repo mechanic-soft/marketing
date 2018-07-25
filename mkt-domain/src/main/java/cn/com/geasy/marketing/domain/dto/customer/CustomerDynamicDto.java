@@ -1,11 +1,14 @@
 package cn.com.geasy.marketing.domain.dto.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 客户动态Dto
@@ -66,4 +69,35 @@ public class CustomerDynamicDto  implements Serializable{
      */
     private String headImgUrl;
 
+    /**
+     * 状态
+     */
+    private Integer status;
+
+    /***
+     * 算术符号
+     */
+    private String symbol;
+
+    /**
+     * 次数
+     */
+    private Integer frequency;
+    /**
+     * 开始时间
+     */
+    private LocalDate startTime;
+    /**
+     * 结束时间
+     */
+    private LocalDate endTime;
+
+    @JsonIgnore
+    public String getStartTimeStr(){
+        return null!=startTime?startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")):null;
+    }
+    @JsonIgnore
+    public String getEndTimeStr(){
+        return  null !=endTime?endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")):null;
+    }
 }

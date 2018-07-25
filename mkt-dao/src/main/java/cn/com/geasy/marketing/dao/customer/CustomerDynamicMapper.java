@@ -25,5 +25,11 @@ public interface CustomerDynamicMapper extends SuperMapper<CustomerDynamic> {
 
     List<CustomerInteractionDynamicStatisticsDto> getCustomerInteractionDynamicStatistics(Page<CustomerInteractionDynamicStatisticsDto> page, @Param("ew") EntityWrapper<CustomerInteractionDynamicStatisticsDto> wrapper);
 
+    /***
+     * 获取客户动态表的客户id
+     * @param customerDynamicDto
+     * @return List<Long> 返回存放客户id的list集合
+     */
+    List<Long> getCustomerIdByCustomerInteractionDynamic(CustomerDynamicDto customerDynamicDto);
 }
 
