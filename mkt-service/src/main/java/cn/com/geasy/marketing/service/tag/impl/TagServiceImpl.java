@@ -60,7 +60,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
             Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
             tag.setTagTypeId(tagDto.getSubTypeId());
             tag.setIsSys(tagDto.getIsSys());
-            if (StringUtils.isNotBlank(tag.getName()) && null != tag.getTagTypeId()) {
+            if (StringUtils.isNotBlank(tag.getName()) && null != tag.getTagTypeId() && null !=tagDto.getTypeId()) {
                 tag.setCreateUser(SessionUtils.getUserId());
                 Integer rows = super.baseMapper.insert(tag);
                 if (rows > 0) {
@@ -97,11 +97,14 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     @Override
     public String updateTag(TagDto tagDto) {
         //设置path
-        Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
-        tag.setTagTypeId(tagDto.getSubTypeId());
-        tag.setIsSys(tagDto.getIsSys());
-        tag.setPath(tagDto.getTypeId()+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
-        Integer rows = super.baseMapper.updateById(tag);
+        Integer rows = 0;
+        if(StringUtils.isNotBlank(tagDto.getName()) && null !=tagDto.getTypeId() && null !=tagDto.getSubTypeId() && null!=tagDto.getId()){
+            Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
+            tag.setTagTypeId(tagDto.getSubTypeId());
+            tag.setIsSys(tagDto.getIsSys());
+            tag.setPath(tagDto.getTypeId() + Const.SPRIT + tag.getTagTypeId() + Const.SPRIT + tag.getId());
+            rows = super.baseMapper.updateById(tag);
+        }
         return rows > 0?Const.UPDATE_SUCCESS:Const.UPDATE_FAIL;
     }
 
