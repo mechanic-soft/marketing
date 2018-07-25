@@ -635,7 +635,7 @@ CREATE TABLE external_call (
     create_user         	bigint(20) COMMENT '创建记录的用户编号'  NULL,
     create_time         	timestamp COMMENT '创建记录的时间'  NULL,
     update_user         	bigint(20) COMMENT '记录最后一次更新的用户编号'  NULL,
-    update_time         	timestamp COMMENT '记录最后一次更新的时间'  NOT NULL DEFAULT '0000-00-00 00:00:00',
+    update_time         	timestamp COMMENT '记录最后一次更新的时间'  NULL ,
     PRIMARY KEY(id)
 );
 
@@ -653,7 +653,7 @@ CREATE TABLE questionnaire (
     create_user    	bigint(20) COMMENT '创建记录的用户编号'  NULL,
     create_time    	timestamp COMMENT '创建记录的时间'  NULL,
     update_user    	bigint(20) COMMENT '记录最后一次更新的用户编号'  NULL,
-    update_time    	timestamp COMMENT '记录最后一次更新的时间'  NOT NULL DEFAULT '0000-00-00 00:00:00',
+    update_time    	timestamp COMMENT '记录最后一次更新的时间'  NULL ,
     PRIMARY KEY(id)
 );
 
@@ -668,7 +668,7 @@ CREATE TABLE rele_external_call_questionnaire (
     create_user     	bigint(20) COMMENT '创建记录的用户编号'  NULL,
     create_time     	timestamp COMMENT '创建记录的时间'  NULL,
     update_user     	bigint(20) COMMENT '记录最后一次更新的用户编号'  NULL,
-    update_time     	timestamp COMMENT '记录最后一次更新的时间'  NOT NULL DEFAULT '0000-00-00 00:00:00',
+    update_time     	timestamp COMMENT '记录最后一次更新的时间'  NULL,
     PRIMARY KEY(id)
 );
 
