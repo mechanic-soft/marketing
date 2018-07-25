@@ -24,9 +24,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,11 +60,11 @@ public class LoginController {
 //            @ApiImplicitParam(name = "pass", value = "登录密码", required = true, dataType = "String", paramType = "form")
     })
     @ApiOperation(value = "用户登录")
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> login(HttpServletRequest request,
                                           HttpServletResponse response,
-                                          String username,
-                                          String password
+                                          @RequestParam(value="username",required=true) String username,
+                                          @RequestParam(value="password",required=true) String password
     ) throws IOException {
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
@@ -75,7 +73,7 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpSession session = request.getSession();
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-            log.debug("用户[" + username + "]已成功登录。");
+//            log.debug("用户[" + username + "]已成功登录。");
             return ResponseUtils.result("用户[" + username + "]已成功登录。");
         } catch (AuthenticationException ex) {
             return ResponseUtils.result(ex.getMessage());
@@ -125,7 +123,7 @@ public class LoginController {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-            log.debug("Invalidating session: " + session.getId());
+//            log.debug("Invalidating session: " + session.getId());
             session.invalidate();
         }
 
