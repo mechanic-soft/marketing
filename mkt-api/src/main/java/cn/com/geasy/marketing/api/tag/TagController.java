@@ -57,8 +57,8 @@ public class TagController {
     }
 
     @ApiOperation(value = "标签列表")
-    @GetMapping(path = "/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ModelMap> getTagsList(@RequestParam Integer pageNum){
+    @GetMapping(path = "/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getTagsList(@RequestParam(defaultValue = "1",required = false) Integer pageNum){
         return ResponseUtils.result(tagService.findSystemTagList(pageNum));
     }
 

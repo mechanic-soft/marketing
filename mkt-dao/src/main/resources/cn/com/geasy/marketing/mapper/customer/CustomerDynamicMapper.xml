@@ -80,4 +80,27 @@
             ${ew.sqlSegment}
         </where>
     </select>
+    <select id="getCustomerIdByCustomerInteractionDynamic" resultType="int" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto">
+        SELECT cd.customer_id
+        FROM customer_dynamic cd
+        <where>
+            <if test="status != null">
+                cd.status = #{status}
+            </if>
+            <if test="event != null">
+               AND cd.event = #{event}
+            </if>
+            <if test="startTimeStr != null and startTimeStr != ''">
+                AND cd.create_time  &gt;= '${startTimeStr} 00:00:00'
+            </if>
+
+            <if test="endTimeStr != null and endTimeStr != ''">
+                AND cd.create_time    &lt;=  '${endTimeStr} 23:59:59'
+            </if>
+        </where>
+        GROUP BY cd.customer_id
+        HAVING count(cd.customer_id) ${symbol}  ${frequency}
+        ORDER BY create_time ASC
+    </select>
+
 </mapper>

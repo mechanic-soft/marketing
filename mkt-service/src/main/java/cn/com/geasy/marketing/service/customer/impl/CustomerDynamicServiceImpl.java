@@ -133,5 +133,10 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         return page.setRecords(customerInteractionDynamicStatisticsDtos);
     }
 
+    @Override
+    public List<Long> getCustomerIdByCustomerInteractionDynamic(CustomerDynamicDto customerDynamicDto) {
+        return this.customerDynamicMapper.getCustomerIdByCustomerInteractionDynamic(customerDynamicDto);
+    }
+
 
 }

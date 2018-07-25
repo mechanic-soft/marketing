@@ -89,9 +89,9 @@ public class CustomerController {
     }
 
     @ApiOperation(value = "客户生命周期事件列表")
-    @PostMapping(path = "/customers/{id}/lifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> customerLifecycle(@PathVariable("id") Long id){
-        return ResponseUtils.result(customerSrv.customerLifecycleById(id));
+    @PostMapping(path = "/customers/{customerId}/lifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> customerLifecycle(@PathVariable("customerId") Long customerId){
+        return ResponseUtils.result(customerSrv.customerLifecycleById(customerId));
     }
 
 
