@@ -5,6 +5,7 @@
 package cn.com.geasy.marketing.service.tag;
 
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
+import cn.com.geasy.marketing.domain.dto.tag.TagTypeDto;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.domain.entity.tag.TagType;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -20,10 +21,10 @@ import java.util.List;
  */
 public interface TagService extends SuperService<Tag> {
     List<Tag> findTagByArticleId(Long articleId);
-    public String addTag(Tag tag,Integer tagarentsTypeId);
-    public String addTagType(TagType tagType);
+    public String addTag(TagDto tagDto);
+    public String addTagType(TagTypeDto tagTypeDto);
     public String removeTag(List<Long> ids);
-    public String updateTag(Tag tag,Integer tagarentsTypeId);
+    public String updateTag(TagDto tagDto);
     public Page<TagDto> findSystemTagList(Integer pageNum);
     public List findTagType();
 }

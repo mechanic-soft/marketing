@@ -3,11 +3,13 @@ package cn.com.geasy.marketing.service.customer.impl;
 import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.dao.customer.CustomerMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
+import cn.com.geasy.marketing.domain.dto.customer.CustomerLifecycleEventDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
 import cn.com.geasy.marketing.domain.entity.customer.CustomerLifecycleEvent;
 import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
+import cn.com.geasy.marketing.mapstruct.customer.CustomerLifecycleEventMapstruct;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
 import cn.com.geasy.marketing.service.customer.CustomerLifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
@@ -99,12 +101,13 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public String synchronizeCustomer(List<WxContact> list) {
+    public String synchronizeCustomer(List<WxContactDto> list) {
+        List<WxContact> wxContacts = WxContactMapstruct.getInstance.toEntityList(list);
         //设置修改为当前用户
-        for (WxContact item:list) {
+        for (WxContact item:wxContacts) {
             item.setUpdateUser(SessionUtils.getUserId());
         }
-        boolean flag = wxContactService.updateBatchById(list);
+        boolean flag = wxContactService.updateBatchById(wxContacts);
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
     }
 
@@ -135,7 +138,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     }
 
     @Override
-    public List<CustomerLifecycleEvent> customerLifecycleById(Long id) {
+    public List<CustomerLifecycleEventDto> customerLifecycleById(Long id) {
         boolean flag = false;
         //步骤一：自定义查询接口
         EntityWrapper<CustomerLifecycleEvent> ew=new EntityWrapper<CustomerLifecycleEvent>();
@@ -149,7 +152,9 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         }
         ew.orderBy("event_date",true);
         List<CustomerLifecycleEvent> list = customerLifecycleEventService.selectList(ew);
-        return CollectionUtils.isEmpty(list) || !flag ?null:list;
+        //
+        List<CustomerLifecycleEventDto> result = CustomerLifecycleEventMapstruct.getInstance.toDtoList(list);
+        return CollectionUtils.isEmpty(result) || !flag ?null:result;
     }
 
     @Override

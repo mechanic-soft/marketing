@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.geasy.marketing.dao.wechat.ChatRecordsMapper">
-    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.entity.wechat.ChatRecords">
+    <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.wechat.WxCustomerDto">
         <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
-        <result property="customerId" column="customerId" javaType="Integer"/>
-        <result property="wxUsername" column="wxUsername" jdbcType="VARCHAR" javaType="String"/>
-        <result property="msgType" column="msgType" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="customerId" column="customer_id" javaType="Long"/>
+        <result property="wxUsername" column="wx_username" jdbcType="VARCHAR" javaType="String"/>
+        <result property="headImgUrl" column="head_img_url" jdbcType="VARCHAR" javaType="String"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR" javaType="String"/>
+        <result property="msgType" column="msg_type" jdbcType="TINYINT" javaType="Integer"/>
         <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
         <result property="url" column="url" jdbcType="VARCHAR" javaType="String"/>
-        <result property="isSend" column="isSend" jdbcType="TINYINT" javaType="Integer"/>
-        <result property="sendTime" column="sendTime" jdbcType="TIMESTAMP" javaType="Integer"/>
-        <result property="status" column="status" jdbcType="TINYINT" javaType="Integer"/>
-        <result property="createUser" column="create_user" javaType="Integer"/>
-        <result property="createTime" column="create_time" javaType="Integer"/>
-        <result property="updateUser" column="update_user" javaType="Integer"/>
-        <result property="updateTime" column="update_time" javaType="Integer"/>
+        <result property="isSend" column="is_send" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="sendTime" column="send_time" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime"/>
     </resultMap>
+
+    <select id="findUncontactCustomer" resultMap="Base_Result_Map" parameterType="java.util.Map">
+        SELECT t.* FROM (
+        SELECT cr.id,customer_id,wx_username,head_img_url,nickname,msg_type,content,url, is_send,send_time FROM
+        chat_records cr INNER JOIN wx_contact wc ON cr.wx_username = wc.username
+        <where>
+            <if test="userId!=null">
+                cr.create_user= ${userId}
+            </if>
+        </where>
+        GROUP BY wx_username
+        <if test="isSort==1">
+            ORDER BY send_time DESC
+        </if>
+        ) t ORDER BY t.send_time ASC
+    </select>
 </mapper>

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRecordsDto implements Serializable {
+public class ChatRecordsDto  implements Serializable {
     private static final long serialVersionUID = 3800368759247477028L;
     /**
      * 聊天记录ID

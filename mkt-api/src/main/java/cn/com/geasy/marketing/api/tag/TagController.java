@@ -1,5 +1,7 @@
 package cn.com.geasy.marketing.api.tag;
 
+import cn.com.geasy.marketing.domain.dto.tag.TagDto;
+import cn.com.geasy.marketing.domain.dto.tag.TagTypeDto;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.domain.entity.tag.TagType;
 import cn.com.geasy.marketing.service.tag.TagService;
@@ -32,14 +34,14 @@ public class TagController {
 
     @ApiOperation(value = "新增标签")
     @PostMapping(path = "/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ModelMap> addTag(@RequestBody Tag tag,@RequestParam Integer tagarentsTypeId){
-       return ResponseUtils.result(tagService.addTag(tag,tagarentsTypeId));
+    public ResponseEntity<ModelMap> addTag(@RequestBody TagDto tagDto){
+       return ResponseUtils.result(tagService.addTag(tagDto));
     }
 
     @ApiOperation(value = "新增标签类别")
     @PostMapping(path = "/tagTypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ModelMap> addTagType(@RequestBody TagType tagType){
-        return ResponseUtils.result(tagService.addTagType(tagType));
+    public ResponseEntity<ModelMap> addTagType(@RequestBody TagTypeDto tagTypeDto){
+        return ResponseUtils.result(tagService.addTagType(tagTypeDto));
     }
 
     @ApiOperation(value = "删除标签")
@@ -50,8 +52,8 @@ public class TagController {
 
     @ApiOperation(value = "修改标签")
     @PutMapping(path = "/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ModelMap> updateTag(@RequestBody Tag tag,@RequestParam Integer tagarentsTypeId){
-        return ResponseUtils.result(tagService.updateTag(tag,tagarentsTypeId));
+    public ResponseEntity<ModelMap> updateTag(@RequestBody TagDto tagDto){
+        return ResponseUtils.result(tagService.updateTag(tagDto));
     }
 
     @ApiOperation(value = "标签列表")

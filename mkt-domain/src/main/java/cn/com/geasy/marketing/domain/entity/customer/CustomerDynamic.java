@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 客户动态实体
@@ -26,29 +27,42 @@ import java.io.Serializable;
 @TableName("customer_dynamic")
 public class CustomerDynamic extends Entity implements Serializable {
     private static final long serialVersionUID = 267795432213577189L;
-
     /**
-     * 登录账户
+     * 客户ID
      */
-    private String customerId;
+    private Long customerId;
     /**
      * 事件
      */
-    private String event;
+    private Integer event;
     /**
      * 发生日期
      */
-    private String eventDate;
+    private LocalDateTime eventDate;
     /**
      * 文章ID
      */
-    private String articleId;
+    private Long articleId;
     /**
      * 文章标题
      */
-    private Long articleTitle;
+    private String articleTitle;
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
+
+    /**
+     * 文章标签
+     */
+    private String articleTag;
+    /**
+     * 阅读时长/秒
+     */
+    private Integer readTime;
+    /**
+     * 是否阅读全文
+     * （0=否，1=是）
+     */
+    private Integer isFullRead;
 }

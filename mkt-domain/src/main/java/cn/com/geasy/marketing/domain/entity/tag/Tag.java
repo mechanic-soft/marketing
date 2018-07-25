@@ -30,12 +30,6 @@ public class Tag extends Entity implements Serializable {
 
     private static final long serialVersionUID = -2963452625509102556L;
     /**
-     * 主键
-     */
-    //@TableId(value="id",type= IdType.INPUT)
-    private Long id;
-
-    /**
      * 标签创建人
      */
     private Long userId;
@@ -48,7 +42,7 @@ public class Tag extends Entity implements Serializable {
     /**
      * 类别：1：文章标签，2：人的标签
      */
-    private Integer tagTypeId;
+    private Long tagTypeId;
 
     /**
      * 标签来源 (0=微信,1=外呼)
