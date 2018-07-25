@@ -1,5 +1,6 @@
 package cn.com.geasy.marketing.domain.dto.wechat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -57,5 +58,6 @@ public class WxCustomerDto implements Serializable{
     /**
      * 最后发送信息时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private LocalDateTime sendTime;
 }

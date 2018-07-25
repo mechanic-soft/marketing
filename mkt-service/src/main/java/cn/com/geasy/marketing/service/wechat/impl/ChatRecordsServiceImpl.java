@@ -6,15 +6,10 @@ package cn.com.geasy.marketing.service.wechat.impl;
 
 import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.dao.wechat.ChatRecordsMapper;
-import cn.com.geasy.marketing.dao.wechat.WxContactMapper;
-import cn.com.geasy.marketing.domain.dto.tag.TagDto;
-import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.dto.wechat.ChatRecordsDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxCustomerDto;
 import cn.com.geasy.marketing.domain.entity.customer.CustomerDynamic;
 import cn.com.geasy.marketing.domain.entity.wechat.ChatRecords;
-import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
-import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
 import cn.com.geasy.marketing.mapstruct.wechat.ChatRecordsMapstruct;
 import cn.com.geasy.marketing.service.customer.CustomerDynamicService;
 import cn.com.geasy.marketing.service.wechat.ChatRecordsService;
@@ -24,7 +19,6 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import com.gitee.mechanic.mybatis.utils.PageUtils;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,36 +90,26 @@ public class ChatRecordsServiceImpl extends SuperServiceImpl<ChatRecordsMapper, 
 
 
     @Override
-    public Page<ChatRecordsDto> findChatRecordsByCondition(String nickname,String keyword,int pageNum) {
-        //根据昵称
-        //步骤一:根据微信昵称匹配对应的微信联系人记录
-        EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
-        ew.where("user_id = {0}", SessionUtils.getUserId());
-        if(StringUtils.isNotBlank(nickname)){
-            ew.andNew("nickname = {0}",nickname);
-        }
-        List<WxContact> list = wxContactService.selectList(ew);
+    public Page<ChatRecordsDto> findChatRecordsByCondition(String username, String keyword, int pageNum) {
         Page<ChatRecordsDto> result = PageUtils.getPage(pageNum);
-        if(!CollectionUtils.isEmpty(list)){
-           Long customerId = list.get(0).getId();
-           //根据客户ID以及当前登录用户ID
-           EntityWrapper<ChatRecords> chatRecordEw=new EntityWrapper<ChatRecords>();
-           chatRecordEw.where("create_user = {0}", SessionUtils.getUserId());
-           if(null != customerId){
-               chatRecordEw.andNew("customer_id ={0}",customerId);
-           }
-           if(StringUtils.isNoneBlank(keyword)){
-               chatRecordEw.like("content",keyword);
-           }
-           //默认升序排列
+        if (StringUtils.isNotBlank(username)) {
+            //根据客户ID以及当前登录用户ID
+            EntityWrapper<ChatRecords> chatRecordEw = new EntityWrapper<ChatRecords>();
+            chatRecordEw.where("create_user = {0}", SessionUtils.getUserId());
+            chatRecordEw.andNew("wx_username ={0}", username);
+            if (StringUtils.isNoneBlank(keyword)) {
+                chatRecordEw.like("content", keyword);
+            }
+            //默认升序排列
             chatRecordEw.orderBy("send_time");
-           //执行查询
+            //执行查询
             Page<ChatRecords> page = PageUtils.getPage(pageNum);
-            page = chatRecordsService.selectPage(page,chatRecordEw);
+            page = chatRecordsService.selectPage(page, chatRecordEw);
             //将对应实体转换为对应实体的DTO
             List<ChatRecordsDto> chatRecordsDtos = ChatRecordsMapstruct.getInstance.toDtoList(page.getRecords());
             result = PageUtils.getPage(page, chatRecordsDtos);
         }
+
         return result;
     }
 
