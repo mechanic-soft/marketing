@@ -17,6 +17,7 @@ import cn.com.geasy.marketing.service.tag.TagService;
 import cn.com.geasy.marketing.service.tag.TagTreeDtoService;
 import cn.com.geasy.marketing.service.tag.TagTypeService;
 import cn.com.geasy.marketing.utils.SessionUtils;
+import cn.com.geasy.marketing.utils.SynchronizeUtils;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
@@ -27,7 +28,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * 请在此写下该类的说明
@@ -55,19 +56,20 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     @Override
     public String addTag(TagDto tagDto) {
         Integer rs = 0;
-        Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
-        tag.setTagTypeId(tagDto.getSubTypeId());
-        tag.setIsSys(tagDto.getIsSys());
-        if(StringUtils.isNotBlank(tag.getName()) && null!=tag.getTagTypeId()) {
-            tag.setCreateUser(SessionUtils.getUserId());
-            Integer rows = super.baseMapper.insert(tag);
-            if(rows > 0){
-                //表示已经插入成功
-                tag.setPath(tagDto.getTypeId()+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
-                rs = super.baseMapper.updateById(tag);
+        if (SynchronizeUtils.sendTag(tagDto.getName())) { //新增标签时同时发送到服务号系统
+            Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
+            tag.setTagTypeId(tagDto.getSubTypeId());
+            tag.setIsSys(tagDto.getIsSys());
+            if (StringUtils.isNotBlank(tag.getName()) && null != tag.getTagTypeId()) {
+                tag.setCreateUser(SessionUtils.getUserId());
+                Integer rows = super.baseMapper.insert(tag);
+                if (rows > 0) {
+                    //表示已经插入成功
+                    tag.setPath(tagDto.getTypeId() + Const.SPRIT + tag.getTagTypeId() + Const.SPRIT + tag.getId());
+                    rs = super.baseMapper.updateById(tag);
+                }
             }
         }
-
         return rs > 0 ? Const.SAVE_SUCCESS:Const.SAVE_FAIL;
     }
 
