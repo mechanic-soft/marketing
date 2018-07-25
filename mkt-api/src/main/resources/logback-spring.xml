@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false" scanPeriod="10 seconds">
     <!-- 彩色日志依赖的渲染类 -->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
-    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
     <!--文件输出的格式设置 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 日志日常打印文件 -->
@@ -52,20 +54,38 @@
             <level>DEBUG</level>
         </filter>
     </appender>
-    <root level="INFO">
-        <appender-ref ref="FILE"/>
-        <appender-ref ref="STDOUT"/>
-    </root>
 
-    <logger name="cn.com.geasy.marketing" level="DEBUG" />
-    <logger name="org.springframework" level="WARN" />
-    <logger name="com.baomidou" level="WARN" />
-    <logger name="org.apache.ibatis" level="WARN" />
-    <logger name="jdbc.resultsettable" level="DEBUG" />
-    <logger name="jdbc.sqltiming" level="OFF" />
-    <logger name="jdbc.sqlonly" level="DEBUG" />
-    <logger name="jdbc.connection" level="DEBUG" />
-    <logger name="jdbc.audit" level="OFF" />
-    <logger name="jdbc.resultset" level="OFF" />
+    <logger name="cn.com.geasy.marketing.listener" level="DEBUG"/>
+    <logger name="cn.com.geasy.marketing" level="DEBUG"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="springfox.documentation" level="WARN"/>
+    <logger name="com.baomidou" level="WARN"/>
+    <logger name="org.apache.ibatis" level="WARN"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="OFF"/>
+    <logger name="jdbc.sqlonly" level="DEBUG"/>
+    <logger name="jdbc.connection" level="DEBUG"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <root level="DEBUG">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
 
 </configuration>
