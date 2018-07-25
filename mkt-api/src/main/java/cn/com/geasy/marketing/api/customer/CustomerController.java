@@ -50,13 +50,13 @@ public class CustomerController {
             @RequestParam(required = false) LocalDate callTimeStart,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @RequestParam(required = false) LocalDate callTimeEnd,
-            @RequestParam(required = true) int pageNum,
-            @RequestParam(required = true) int pageSize)
+            @RequestParam(required = false) Integer pageNum,
+            @RequestParam(required = false) Integer pageSize)
     {
 
         //localDateToStr(callTimeStart);
         CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
-        return ResponseUtils.result(customerSrv.selectDtoPage(pageNum,pageSize,customerDto));
+        return ResponseUtils.result(customerSrv.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,customerDto));
     }
 
 
