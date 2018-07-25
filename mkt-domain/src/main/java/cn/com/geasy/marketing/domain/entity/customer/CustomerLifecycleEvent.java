@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 客户生命周期事件实体
@@ -38,7 +38,7 @@ public class CustomerLifecycleEvent extends Entity implements Serializable {
     /**
      * 事件日期
      */
-    private Date eventDate;
+    private LocalDateTime eventDate;
 
     /**
      * 用户ID

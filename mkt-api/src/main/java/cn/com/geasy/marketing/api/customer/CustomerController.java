@@ -1,10 +1,9 @@
 package cn.com.geasy.marketing.api.customer;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
-import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
+import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +77,7 @@ public class CustomerController {
 
     @ApiOperation(value = "同步客户")
     @PostMapping(path = "/customers/wxContacts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> synchronizeCustomer(@RequestBody List<WxContact> list){
+    public ResponseEntity<ModelMap> synchronizeCustomer(@RequestBody List<WxContactDto> list){
         return ResponseUtils.result(customerSrv.synchronizeCustomer(list));
     }
 

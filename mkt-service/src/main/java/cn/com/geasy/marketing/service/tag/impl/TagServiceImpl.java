@@ -7,8 +7,11 @@ package cn.com.geasy.marketing.service.tag.impl;
 import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.dao.tag.TagMapper;
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
+import cn.com.geasy.marketing.domain.dto.tag.TagTypeDto;
 import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.domain.entity.tag.TagType;
+import cn.com.geasy.marketing.mapstruct.tag.TagMapstruct;
+import cn.com.geasy.marketing.mapstruct.tag.TagTypeMapstruct;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
 import cn.com.geasy.marketing.service.tag.TagService;
 import cn.com.geasy.marketing.service.tag.TagTreeDtoService;
@@ -50,14 +53,17 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public String addTag(Tag tag,Integer tagarentsTypeId) {
+    public String addTag(TagDto tagDto) {
         Integer rs = 0;
+        Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
+        tag.setTagTypeId(tagDto.getSubTypeId());
+        tag.setIsSys(tagDto.getIsSys());
         if(StringUtils.isNotBlank(tag.getName()) && null!=tag.getTagTypeId()) {
             tag.setCreateUser(SessionUtils.getUserId());
             Integer rows = super.baseMapper.insert(tag);
             if(rows > 0){
                 //表示已经插入成功
-                tag.setPath(tagarentsTypeId+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
+                tag.setPath(tagDto.getTypeId()+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
                 rs = super.baseMapper.updateById(tag);
             }
         }
@@ -66,8 +72,9 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     }
 
     @Override
-    public String addTagType(TagType tagType) {
+    public String addTagType(TagTypeDto tagTypeDto) {
         boolean result = false;
+        TagType tagType = TagTypeMapstruct.getInstance.toEntity(tagTypeDto);
         if(StringUtils.isNotBlank(tagType.getName()) && null!=tagType.getParentId()) {
             //获取当前登录用户
             tagType.setCreateUser(SessionUtils.getUserId());
@@ -76,7 +83,6 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
         return result ? Const.SAVE_SUCCESS:Const.SAVE_FAIL;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public String removeTag(List<Long> ids) {
         Integer rows = 0;
@@ -87,9 +93,12 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     }
 
     @Override
-    public String updateTag(Tag tag,Integer tagarentsTypeId) {
+    public String updateTag(TagDto tagDto) {
         //设置path
-        tag.setPath(tagarentsTypeId+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
+        Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
+        tag.setTagTypeId(tagDto.getSubTypeId());
+        tag.setIsSys(tagDto.getIsSys());
+        tag.setPath(tagDto.getTypeId()+Const.SPRIT+tag.getTagTypeId()+Const.SPRIT+tag.getId());
         Integer rows = super.baseMapper.updateById(tag);
         return rows > 0?Const.UPDATE_SUCCESS:Const.UPDATE_FAIL;
     }

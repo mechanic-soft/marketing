@@ -1,6 +1,7 @@
 package cn.com.geasy.marketing.domain.dto.tag;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +23,12 @@ public class TagDto implements Serializable {
     /**
      * 标签id
      */
-    private Long tagId;
+    private Long id;
 
     /**
      * 标签名字
      */
     private String name;
-
-
-
     /**
      * 类型id
      */
@@ -66,7 +64,9 @@ public class TagDto implements Serializable {
     /**
      * 是否系统标签(0=系统标签，1=自定义标签)
      */
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private Integer isSys;
+
+
 
 }

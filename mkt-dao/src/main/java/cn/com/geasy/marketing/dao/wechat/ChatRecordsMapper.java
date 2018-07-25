@@ -4,9 +4,13 @@
  */
 package cn.com.geasy.marketing.dao.wechat;
 
+import cn.com.geasy.marketing.domain.dto.wechat.WxCustomerDto;
 import cn.com.geasy.marketing.domain.entity.wechat.ChatRecords;
-import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 聊天记录Mapper
@@ -15,4 +19,5 @@ import com.gitee.mechanic.mybatis.base.SuperMapper;
  * @version 1.0.0
  */
 public interface ChatRecordsMapper extends SuperMapper<ChatRecords> {
+    public List<WxCustomerDto> findUncontactCustomer(Page<WxCustomerDto> page,Map<String, Object> map);
 }

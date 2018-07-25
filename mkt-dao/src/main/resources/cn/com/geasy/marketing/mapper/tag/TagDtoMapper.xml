@@ -3,7 +3,7 @@
 <mapper namespace="cn.com.geasy.marketing.dao.tag.TagDtoMapper">
 
     <resultMap id="Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.tag.TagDto">
-        <result property="tagId" column="tagId" javaType="Long"/>
+        <result property="id" column="tagId" javaType="Long"/>
         <result property="name" column="name" javaType="String"/>
         <result property="subTypeId" column="subTypeId" javaType="Long"/>
         <result property="subTypeName" column="subTypeName" javaType="String"/>
