@@ -17,6 +17,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -34,30 +36,36 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
     @Autowired
     private TaskUserService taskUserService;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean save(TaskDto taskDto) {
         Long userId = SessionUtils.getUserId();
-        List<TaskUser> taskUserList = new ArrayList<TaskUser>();
-        Task task = new Task();
-        task.setTitle(taskDto.getTitle());
-        task.setContent(taskDto.getContent());
-        //保存到task表
-        this.baseMapper.insert(task);
-        Long taskId = task.getId();
-        taskDto.getUserId().forEach(i -> {
-            TaskUser taskUser = new TaskUser();
-            taskUser.setUserId(i);
-            taskUser.setTaskId(taskId);
-            taskUser.setCreateUser(userId);
-            taskUser.setUpdateUser(userId);
-            taskUserList.add(taskUser);
-        });
-        //保存到taskUser表
-        return taskUserService.insertOrUpdateAllColumnBatch(taskUserList);
+        boolean returnFlag = false;
+        try {
+            List<TaskUser> taskUserList = new ArrayList<TaskUser>();
+            Task task = new Task();
+            task.setTitle(taskDto.getTitle());
+            task.setContent(taskDto.getContent());
+            //保存到task表
+            this.baseMapper.insert(task);
+            Long taskId = task.getId();
+            taskDto.getUserId().forEach(i -> {
+                TaskUser taskUser = new TaskUser();
+                taskUser.setUserId(i);
+                taskUser.setTaskId(taskId);
+                taskUser.setCreateUser(userId);
+                taskUser.setUpdateUser(userId);
+                taskUserList.add(taskUser);
+            });
+            //保存到taskUser表
+            returnFlag = taskUserService.insertOrUpdateAllColumnBatch(taskUserList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return returnFlag;
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean update(TaskDto taskDto) {
         Long newUserId = SessionUtils.getUserId();
