@@ -17,5 +17,12 @@ public interface CustomerMapper extends SuperMapper<Customer> {
     public CustomerDto findById(CustomerDto customerDto);
     List<CustomerDto> selectDtoPage(Page page , @Param("customerDto") CustomerDto customerDto);
 
+    /**
+     * 查找已经“已开户”标签下的客户
+     * @param customerDtoIds
+     * @return
+     */
+    List<CustomerDto> findOpenAccountCustomerDtoIds(@Param("ids") List<Long> customerDtoIds);
+
 }
 

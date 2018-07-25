@@ -4,6 +4,7 @@ import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
+import cn.com.geasy.marketing.utils.SessionUtils;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class CustomerController {
         return ResponseUtils.result(customerSrv.deleteBatchIds(ids));
     }
 
-    @ApiOperation(value = "用户列表查询")
+    @ApiOperation(value = "客户列表查询")
     @GetMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> selectPage(
             @RequestParam(required = false) String nickname,
@@ -54,7 +55,7 @@ public class CustomerController {
     {
 
         //localDateToStr(callTimeStart);
-        CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd);
+        CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
         return ResponseUtils.result(customerSrv.selectDtoPage(pageNum,pageSize,customerDto));
     }
 

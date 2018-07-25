@@ -348,9 +348,8 @@ CREATE TABLE customer (
   maturity           TINYINT            NULL, -- 客户成熟度
   is_open_account    TINYINT            NULL, -- 是否开户
   callcenter_user_id VARCHAR(64)        NULL, -- 外呼平台用户ID
-  user_id            BIGINT             NULL, --
-  corp_id            BIGINT             NULL, -- 公司ID
-  status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  user_id            BIGINT             NULL, -- 客户id  corp_id            BIGINT             NULL, -- 公司ID
+  corp_id            BIGINT             NULL, -- 公司ID  status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
   create_user        BIGINT             NULL, -- 创建记录的用户编号
   create_time        TIMESTAMP          NULL, -- 创建记录的时间
   update_user        BIGINT             NULL, -- 记录最后一次更新的用户编号
@@ -479,8 +478,7 @@ CREATE TABLE tag_type (
   id          BIGINT PRIMARY KEY                 NOT NULL,
   parent_id   BIGINT default '0'                 NULL, -- 父级ID
   name        VARCHAR(256)                       NULL, -- 标签名称
-  code        VARCHAR(256)                       NULL, -- 标签编码(仅数据处理用)
-  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
+  code        VARCHAR(256)                       NULL, -- 标签编码(仅数据处理用)  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                             NULL, -- 创建记录的用户编号
   create_time TIMESTAMP                          NULL, -- 创建记录的时间
   update_user BIGINT                             NULL, -- 记录最后一次更新的用户编号
@@ -595,80 +593,3 @@ CREATE TABLE mp_user (
   update_user     BIGINT                  NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP               NULL -- 记录最后一次更新时间
 );
-
-
-/*==============================================================*/
-/* Table: 外呼信息表                                              */
-/*==============================================================*/
-CREATE TABLE external_call (
-    id                  	bigint(20) COMMENT '主键'  NOT NULL DEFAULT '0',
-    item_code           	varchar(150) COMMENT '项目编码'  NULL,
-    item_name           	varchar(255) COMMENT '项目名称'  NULL,
-    task_code           	varchar(255) COMMENT '任务编码'  NULL,
-    task_name           	varchar(255) COMMENT '任务名称'  NULL,
-    business_hall_code  	varchar(255) COMMENT '营业厅编码'  NULL,
-    business_hall_name  	varchar(255) COMMENT '营业厅名称'  NULL,
-    call_time           	timestamp COMMENT '呼叫时间'  NULL,
-    user_code           	varchar(255) COMMENT '用户编码'  NULL,
-    customer_id         	varchar(255) COMMENT '坐席工号（客户经理id）'  NULL,
-    customer_name       	varchar(255) COMMENT '坐席工号名称（客户经理名称）'  NULL,
-    call_time_start     	timestamp COMMENT '呼叫开始时间'  NULL,
-    call_time_answer    	timestamp COMMENT '呼叫应答时间'  NULL,
-    call_time_end       	timestamp COMMENT '呼叫结束时间'  NULL,
-    talk_time           	bigint(20) COMMENT '通话时长'  NULL,
-    ring_time           	bigint(20) COMMENT '振铃时长'  NULL,
-    line_up_time        	bigint(20) COMMENT '排队时长'  NULL,
-    is_answer           	int(5) COMMENT '是否接通'  NULL,
-    call_result         	varchar(30) COMMENT '呼叫结果(用户挂机、用户未接通)'  NULL,
-    call_type           	varchar(5) COMMENT '呼叫类别(1呼、2呼、3呼)'  NULL,
-    call_in_out         	varchar(20) COMMENT '呼叫方向(呼出、呼入)'  NULL,
-    is_send_msg         	varchar(15) COMMENT '是否下发短信'  NULL,
-    msg                 	varchar(1000) COMMENT '短信内容'  NULL,
-    record_msg          	varchar(1000) COMMENT '录音内容'  NULL,
-    reserved_field_one  	varchar(255) COMMENT '预留1'  NULL,
-    reserved_field_two  	varchar(255) COMMENT '预留2'  NULL,
-    reserved_field_three	varchar(255) COMMENT '预留3'  NULL,
-    reserved_field_four 	varchar(255) COMMENT '预留4'  NULL,
-    reserved_field_five 	varchar(255) COMMENT '预留5'  NULL,
-    remark              	varchar(255) COMMENT '备注'  NULL,
-    status              	tinyint(4) COMMENT '状态(0=删除,1=正常)'  NOT NULL DEFAULT '1',
-    create_user         	bigint(20) COMMENT '创建记录的用户编号'  NULL,
-    create_time         	timestamp COMMENT '创建记录的时间'  NULL,
-    update_user         	bigint(20) COMMENT '记录最后一次更新的用户编号'  NULL,
-    update_time         	timestamp COMMENT '记录最后一次更新的时间'  NULL ,
-    PRIMARY KEY(id)
-);
-
-/*==============================================================*/
-/* Table: 问卷记录表                                              */
-/*==============================================================*/
-CREATE TABLE questionnaire (
-    id             	bigint(40) COMMENT '主键'  NOT NULL DEFAULT '0',
-    sequence_number	bigint(40) COMMENT '问卷序号'  NULL,
-    is_not_null    	bigint(5) COMMENT '是否必填'  NULL,
-    content        	varchar(1500) COMMENT '问卷内容'  NULL,
-    result         	varchar(1000) COMMENT '问卷结果'  NULL,
-    remark         	varchar(500) COMMENT '备注'  NULL,
-    status         	tinyint(4) COMMENT '状态(0=删除,1=正常)'  NOT NULL DEFAULT '1',
-    create_user    	bigint(20) COMMENT '创建记录的用户编号'  NULL,
-    create_time    	timestamp COMMENT '创建记录的时间'  NULL,
-    update_user    	bigint(20) COMMENT '记录最后一次更新的用户编号'  NULL,
-    update_time    	timestamp COMMENT '记录最后一次更新的时间'  NULL ,
-    PRIMARY KEY(id)
-);
-
-/*==============================================================*/
-/* Table: 外呼信息与问卷记录关联关系表                                              */
-/*==============================================================*/
-CREATE TABLE rele_external_call_questionnaire (
-    id              	bigint(35) COMMENT 'id'  NOT NULL DEFAULT '0',
-    external_call_id	bigint(35) COMMENT '外呼信息id'  NOT NULL,
-    questionnaire_id	bigint(35) COMMENT '问卷记录id'  NOT NULL,
-    status          	tinyint(4) COMMENT '状态(0=删除,1=正常)'  NOT NULL DEFAULT '1',
-    create_user     	bigint(20) COMMENT '创建记录的用户编号'  NULL,
-    create_time     	timestamp COMMENT '创建记录的时间'  NULL,
-    update_user     	bigint(20) COMMENT '记录最后一次更新的用户编号'  NULL,
-    update_time     	timestamp COMMENT '记录最后一次更新的时间'  NULL,
-    PRIMARY KEY(id)
-);
-
