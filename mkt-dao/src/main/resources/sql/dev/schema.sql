@@ -368,7 +368,7 @@ CREATE TABLE customer_dynamic (
   article_id    BIGINT                              NULL, -- 文章ID
   article_title VARCHAR(512)                        NULL, -- 文章标题
   article_tag   VARCHAR(512)                        NULL, -- 文章标签
-  read_time     TIMESTAMP                           NULL, -- 阅读时长
+  read_time     INTEGER                             NULL, -- 阅读时长
   is_full_read  TINYINT                             NULL, -- 是否阅读全文
   user_id       BIGINT                              NULL, -- 用户ID
   status        TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)

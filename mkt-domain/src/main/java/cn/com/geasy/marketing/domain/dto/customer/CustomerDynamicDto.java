@@ -1,38 +1,30 @@
-/*
- * Copyright 2016-2018 the original author or authors.
- * Created on 2018/7/16 下午7:02
- */
-package cn.com.geasy.marketing.domain.entity.customer;
+package cn.com.geasy.marketing.domain.dto.customer;
 
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 客户动态实体
- *
- * @author phil
- * @version 1.0.0
+ * 客户动态Dto
+ * @author tingfei.wang
+ * @date 2018年07月22日 10:20:00
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("customer_dynamic")
-public class CustomerDynamic extends Entity implements Serializable {
-    private static final long serialVersionUID = 267795432213577189L;
+public class CustomerDynamicDto  implements Serializable{
+
+    private static final long serialVersionUID = 5196270173475692183L;
+    private Long id;
     /**
      * 客户ID
      */
     private Long customerId;
     /**
-     * 事件
+     * 事件(0=阅读,1=订阅,2=联系)
      */
     private Integer event;
     /**
@@ -65,4 +57,13 @@ public class CustomerDynamic extends Entity implements Serializable {
      * （0=否，1=是）
      */
     private Integer isFullRead;
+    /**
+     * 微信昵称
+     */
+    private String nickname;
+    /**
+     * 微信头像URL
+     */
+    private String headImgUrl;
+
 }
