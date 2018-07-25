@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.geasy.marketing.dao.customer.CustomerDynamicMapper">
+    <resultMap id="CustomerDynamicMap" type="cn.com.geasy.marketing.domain.entity.customer.CustomerDynamic">
+        <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
+        <result property="customerId" column="customerId" jdbcType="BIGINT" javaType="Long"/>
+        <result property="event" column="event" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="eventDate" column="eventDate" jdbcType="TIMESTAMP" javaType="Integer"/>
+        <result property="articleId" column="articleId" jdbcType="BIGINT" javaType="Long"/>
+        <result property="articleTitle" column="articleTitle" jdbcType="VARCHAR" javaType="String"/>
+        <result property="articleTag" column="articleTag" jdbcType="VARCHAR" javaType="String"/>
+        <result property="readTime" column="readTime" jdbcType="TIMESTAMP" javaType="Integer"/>
+        <result property="isFullRead" column="isFullRead" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="userId" column="userId" jdbcType="BIGINT" javaType="Long"/>
+        <result property="status" column="status" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="createUser" column="create_user" javaType="Integer"/>
+        <result property="createTime" column="create_time" javaType="Integer"/>
+        <result property="updateUser" column="update_user" javaType="Integer"/>
+        <result property="updateTime" column="update_time" javaType="Integer"/>
+    </resultMap>
+    <select id="findById" resultMap="CustomerDynamicMap" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto">
+        SELECT ct.ID,wx.head_img_url,wx.nickname,wx.username,ct.remark,ct.phone,ct.maturity,wx.is_sync,ct.is_open_account
+        FROM customer_dynamic ct INNER JOIN wx_contact wx ON ct.wx_contact_id = wx.ID
+        <where>
+            <if test="id != null">
+                ct.ID = #{id}
+            </if>
+        </where>
+    </select>
+</mapper>
