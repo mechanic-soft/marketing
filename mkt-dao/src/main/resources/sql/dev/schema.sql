@@ -348,8 +348,9 @@ CREATE TABLE customer (
   maturity           TINYINT            NULL, -- 客户成熟度
   is_open_account    TINYINT            NULL, -- 是否开户
   callcenter_user_id VARCHAR(64)        NULL, -- 外呼平台用户ID
-  user_id            BIGINT             NULL, -- 客户id  corp_id            BIGINT             NULL, -- 公司ID
-  corp_id            BIGINT             NULL, -- 公司ID  status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  user_id            BIGINT             NULL, -- 客户id
+  corp_id            BIGINT             NULL, -- 公司ID
+  status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
   create_user        BIGINT             NULL, -- 创建记录的用户编号
   create_time        TIMESTAMP          NULL, -- 创建记录的时间
   update_user        BIGINT             NULL, -- 记录最后一次更新的用户编号
@@ -478,7 +479,8 @@ CREATE TABLE tag_type (
   id          BIGINT PRIMARY KEY                 NOT NULL,
   parent_id   BIGINT default '0'                 NULL, -- 父级ID
   name        VARCHAR(256)                       NULL, -- 标签名称
-  code        VARCHAR(256)                       NULL, -- 标签编码(仅数据处理用)  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
+  code        VARCHAR(256)                       NULL, -- 标签编码(仅数据处理用)
+  status      TINYINT DEFAULT 1                  NOT NULL, -- 状态(0=删除,1=正常)
   create_user BIGINT                             NULL, -- 创建记录的用户编号
   create_time TIMESTAMP                          NULL, -- 创建记录的时间
   update_user BIGINT                             NULL, -- 记录最后一次更新的用户编号
