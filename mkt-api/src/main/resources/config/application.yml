@@ -8,12 +8,8 @@ server:
 spring:
   application:
     name: Marketing API
-  profiles:
-#    active: @environment@
-    active: dev
   jackson:
-#    mapper: true
-#    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
     serialization:
       indent_output: true
@@ -26,7 +22,6 @@ spring:
       accept_empty_string_as_null_object: true
       read_unknown_enum_values_as_null: false
     locale: zh_CN
-#    joda-date-time-format: yyyy-MM-dd HH:mm:ss
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     sql-script-encoding: UTF-8
