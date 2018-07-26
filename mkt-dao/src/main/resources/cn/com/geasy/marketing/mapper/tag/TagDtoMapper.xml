@@ -10,7 +10,7 @@
         <result property="typeId" column="typeId" javaType="Long"/>
         <result property="typeName" column="typeName" javaType="String"/>
         <result property="customerId" column="customerId" javaType="Long"/>
-        <result property="tagSrc" column="tagSrc" javaType="Long"/>
+        <result property="tagSrc" column="tagSrc" javaType="Integer"/>
     </resultMap>
 
 

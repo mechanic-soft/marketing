@@ -1,31 +1,23 @@
-/*
- * Copyright 2016-2018 the original author or authors.
- * Created on 2018/7/16 下午7:13
- */
-package cn.com.geasy.marketing.domain.entity.wechat;
+package cn.com.geasy.marketing.domain.dto.wechat;
 
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
- * 微信联系人实体
+ * 微信联系人Dto
  *
- * @author phil
+ * @author yml
  * @version 1.0.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("wx_contact")
-public class WxContact extends Entity implements Serializable {
-    private static final long serialVersionUID = -886092645712427755L;
+public class WxContactSecondDto implements Serializable{
+
+    private static final long serialVersionUID = 5458432260545192749L;
     /**
      * 用户ID
      */
@@ -45,6 +37,9 @@ public class WxContact extends Entity implements Serializable {
     /**
      * 头像URL
      */
+    private String headImgUrl;
+
+
     private Integer contactFlag;
     /**
      *
@@ -149,11 +144,10 @@ public class WxContact extends Entity implements Serializable {
 
     private String encryChatRoomId;
 
-    private String headImgUrl;
-
     /**
      * 是否同步
      */
     private Integer isSync;
+
 
 }

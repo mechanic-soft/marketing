@@ -5,12 +5,14 @@ import cn.com.geasy.marketing.dao.customer.CustomerMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerLifecycleEventDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
+import cn.com.geasy.marketing.domain.dto.wechat.WxContactSecondDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
 import cn.com.geasy.marketing.domain.entity.customer.CustomerLifecycleEvent;
 import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.mapstruct.customer.CustomerLifecycleEventMapstruct;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
+import cn.com.geasy.marketing.mapstruct.wechat.WxContactSecondMapstruct;
 import cn.com.geasy.marketing.service.customer.CustomerLifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
@@ -28,6 +30,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -166,6 +170,8 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return page;
     }
 
+
+
     /**
      * 设置是"否加微信"、"是否开户"、用户标签等信息
      * TODO “最近联系”字段
@@ -241,5 +247,17 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return reles;
     }
 
+    @Override
+    public String synchronizeWxUserList(List<WxContactSecondDto> list) {
+        List<WxContact> wxContacts = WxContactSecondMapstruct.getInstance.toEntityList(list);
+        for (WxContact item:wxContacts) {
+            item.setUpdateUser(SessionUtils.getUserId());
+            item.setCreateUser(SessionUtils.getUserId());
+            item.setUpdateTime(LocalDateTime.now());
+            item.setCreateTime(LocalDateTime.now());
+        }
+        boolean flag = wxContactService.insertBatch(wxContacts);
+        return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
+    }
 }
 

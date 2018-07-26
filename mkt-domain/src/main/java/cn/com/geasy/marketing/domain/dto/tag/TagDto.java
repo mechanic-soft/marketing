@@ -60,7 +60,7 @@ public class TagDto implements Serializable {
     /**
      * 标签来源(0=阅读,1=外呼，2=聊天)
      */
-    private Long tagSrc;
+    private Integer tagSrc;
     /**
      * 是否系统标签(0=系统标签，1=自定义标签)
      */
