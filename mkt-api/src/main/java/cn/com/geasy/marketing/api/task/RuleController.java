@@ -7,6 +7,8 @@ package cn.com.geasy.marketing.api.task;
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.service.task.RuleService;
 import cn.com.geasy.marketing.service.wechat.ChatRecordsService;
+import com.gitee.mechanic.core.enums.HttpCode;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -67,6 +69,9 @@ public class RuleController {
     @ApiOperation(value = "修改规则")
     @PutMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody RuleDto ruleDto){
+        if(ruleDto.getId() == null){
+            throw new ServiceException(HttpCode.PARAMS_ERROR,"id不能为空");
+        }
         return ResponseUtils.result(this.ruleService.update(ruleDto));
     }
 

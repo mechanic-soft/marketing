@@ -6,6 +6,8 @@ package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.TaskDto;
 import cn.com.geasy.marketing.service.task.TaskService;
+import com.gitee.mechanic.core.enums.HttpCode;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,19 +56,17 @@ public class TaskController {
     }
 
     @ApiOperation(value = "新建任务信息")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "userId", value = "客户ID", paramType = "body"),
-    })
     @PostMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody TaskDto taskDto){
         return ResponseUtils.result(this.taskService.save(taskDto));
     }
 
     @ApiOperation(value = "修改任务信息")
-    @PutMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> update(@PathVariable Long id){
-        TaskDto taskDto = new TaskDto();
-        taskDto.setId(id);
+    @PutMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> update(@RequestBody TaskDto taskDto){
+        if(taskDto.getId() == null){
+            throw new ServiceException(HttpCode.PARAMS_ERROR,"id不能为空");
+        }
         return ResponseUtils.result(this.taskService.update(taskDto));
     }
     @ApiOperation(value = "获取任务详细信息")
