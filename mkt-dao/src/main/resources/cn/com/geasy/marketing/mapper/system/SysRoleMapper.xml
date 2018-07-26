@@ -85,7 +85,7 @@
         WHERE sr.status = 1 AND rrp.status = 1 AND sp.status = 1
         ORDER BY sr.id
     </select>
-    <select id="findDtoPage" resultMap="Case_Permission_Result_Map">
+    <select id="findDtos" resultMap="Case_Permission_Result_Map">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role sr

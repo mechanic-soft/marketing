@@ -45,11 +45,17 @@ public class SysPermissionServiceImpl extends SuperServiceImpl<SysPermissionMapp
     }
 
     @Override
-    public Page<SysPermissionDto> findDtoPage(int pageNum) {
+    public Page<SysPermissionDto> findDtos(int pageNum) {
         Page<SysPermissionDto> page = PageUtils.getPage(pageNum);
         List<SysPermission> permissions = baseMapper.selectPage(page, null);
         List<SysPermissionDto> permissionDtos = SysPermissionMapstruct.getInstance.toDtoList(permissions);
         return PageUtils.getPage(page, permissionDtos);
+    }
+
+    @Override
+    public List<SysPermissionDto> findDtos( ) {
+        List<SysPermission> permissions = baseMapper.selectList(null);
+        return SysPermissionMapstruct.getInstance.toDtoList(permissions);
     }
 
     @Override

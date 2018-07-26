@@ -67,9 +67,14 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
         return super.baseMapper.deleteBatchIds(ids);
     }
 
+    @Override
+    public List<SysRoleDto> findDtoAll() {
+        return baseMapper.findDtos(null);
+    }
+
     public Page<SysRoleDto> findDtoPage(int pageNum) {
         Page<SysRoleDto> page = PageUtils.getPage(pageNum);
-        List<SysRoleDto> roleDtos = baseMapper.findDtoPage(null, page);
+        List<SysRoleDto> roleDtos = baseMapper.findDtos(null, page);
         return page.setRecords(roleDtos);
     }
 
@@ -91,6 +96,16 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
      */
     public List<SysRoleDto> findDtoByUserId(Long userId){
         return SysRoleMapstruct.getInstance.toDtoList(baseMapper.findByUserId(userId));
+    }
+
+    /**
+     * 返回匹配指定用户ID的角色
+     *
+     * @param userId 用户ID
+     * @return List&lt;SysRole&gt; 角色
+     */
+    public List<SysRole> findByUserId(Long userId){
+        return baseMapper.findByUserId(userId);
     }
 
     /**

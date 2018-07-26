@@ -21,10 +21,17 @@ import java.util.List;
 public interface SysUserService extends SuperService<SysUser> {
     /**
      * 用户分页列表
+     *
      * @param pageNum 页码
      * @return Page&lt;SysUserDto&gt;
      */
-    Page<SysUserDto> findPage(int pageNum);
+    Page<SysUserDto> findDtos(int pageNum);
+    /**
+     * 用户列表
+     *
+     * @return List&lt;SysUserDto&gt;
+     */
+    List<SysUserDto> findDtos();
     /**
      * 返回匹配指定登录账户的用户
      *
