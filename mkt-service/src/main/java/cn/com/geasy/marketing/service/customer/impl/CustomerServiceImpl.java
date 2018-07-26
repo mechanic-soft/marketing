@@ -253,6 +253,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         for (WxContact item:wxContacts) {
             item.setUpdateUser(SessionUtils.getUserId());
             item.setCreateUser(SessionUtils.getUserId());
+            item.setUserId(SessionUtils.getUserId());
             item.setUpdateTime(LocalDateTime.now());
             item.setCreateTime(LocalDateTime.now());
         }
