@@ -41,7 +41,7 @@ public class MyUserService implements UserDetailsService {
             throw new UsernameNotFoundException("用户【" + username + "】不存在");
         }
 
-        List<SysRole> roles = roleMapper.selectByUserId(user.getId());
+        List<SysRole> roles = roleMapper.findByUserId(user.getId());
         List<GrantedAuthority> authorities = Lists.newArrayList();
         for (SysRole role : roles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));

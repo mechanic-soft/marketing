@@ -6,11 +6,13 @@ package cn.com.geasy.marketing.domain.dto.system;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户DTO
@@ -74,4 +76,6 @@ public class SysUserDto implements Serializable {
      */
     @JsonIgnore
     private String mpUuid;
+
+    List<SysRoleDto> roles = Lists.newArrayList();
 }

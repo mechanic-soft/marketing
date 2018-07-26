@@ -8,6 +8,7 @@ import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * 系统用户数据访问接口
@@ -15,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
  * @author phil
  * @version 1.0.0
  */
+@Repository
 public interface SysUserMapper extends SuperMapper<SysUser> {
     /**
      * 返回匹配指定登录账户的用户

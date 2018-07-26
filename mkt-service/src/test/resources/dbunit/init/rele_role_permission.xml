@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <table name="rele_role_permission">
+        <column>id</column>
+        <column>role_id</column>
+        <column>permission_id</column>
+        <column>status</column>
+        <column>create_user</column>
+        <column>create_time</column>
+        <column>update_user</column>
+        <column>update_time</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>1</value>
+            <value>3</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>1</value>
+            <value>4</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>5</value>
+            <value>2</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>6</value>
+            <value>2</value>
+            <value>4</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>7</value>
+            <value>3</value>
+            <value>4</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>8</value>
+            <value>3</value>
+            <value>1</value>
+            <value>0</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+    </table>
+</dataset>
+
+
+
+<!--<dataset>-->
+    <!--<rele_role_permission id="1" role_id="1" permission_id="1" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="2" role_id="1" permission_id="2" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="3" role_id="1" permission_id="3" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="4" role_id="1" permission_id="4" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="5" role_id="2" permission_id="1" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="6" role_id="2" permission_id="4" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="7" role_id="3" permission_id="4" status="1" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+    <!--<rele_role_permission id="8" role_id="3" permission_id="1" status="0" create_user="1" create_time="2017-10-30 12:16:57" update_user="1" update_time="2017-10-31 12:16:57"/>-->
+<!--</dataset>-->

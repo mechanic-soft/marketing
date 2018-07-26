@@ -46,7 +46,7 @@
         sp.method AS sp_method,
         sp.description AS sp_description
     </sql>
-    <select id="selectByUserId" resultMap="Base_Result_Map" parameterType="Long">
+    <select id="findByUserId" resultMap="Base_Result_Map" parameterType="Long">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role sr

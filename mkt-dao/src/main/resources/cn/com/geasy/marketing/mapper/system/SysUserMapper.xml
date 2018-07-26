@@ -18,7 +18,6 @@
         su.id AS id,
         su.username AS username,
         su.password AS password,
-/*        su.salt AS salt,*/
         su.real_name AS real_name,
         su.wx_uin AS wx_uin,
         su.wx_username AS wx_username,
@@ -26,24 +25,19 @@
         su.wx_head_img_url AS wx_head_img_url,
         su.wx_sex AS wx_sex,
         su.wx_signature AS wx_signature
-/*        ,su.status AS status,
-        su.create_user AS createUser,
-        su.create_time AS createTime,
-        su.update_user AS updateUser,
-        su.update_time AS updateTime*/
     </sql>
     <select id="findByUsername" resultMap="Base_Result_Map">
         SELECT
           <include refid="Base_Column_List"/>
         FROM sys_user su
-        WHERE su.username = #{username}
+        WHERE su.status = 1 AND su.username = #{username}
     </select>
 
     <select id="findByWxUin" resultMap="Base_Result_Map">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_user su
-        WHERE su.wx_uin = #{wxUin}
+        WHERE su.status = 1 AND su.wx_uin = #{wxUin}
     </select>
 
     <update id="updateByUsername" parameterType="cn.com.geasy.marketing.domain.dto.system.SysUserDto">
@@ -54,6 +48,6 @@
             wx_head_img_url=#{user.wxHeadImgUrl},
             wx_sex=#{user.wxSex},
             wx_signature=#{user.wxSignature}
-            WHERE username=#{user.username}
+            WHERE status = 1 AND username=#{user.username}
     </update>
 </mapper>

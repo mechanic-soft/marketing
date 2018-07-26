@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.gitee.mechanic.mybatis.base.SuperMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * @author phil
  * @version 1.0.0
  */
+@Repository
 public interface SysRoleMapper extends SuperMapper<SysRole> {
     /**
      * 返回匹配指定用户ID的角色
@@ -28,7 +30,7 @@ public interface SysRoleMapper extends SuperMapper<SysRole> {
      * @param userId 用户ID
      * @return List&lt;SysRole&gt; 角色
      */
-    List<SysRole> selectByUserId(Long userId);
+    List<SysRole> findByUserId(Long userId);
 
     /**
      * 返回匹配指定权限ID的角色

@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.api.system;
 
+import cn.com.geasy.marketing.contant.PasswordConstant;
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.service.security.CurrentUser;
 import cn.com.geasy.marketing.service.system.SysUserService;
@@ -88,15 +89,13 @@ public class LoginController {
 
     @ApiOperation(value = "微信UIN登录")
     @PostMapping(value = "/wx/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> login(HttpServletRequest request,
-                                          @RequestParam(value = "uin", required = true) Long wxUin
-    ) {
+    public ResponseEntity<ModelMap> login(HttpServletRequest request, @RequestParam(value = "uin", required = true) Long wxUin) {
         SysUserDto userDto = this.userService.findByWxUin(wxUin);
         if (userDto == null) {
             return ResponseUtils.result(HttpCode.WX_UIN_NOT_EXIST, "微信UIN不存在。");
         }
         try {
-            this.authenticate(userDto.getUsername(), "123456");
+            this.authenticate(userDto.getUsername(), PasswordConstant.DEFAULT_PASSWORD);
         } catch (LoginException e) {
             return ResponseUtils.result(HttpCode.ACCOUNT_PASSWORD_ERROR);
         }
@@ -137,10 +136,8 @@ public class LoginController {
         if (session != null) {
             session.invalidate();
         }
-
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(null);
-
         SecurityContextHolder.clearContext();
     }
 
