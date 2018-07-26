@@ -65,10 +65,8 @@ public class RuleController {
     }
 
     @ApiOperation(value = "修改规则")
-    @PutMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> update(@PathVariable Long id){
-        RuleDto ruleDto= new RuleDto();
-        ruleDto.setId(id);
+    @PutMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> update(@RequestBody RuleDto ruleDto){
         return ResponseUtils.result(this.ruleService.update(ruleDto));
     }
 
