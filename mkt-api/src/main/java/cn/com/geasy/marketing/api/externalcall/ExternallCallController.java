@@ -1,14 +1,8 @@
-package cn.com.geasy.marketing.api.externalCall;
+package cn.com.geasy.marketing.api.externalcall;
 
-import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
-import cn.com.geasy.marketing.domain.dto.externalCall.ExternalCallDto;
 import cn.com.geasy.marketing.domain.dto.externalCall.QuestionnaireDto;
-import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.entity.externalCall.ExternalCall;
-import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
-import cn.com.geasy.marketing.service.customer.CustomerService;
-import cn.com.geasy.marketing.service.externalCall.ExternalCallService;
-import cn.com.geasy.marketing.service.tag.TagDtoService;
+import cn.com.geasy.marketing.service.externalcall.ExternalCallService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

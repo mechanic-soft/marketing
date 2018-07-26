@@ -30,5 +30,6 @@
         from tag t
             join rele_tag_article rta on t.id = rta.tag_id
         where rta.article_id =#{articleId}
+        and t.status = 1
     </select>
 </mapper>

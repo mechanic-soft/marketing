@@ -1,16 +1,14 @@
-package cn.com.geasy.marketing.service.externalCall.impl;
+package cn.com.geasy.marketing.service.externalcall.impl;
 
-import cn.com.geasy.marketing.dao.ExternalCall.ExternalCallMapper;
+import cn.com.geasy.marketing.dao.externalcall.ExternalCallMapper;
 import cn.com.geasy.marketing.domain.dto.externalCall.QuestionnaireDto;
-import cn.com.geasy.marketing.domain.dto.system.SysLogDto;
 import cn.com.geasy.marketing.domain.entity.externalCall.ExternalCall;
 import cn.com.geasy.marketing.domain.entity.externalCall.Questionnaire;
 import cn.com.geasy.marketing.domain.entity.externalCall.ReleExternalCallQuestionnaire;
 import cn.com.geasy.marketing.mapstruct.externalCall.QuestionnaireMapstruct;
-import cn.com.geasy.marketing.mapstruct.system.SysLogMapstruct;
-import cn.com.geasy.marketing.service.externalCall.ExternalCallService;
-import cn.com.geasy.marketing.service.externalCall.QuestionnaireService;
-import cn.com.geasy.marketing.service.externalCall.ReleExternalCallQuestionnaireService;
+import cn.com.geasy.marketing.service.externalcall.ExternalCallService;
+import cn.com.geasy.marketing.service.externalcall.QuestionnaireService;
+import cn.com.geasy.marketing.service.externalcall.ReleExternalCallQuestionnaireService;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

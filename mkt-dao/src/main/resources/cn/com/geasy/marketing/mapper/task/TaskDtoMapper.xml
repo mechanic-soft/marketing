@@ -20,6 +20,7 @@
                 FROM task t1
                 LEFT JOIN sys_user t2 ON t1.create_user = t2.id
                 WHERE 1 = 1
+                and t1.status = 1
                 <if test="taskDto.createTimeStr != null and taskDto.createTimeStr != ''">
                     AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') = '${taskDto.createTimeStr}'
                 </if>

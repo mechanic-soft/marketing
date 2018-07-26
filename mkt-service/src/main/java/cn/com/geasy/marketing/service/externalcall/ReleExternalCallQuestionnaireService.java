@@ -1,6 +1,5 @@
-package cn.com.geasy.marketing.service.externalCall;
+package cn.com.geasy.marketing.service.externalcall;
 
-import cn.com.geasy.marketing.domain.entity.externalCall.Questionnaire;
 import cn.com.geasy.marketing.domain.entity.externalCall.ReleExternalCallQuestionnaire;
 import com.gitee.mechanic.mybatis.base.SuperService;
 

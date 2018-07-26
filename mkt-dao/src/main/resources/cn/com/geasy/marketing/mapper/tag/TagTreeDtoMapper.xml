@@ -13,6 +13,7 @@
        select id,name from tag_type t1 where 1=1
         <if test="tagTreeDto.parentId != null">
             and t1.parent_Id = #{tagTreeDto.parentId}
+            and t1.status = 1
         </if>
     </select>
 
@@ -20,6 +21,7 @@
         select id,name from tag t1 where 1=1
         <if test="tagTreeDto.parentId != null">
             and t1.tag_type_id = #{tagTreeDto.parentId}
+            and t1.status = 1
         </if>
     </select>
 
