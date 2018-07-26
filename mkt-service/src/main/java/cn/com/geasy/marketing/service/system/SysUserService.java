@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.service.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
 import java.util.List;
@@ -46,12 +47,12 @@ public interface SysUserService extends SuperService<SysUser> {
      *
      * @param user 用户信息
      */
-    void updateByUsername(SysUserDto user);
+    void updateByUsername(SysUserDto user) throws ServiceException;
 
     /**
      * 保存用户信息。保存时会检测用户名是否存在。
      *
      * @return boolean
      */
-    boolean insertOrUpdate(SysUserDto user);
+    boolean insertOrUpdate(SysUserDto user) throws ServiceException;
 }

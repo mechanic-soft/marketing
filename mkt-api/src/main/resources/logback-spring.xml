@@ -56,7 +56,7 @@
 
     <logger name="cn.com.geasy.marketing.listener" level="DEBUG"/>
     <logger name="cn.com.geasy.marketing" level="DEBUG"/>
-    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework" level="WARN"/>
     <logger name="springfox.documentation" level="WARN"/>
     <logger name="com.baomidou" level="WARN"/>
     <logger name="org.apache.ibatis" level="WARN"/>

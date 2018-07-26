@@ -15,19 +15,41 @@
     <packaging>pom</packaging>
     <name>Marketing</name>
     <description>Goeasy - Marketing</description>
-    <url>https://gitee.com/tvi/marketing</url>
+
+    <properties>
+        <code.url>https://gitee.com/tvi/marketing</code.url>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <!--Compiler versions-->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!--Dependency versions-->
+        <springboot.version>2.0.3.RELEASE</springboot.version>
+        <springfox.version>2.6.1</springfox.version>
+        <mapstruct.version>1.2.0.Final</mapstruct.version>
+        <log4jdbc.version>1.16</log4jdbc.version>
+        <xstream.version>1.4.9</xstream.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+    </properties>
+
+
+    <url>${code.url}</url>
     <organization>
         <name>TechViewInfo Co.,Ltd</name>
         <url>http://www.techviewinfo.com</url>
     </organization>
     <issueManagement>
         <system>Gitee</system>
-        <url>${url}/issues</url>
+        <url>${code.url}/issues</url>
     </issueManagement>
     <scm>
-        <url>${url}</url>
-        <connection>scm:git:${url}.git</connection>
-        <developerConnection>scm:git:${url}.git</developerConnection>
+        <url>${code.url}</url>
+        <connection>scm:git:${code.url}.git</connection>
+        <developerConnection>scm:git:${code.url}.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <distributionManagement>
@@ -78,24 +100,6 @@
             </roles>
         </developer>
     </developers>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-
-        <!--Compiler versions-->
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-
-        <!--Dependency versions-->
-        <springboot.version>2.0.3.RELEASE</springboot.version>
-        <springfox.version>2.6.1</springfox.version>
-        <mapstruct.version>1.2.0.Final</mapstruct.version>
-        <log4jdbc.version>1.16</log4jdbc.version>
-        <xstream.version>1.4.9</xstream.version>
-        <dom4j.version>1.6.1</dom4j.version>
-        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
-    </properties>
     <build>
         <pluginManagement>
             <plugins>
@@ -112,7 +116,7 @@
                 <inherited>false</inherited>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagBase>${url}/tags</tagBase>
+                    <tagBase>${code.url}/tags</tagBase>
                     <useReleaseProfile>false</useReleaseProfile>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>

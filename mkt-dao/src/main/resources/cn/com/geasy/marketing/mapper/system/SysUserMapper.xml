@@ -45,14 +45,15 @@
         FROM sys_user su
         WHERE su.wx_uin = #{wxUin}
     </select>
+
     <update id="updateByUsername" parameterType="cn.com.geasy.marketing.domain.dto.system.SysUserDto">
         UPDATE sys_user SET
             wx_uin=#{user.wxUin},
-            wx_username=#{wxUsername},
-            wx_nickname=#{wxNickname},
-            wx_head_img_url=#{wxHeadImgUrl},
-            wx_sex=#{wxSex},
-            wx_signature=#{wxSignature}
+            wx_username=#{user.wxUsername},
+            wx_nickname=#{user.wxNickname},
+            wx_head_img_url=#{user.wxHeadImgUrl},
+            wx_sex=#{user.wxSex},
+            wx_signature=#{user.wxSignature}
             WHERE username=#{user.username}
     </update>
 </mapper>

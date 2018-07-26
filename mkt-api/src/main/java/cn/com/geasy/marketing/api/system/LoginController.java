@@ -5,11 +5,11 @@
 package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
-import cn.com.geasy.marketing.domain.entity.system.SysUser;
-import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
+import cn.com.geasy.marketing.service.security.CurrentUser;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.core.enums.HttpCode;
 import com.gitee.mechanic.web.exception.LoginException;
+import com.gitee.mechanic.web.utils.RequestUtils;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,10 +25,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,33 +62,44 @@ public class LoginController {
         String username = user.getUsername();
         String password = user.getPassword();
 
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
         try {
-            Authentication authentication = authenticationManager.authenticate(authRequest);
-
-            SysUser sysUser = SysUserMapstruct.getInstance.toEntity(user);
+            this.authenticate(username, password);
             this.userService.updateByUsername(user);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpSession session = request.getSession();
-            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-            logger.debug("用户[" + username + "]已成功登录。");
-            return ResponseUtils.result("用户[" + username + "]已成功登录。");
-        } catch (AuthenticationException ex) {
+            SecurityContext securityContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+            Authentication authentication = securityContext.getAuthentication();
+            CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
+            currentUser.setWxUin(user.getWxUin());
+            currentUser.setWxUsername(user.getWxUsername());
+            currentUser.setWxNickname(user.getWxNickname());
+            currentUser.setWxHeadImgUrl(user.getWxHeadImgUrl());
+            currentUser.setWxSex(user.getWxSex());
+            currentUser.setWxSignature(user.getWxSignature());
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(currentUser, authentication.getCredentials(), authentication.getAuthorities());
+            securityContext.setAuthentication(token);
+        } catch (LoginException e) {
+            this.logout();
             return ResponseUtils.result(HttpCode.ACCOUNT_PASSWORD_ERROR);
         }
+        return ResponseUtils.result("用户[" + username + "]已成功登录。");
+
     }
 
     @ApiOperation(value = "微信UIN登录")
     @PostMapping(value = "/wx/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> login(HttpServletRequest request,
                                           @RequestParam(value = "uin", required = true) Long wxUin
-    ) throws LoginException {
+    ) {
         SysUserDto userDto = this.userService.findByWxUin(wxUin);
         if (userDto == null) {
-            throw new LoginException(HttpCode.WX_UIN_NOT_EXIST);
+            return ResponseUtils.result(HttpCode.WX_UIN_NOT_EXIST, "微信UIN不存在。");
         }
-        this.authenticate(userDto.getUsername(), userDto.getPassword());
+        try {
+            this.authenticate(userDto.getUsername(), "123456");
+        } catch (LoginException e) {
+            return ResponseUtils.result(HttpCode.ACCOUNT_PASSWORD_ERROR);
+        }
         return ResponseUtils.result("用户[" + userDto.getUsername() + "]已成功登录。");
     }
 
@@ -104,25 +112,13 @@ public class LoginController {
     @ApiOperation(value = "退出登录接口")
     @GetMapping("/logout")
     public ResponseEntity<ModelMap> logout(HttpServletRequest request, HttpServletResponse response) {
-
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-
-        SecurityContext context = SecurityContextHolder.getContext();
-        context.setAuthentication(null);
-
-        SecurityContextHolder.clearContext();
+        logout();
         return ResponseUtils.result("用户已退出登录。");
     }
 
     private void authenticate(String username, String password) throws LoginException {
         try {
-            ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
-            Assert.notNull(servletRequestAttributes, "request must not be null.");
-            HttpServletRequest request = servletRequestAttributes.getRequest();
-
+            HttpServletRequest request = RequestUtils.getRequest();
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
             Authentication authentication = authenticationManager.authenticate(authRequest);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -134,4 +130,18 @@ public class LoginController {
         }
 
     }
+
+    private void logout() {
+        HttpServletRequest request = RequestUtils.getRequest();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(null);
+
+        SecurityContextHolder.clearContext();
+    }
+
 }

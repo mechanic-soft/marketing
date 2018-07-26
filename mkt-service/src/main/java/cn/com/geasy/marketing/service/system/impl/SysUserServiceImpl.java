@@ -13,9 +13,11 @@ import cn.com.geasy.marketing.service.system.ReleUserRoleService;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import cn.com.geasy.marketing.utils.SecurityPasswordUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.gitee.mechanic.core.enums.HttpCode;
 import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -50,6 +52,16 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         return super.baseMapper.findByWxUin(wxUin);
     }
 
+    public SysUserDto findByUsernameOrWxUin(String username, Long wxUin) {
+        Wrapper<SysUser> wrapper = new EntityWrapper<>();
+        wrapper.eq("username", username).or().eq("wx_uin", wxUin);
+        List<SysUser> users = super.baseMapper.selectList(wrapper);
+        if (CollectionUtils.isNotEmpty(users)){
+            return SysUserMapstruct.getInstance.toDtoList(users).get(0);
+        }
+        return null;
+    }
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     public Integer remove(List<Long> ids) {
@@ -59,14 +71,25 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         return super.baseMapper.deleteBatchIds(ids);
     }
 
-    public void updateByUsername(SysUserDto user){
-         baseMapper.updateByUsername(user);
+    public void updateByUsername(SysUserDto user) throws ServiceException{
+        SysUserDto exist = baseMapper.findByWxUin(user.getWxUin());
+        if (exist == null) {
+            baseMapper.updateByUsername(user);
+        }else {
+            throw new ServiceException(HttpCode.SQL_DATA_ERROR, "微信UIN[" + user.getWxUin() + "]已存在。");
+        }
     }
 
-    public boolean insertOrUpdate(SysUserDto userDto){
-        SysUserDto exist = findByUsername(userDto.getUsername());
-        if (exist != null){
-            throw new ServiceException(HttpCode.SQL_DATA_ERROR, "用户名" + userDto.getUsername() + "已存在");
+    public boolean insertOrUpdate(SysUserDto userDto) throws ServiceException{
+        //验证用户名是否存在
+        SysUserDto usernameExist = findByUsername(userDto.getUsername());
+        if (usernameExist != null){
+            throw new ServiceException(HttpCode.SQL_DATA_ERROR, "用户名[" + userDto.getUsername() + "]已存在");
+        }
+        //验证微信UIN是否存在
+        SysUserDto wxUinExist = findByWxUin(userDto.getWxUin());
+        if (wxUinExist != null){
+            throw new ServiceException(HttpCode.SQL_DATA_ERROR, "微信UIN[" + userDto.getUsername() + "]已存在");
         }
         //密码加密
         String password = SecurityPasswordUtils.encrypt(userDto.getPassword());
