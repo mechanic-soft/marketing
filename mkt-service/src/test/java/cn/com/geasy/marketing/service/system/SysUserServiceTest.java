@@ -5,7 +5,7 @@
 package cn.com.geasy.marketing.service.system;
 
 import cn.com.geasy.marketing.dao.system.SysUserMapper;
-import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.service.StartupTestApplication;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,11 +41,10 @@ public class SysUserServiceTest {
 
     @Test
     public void testFindByUsername() throws Exception{
-        SysUser expect = new SysUser();
+        SysUserDto expect = new SysUserDto();
         expect.setId(1L);
         expect.setUsername("admin");
         expect.setPassword("123456");
-        expect.setSalt("salt");
         expect.setRealName("name");
         expect.setWxUsername("wxusername");
         expect.setWxNickname("wxnickname");
@@ -55,7 +54,7 @@ public class SysUserServiceTest {
 
         given(this.userMapper.findByUsername(anyString())).willReturn(expect);
 
-        SysUser actual = this.userService.findByUsername("admin");
+        SysUserDto actual = this.userService.findByUsername("admin");
 
         assertThat(actual).isEqualTo(expect);
     }

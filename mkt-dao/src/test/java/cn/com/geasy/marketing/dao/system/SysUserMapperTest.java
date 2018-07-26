@@ -4,7 +4,7 @@
  */
 package cn.com.geasy.marketing.dao.system;
 
-import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import com.gitee.mechanic.test.AbstractTransSpringBootDbunitTests;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseSetups;
@@ -32,14 +32,14 @@ public class SysUserMapperTest extends AbstractTransSpringBootDbunitTests {
     @Test
     public void testFindByUsername() {
 
-        SysUser sysUser = userMapper.findByUsername("admin");
+        SysUserDto sysUser = userMapper.findByUsername("admin");
 
         assertThat(sysUser).isNotNull();
 
         assertThat(sysUser.getId()).isEqualTo(1);
         assertThat(sysUser.getUsername()).isEqualTo("admin");
         assertThat(sysUser.getPassword()).isEqualTo("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
-        assertThat(sysUser.getSalt()).isEqualTo("e5a721750f676a48ee77f3fe8c5a58e9");
+//        assertThat(sysUser.getSalt()).isEqualTo("e5a721750f676a48ee77f3fe8c5a58e9");
         assertThat(sysUser.getRealName()).isEqualTo("管理员");
         assertThat(sysUser.getWxUin()).isEqualTo(1185887460L);
         assertThat(sysUser.getWxUsername()).isEqualTo("@42dc1e0cb92c1eb6eda3cb65c0ddbf64");

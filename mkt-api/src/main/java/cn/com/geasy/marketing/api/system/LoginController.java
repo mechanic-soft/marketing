@@ -4,7 +4,12 @@
  */
 package cn.com.geasy.marketing.api.system;
 
+import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
+import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
+import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.core.enums.HttpCode;
+import com.gitee.mechanic.web.exception.LoginException;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,15 +24,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,36 +48,51 @@ public class LoginController {
 
     private final AuthenticationManager authenticationManager;
 
-    // 原请求信息的缓存及恢复
-    private RequestCache requestCache = new HttpSessionRequestCache();
-
-    // 用于重定向
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final SysUserService userService;
 
     @Autowired
-    public LoginController(AuthenticationManager authenticationManager) {
+    public LoginController(AuthenticationManager authenticationManager, SysUserService userService) {
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @ApiOperation(value = "用户登录")
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> login(HttpServletRequest request,
-                                          HttpServletResponse response,
-                                          @RequestParam(value="username",required=true) String username,
-                                          @RequestParam(value="password",required=true) String password
+                                          @RequestBody SysUserDto user
     ) throws IOException {
+
+        String username = user.getUsername();
+        String password = user.getPassword();
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
         try {
             Authentication authentication = authenticationManager.authenticate(authRequest);
+
+            SysUser sysUser = SysUserMapstruct.getInstance.toEntity(user);
+            this.userService.updateByUsername(user);
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpSession session = request.getSession();
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
             logger.debug("用户[" + username + "]已成功登录。");
             return ResponseUtils.result("用户[" + username + "]已成功登录。");
         } catch (AuthenticationException ex) {
-            return ResponseUtils.result(ex.getMessage());
+            return ResponseUtils.result(HttpCode.ACCOUNT_PASSWORD_ERROR);
         }
+    }
+
+    @ApiOperation(value = "微信UIN登录")
+    @PostMapping(value = "/wx/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> login(HttpServletRequest request,
+                                          @RequestParam(value = "uin", required = true) Long wxUin
+    ) throws LoginException {
+        SysUserDto userDto = this.userService.findByWxUin(wxUin);
+        if (userDto == null) {
+            throw new LoginException(HttpCode.WX_UIN_NOT_EXIST);
+        }
+        this.authenticate(userDto.getUsername(), userDto.getPassword());
+        return ResponseUtils.result("用户[" + userDto.getUsername() + "]已成功登录。");
     }
 
     @ApiOperation(value = "用户未登录时跳转到的接口")
@@ -99,5 +115,23 @@ public class LoginController {
 
         SecurityContextHolder.clearContext();
         return ResponseUtils.result("用户已退出登录。");
+    }
+
+    private void authenticate(String username, String password) throws LoginException {
+        try {
+            ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
+            Assert.notNull(servletRequestAttributes, "request must not be null.");
+            HttpServletRequest request = servletRequestAttributes.getRequest();
+
+            UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
+            Authentication authentication = authenticationManager.authenticate(authRequest);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            HttpSession session = request.getSession();
+            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+            logger.debug("用户[" + username + "]已成功登录。");
+        } catch (AuthenticationException ex) {
+            throw new LoginException(HttpCode.ACCOUNT_PASSWORD_ERROR);
+        }
+
     }
 }

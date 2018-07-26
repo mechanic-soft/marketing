@@ -5,7 +5,6 @@
 package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
-import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
@@ -57,19 +56,16 @@ public class SysUserController {
     @ApiOperation(value = "新增用户")
     @PostMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody(required = true) SysUserDto sysUserDto){
-        SysUser sysUser = SysUserMapstruct.getInstance.toEntity(sysUserDto);
-        this.sysUserService.insert(sysUser);
-        SysUserDto savedUserDto = SysUserMapstruct.getInstance.toDto(sysUser);
-        return ResponseUtils.result(savedUserDto);
+        sysUserDto.setId(null);
+        this.sysUserService.insertOrUpdate(sysUserDto);
+        return ResponseUtils.result(sysUserDto);
     }
     
     @ApiOperation(value = "更新用户")
     @PatchMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysUserDto sysUserDto){
-        SysUser sysUser = SysUserMapstruct.getInstance.toEntity(sysUserDto);
-        this.sysUserService.updateById(sysUser);
-        SysUserDto savedUserDto = SysUserMapstruct.getInstance.toDto(sysUser);
-        return ResponseUtils.result(savedUserDto);
+        this.sysUserService.insertOrUpdate(sysUserDto);
+        return ResponseUtils.result(sysUserDto);
     }
     
     @ApiOperation(value = "删除用户")

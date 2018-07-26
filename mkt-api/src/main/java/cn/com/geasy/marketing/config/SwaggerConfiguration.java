@@ -37,16 +37,6 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket createRestApi() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .useDefaultResponseMessages(false)
-//                .forCodeGeneration(true)
-//                .apiInfo(apiInfo())
-//                .tags(new Tag("Login", "用户接口"), getTags())
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage(API_BASE_PACKAGE))
-//                .paths(PathSelectors.any())
-//                .build();
-
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
@@ -55,17 +45,6 @@ public class SwaggerConfiguration {
                 .build()
                 .apiInfo(apiInfo());
     }
-
-//    @Bean
-//    public Docket packageApi() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .groupName("app")
-//                .apiInfo(apiInfo())
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("tech.yiyehu.modules.app.controller"))
-//                .paths(PathSelectors.any())
-//                .build();
-//    }
 
     private Tag[] getTags() {
         return new Tag[]{

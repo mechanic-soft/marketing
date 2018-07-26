@@ -117,58 +117,6 @@
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven-enforcer-plugin.version}</version>
-                <executions>
-                    <!--<execution>-->
-                    <!--<id>enforce-versions</id>-->
-                    <!--<goals>-->
-                    <!--<goal>enforce</goal>-->
-                    <!--</goals>-->
-                    <!--<configuration>-->
-                    <!--<rules>-->
-                    <!--&lt;!&ndash;<requireMavenVersion>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<version>2.</version>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</requireMavenVersion>&ndash;&gt;-->
-                    <!--<requireJavaVersion>-->
-                    <!--<version>${java.version}</version>-->
-                    <!--</requireJavaVersion>-->
-                    <!--</rules>-->
-                    <!--</configuration>-->
-                    <!--</execution>-->
-                    <execution>
-                        <id>enforce-banned-dependencies</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <!--<exclude>junit:junit</exclude>-->
-                                        <!--<exclude>org.testng:testng</exclude>-->
-                                        <!--<exclude>com.google.collections:google-collections</exclude>-->
-                                        <exclude>commons-logging:commons-logging</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-api:2.10.0</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-core</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-jul</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-slf4j-impl</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-to-slf4j</exclude>
-                                        <exclude>org.springframework.boot:spring-boot-starter-log4j2</exclude>
-                                    </excludes>
-                                    <!--<includes>-->
-                                    <!--<include>junit:junit:4.8.2:jar:test</include>-->
-                                    <!--<include>cglib:cglib-nodep:jar:2.2</include>-->
-                                    <!--</includes>-->
-                                </bannedDependencies>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
     <dependencyManagement>

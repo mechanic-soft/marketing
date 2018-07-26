@@ -6,8 +6,8 @@ package cn.com.geasy.marketing.service.security;
 
 import cn.com.geasy.marketing.dao.system.SysRoleMapper;
 import cn.com.geasy.marketing.dao.system.SysUserMapper;
+import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.domain.entity.system.SysRole;
-import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import cn.com.geasy.marketing.mapstruct.system.SysRoleMapstruct;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class MyUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = userMapper.findByUsername(username);
+        SysUserDto user = userMapper.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户【" + username + "】不存在");
         }
