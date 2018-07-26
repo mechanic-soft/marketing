@@ -116,7 +116,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         Long userId = SessionUtils.getUserId();
         Page<CustomerInteractionDynamicStatisticsDto> page = PageUtils.getPage(pageNum);
         EntityWrapper<CustomerInteractionDynamicStatisticsDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("cd.user_id", userId).between("event", 0, 2).ge("cd.event_date", startDate).groupBy("customer_id,nickname,head_img_url");
+        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).groupBy("customer_id,nickname,head_img_url");
         List<CustomerInteractionDynamicStatisticsDto> customerInteractionDynamicStatisticsDtos = customerDynamicMapper.getCustomerInteractionDynamicStatistics(page, wrapper);
 
         if(CollectionUtils.isEmpty(customerInteractionDynamicStatisticsDtos)){

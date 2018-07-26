@@ -39,7 +39,7 @@ public class CustomerDynamicController {
     public CustomerDynamicController(CustomerDynamicService customerDynamicService) {this.customerDynamicService = customerDynamicService;}
 
     @ApiOperation(value = "添加客户动态")
-    @PostMapping(path = "/customerDynamics", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(path = "/customerDynamics", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody CustomerDynamicDto customerDynamicDto) {
         return ResponseUtils.result(this.customerDynamicService.save(customerDynamicDto) ? "保存成功" : "添加失败：昵称不匹配。" );
     }
