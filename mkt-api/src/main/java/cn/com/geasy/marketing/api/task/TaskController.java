@@ -64,13 +64,15 @@ public class TaskController {
 
     @ApiOperation(value = "修改任务信息")
     @PutMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> update(@RequestBody TaskDto taskDto){
+    public ResponseEntity<ModelMap> update(@PathVariable Long id){
+        TaskDto taskDto = new TaskDto();
+        taskDto.setId(id);
         return ResponseUtils.result(this.taskService.update(taskDto));
     }
     @ApiOperation(value = "获取任务详细信息")
     @GetMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getTask(@RequestParam Long taskId){
-        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(taskId));
+    public ResponseEntity<ModelMap> getTask(@PathVariable Long id){
+        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(id));
     }
 
     @ApiOperation(value = "获取今日任务信息")

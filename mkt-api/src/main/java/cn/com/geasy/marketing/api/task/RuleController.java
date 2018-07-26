@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.service.task.RuleService;
+import cn.com.geasy.marketing.service.wechat.ChatRecordsService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,13 +34,11 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/v1")
 public class RuleController {
-
-    private final RuleService ruleService;
+    @Autowired
+    private RuleService ruleService;
 
     @Autowired
-    public RuleController(RuleService ruleService) {
-        this.ruleService = ruleService;
-    }
+    private ChatRecordsService chatRecordsService;
 
     @ApiOperation(value = "规则列表")
     @GetMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -67,19 +66,22 @@ public class RuleController {
 
     @ApiOperation(value = "修改规则")
     @PutMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> update(@RequestBody RuleDto ruleDto){
+    public ResponseEntity<ModelMap> update(@PathVariable Long id){
+        RuleDto ruleDto= new RuleDto();
+        ruleDto.setId(id);
         return ResponseUtils.result(this.ruleService.update(ruleDto));
     }
 
     @ApiOperation(value = "获取规则详情")
     @GetMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getRule(@RequestParam Long ruleId){
-        return ResponseUtils.result(this.ruleService.findRuleByRuleId(ruleId));
+    public ResponseEntity<ModelMap> getRule(@PathVariable Long id){
+        return ResponseUtils.result(this.ruleService.findRuleByRuleId(id));
     }
 
     /*@ApiOperation(value = "今日提醒跳转加微客户列表")
-    @GetMapping(path = "/chatConsumers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> findChatConsumersList(@RequestParam List<Long> customerList, @RequestParam(defaultValue = "1",required = false) int pageNum){
-        return ResponseUtils.result(ruleService.getChatConsumersList(customerList,pageNum));
+    @GetMapping(path = "/rules/chatConsumers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getChatConsumersByWxContactIdList(@RequestParam List<Long> customerList,
+                                                                      @RequestParam(defaultValue = "1",required = true) int pageNum){
+        return ResponseUtils.result(chatRecordsService.getChatConsumersByWxContactIdList(customerList,pageNum));
     }*/
 }
