@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.domain.dto.system;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class SysUserDto implements Serializable {
     /**
      * 密码
      */
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     /**
      * 真实姓名
@@ -66,9 +67,11 @@ public class SysUserDto implements Serializable {
     /**
      * 服务号OpenID
      */
+    @JsonIgnore
     private String mpOpenid;
     /**
      * 服务号UUID
      */
+    @JsonIgnore
     private String mpUuid;
 }

@@ -6,6 +6,8 @@ server:
     path: /error
 
 spring:
+  profiles:
+    active: @environment@
   application:
     name: Marketing API
   jackson:

@@ -8,7 +8,7 @@ spring:
     username: sa
     password:
     schema: classpath:sql/dev/schema.sql
-    data: classpath:sql/dev/data.sql,classpath:sql/dev/data1.sql
+    data: classpath:sql/dev/init_data.sql,classpath:sql/dev/test_data.sql
     initialization-mode: embedded
   h2:
     console:

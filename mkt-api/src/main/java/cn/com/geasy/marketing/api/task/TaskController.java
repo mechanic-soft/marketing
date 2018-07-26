@@ -6,6 +6,8 @@ package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.TaskDto;
 import cn.com.geasy.marketing.service.task.TaskService;
+import com.gitee.mechanic.core.enums.HttpCode;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,33 +46,33 @@ public class TaskController {
     public ResponseEntity<ModelMap> selectPage(
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @RequestParam(required = false) LocalDate createTime,
-            @RequestParam(required = true) int pageNum,
-            @RequestParam(required = true) int pageSize)
+            @RequestParam(required = true) Integer pageNum,
+            @RequestParam(required = false) Integer pageSize)
     {
         //localDateToStr(callTimeStart);callTimeStart,callTimeEnd
         TaskDto customerDto = new TaskDto();
         customerDto.setCreateTime(createTime);
-        return ResponseUtils.result(taskService.selectDtoPage(pageNum,pageSize,customerDto));
+        return ResponseUtils.result(taskService.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,customerDto));
     }
 
     @ApiOperation(value = "新建任务信息")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "userId", value = "客户ID", paramType = "body"),
-    })
     @PostMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody TaskDto taskDto){
         return ResponseUtils.result(this.taskService.save(taskDto));
     }
 
     @ApiOperation(value = "修改任务信息")
-    @PutMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody TaskDto taskDto){
+        if(taskDto.getId() == null){
+            throw new ServiceException(HttpCode.PARAMS_ERROR,"id不能为空");
+        }
         return ResponseUtils.result(this.taskService.update(taskDto));
     }
     @ApiOperation(value = "获取任务详细信息")
     @GetMapping(path = "/tasks/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getTask(@RequestParam Long taskId){
-        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(taskId));
+    public ResponseEntity<ModelMap> getTask(@PathVariable Long id){
+        return ResponseUtils.result(this.taskService.findTaskAndUsersByTaskId(id));
     }
 
     @ApiOperation(value = "获取今日任务信息")

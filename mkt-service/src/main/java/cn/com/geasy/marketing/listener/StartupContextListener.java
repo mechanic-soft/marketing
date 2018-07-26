@@ -24,7 +24,7 @@ public class StartupContextListener implements ApplicationListener<ContextRefres
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         logger.info("-------------------------------------------");
-        logger.info("Wechat Marketing Platform started.");
+        logger.info("| Wechat Marketing Platform started.");
         logger.info("-------------------------------------------");
     }
 }

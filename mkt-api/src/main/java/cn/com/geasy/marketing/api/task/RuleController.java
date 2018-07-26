@@ -6,6 +6,9 @@ package cn.com.geasy.marketing.api.task;
 
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.service.task.RuleService;
+import cn.com.geasy.marketing.service.wechat.ChatRecordsService;
+import com.gitee.mechanic.core.enums.HttpCode;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 规则
@@ -32,24 +36,22 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping(path = "/v1")
 public class RuleController {
-
-    private final RuleService ruleService;
+    @Autowired
+    private RuleService ruleService;
 
     @Autowired
-    public RuleController(RuleService ruleService) {
-        this.ruleService = ruleService;
-    }
+    private ChatRecordsService chatRecordsService;
 
     @ApiOperation(value = "规则列表")
     @GetMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> selectPage(
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @RequestParam(required = false) LocalDate createTime,
-            @RequestParam(required = true) int pageNum,
-            @RequestParam(required = true) int pageSize){
+            @RequestParam(required = true) Integer pageNum,
+            @RequestParam(required = false) Integer pageSize){
         RuleDto ruleDto = new RuleDto();
         ruleDto.setCreateTime(createTime);
-        return ResponseUtils.result(ruleService.selectDtoPage(pageNum,pageSize,ruleDto));
+        return ResponseUtils.result(ruleService.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,ruleDto));
     }
 
     @ApiOperation(value = "今日提醒")
@@ -65,15 +67,24 @@ public class RuleController {
     }
 
     @ApiOperation(value = "修改规则")
-    @PutMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(path = "/rules", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody RuleDto ruleDto){
+        if(ruleDto.getId() == null){
+            throw new ServiceException(HttpCode.PARAMS_ERROR,"id不能为空");
+        }
         return ResponseUtils.result(this.ruleService.update(ruleDto));
     }
 
     @ApiOperation(value = "获取规则详情")
     @GetMapping(path = "/rules/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getRule(@RequestParam Long ruleId){
-        return ResponseUtils.result(this.ruleService.findRuleByRuleId(ruleId));
+    public ResponseEntity<ModelMap> getRule(@PathVariable Long id){
+        return ResponseUtils.result(this.ruleService.findRuleByRuleId(id));
     }
 
+    /*@ApiOperation(value = "今日提醒跳转加微客户列表")
+    @GetMapping(path = "/rules/chatConsumers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> getChatConsumersByWxContactIdList(@RequestParam List<Long> customerList,
+                                                                      @RequestParam(defaultValue = "1",required = true) int pageNum){
+        return ResponseUtils.result(chatRecordsService.getChatConsumersByWxContactIdList(customerList,pageNum));
+    }*/
 }
