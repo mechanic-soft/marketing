@@ -4,7 +4,9 @@
  */
 package cn.com.geasy.marketing.service.system;
 
+import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
 import java.util.List;
@@ -22,7 +24,15 @@ public interface SysUserService extends SuperService<SysUser> {
      * @param username 登录账户
      * @return SysUser 用户
      */
-    SysUser findByUsername(String username);
+    SysUserDto findByUsername(String username);
+
+    /**
+     * 返回匹配微信UIN的用户
+     *
+     * @param wxUin 微信UIN
+     * @return SysUser 用户
+     */
+    SysUserDto findByWxUin(Long wxUin);
 
     /**
      * 删除用户，同时删除用户与角色关联信息
@@ -31,4 +41,18 @@ public interface SysUserService extends SuperService<SysUser> {
      * @return Boolean
      */
     Integer remove(List<Long> ids);
+
+    /**
+     * 按用户名更新用户微信信息
+     *
+     * @param user 用户信息
+     */
+    void updateByUsername(SysUserDto user) throws ServiceException;
+
+    /**
+     * 保存用户信息。保存时会检测用户名是否存在。
+     *
+     * @return boolean
+     */
+    boolean insertOrUpdate(SysUserDto user) throws ServiceException;
 }

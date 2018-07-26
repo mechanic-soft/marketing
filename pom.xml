@@ -15,19 +15,41 @@
     <packaging>pom</packaging>
     <name>Marketing</name>
     <description>Goeasy - Marketing</description>
-    <url>https://gitee.com/tvi/marketing</url>
+
+    <properties>
+        <code.url>https://gitee.com/tvi/marketing</code.url>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <!--Compiler versions-->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!--Dependency versions-->
+        <springboot.version>2.0.3.RELEASE</springboot.version>
+        <springfox.version>2.6.1</springfox.version>
+        <mapstruct.version>1.2.0.Final</mapstruct.version>
+        <log4jdbc.version>1.16</log4jdbc.version>
+        <xstream.version>1.4.9</xstream.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+    </properties>
+
+
+    <url>${code.url}</url>
     <organization>
         <name>TechViewInfo Co.,Ltd</name>
         <url>http://www.techviewinfo.com</url>
     </organization>
     <issueManagement>
         <system>Gitee</system>
-        <url>${url}/issues</url>
+        <url>${code.url}/issues</url>
     </issueManagement>
     <scm>
-        <url>${url}</url>
-        <connection>scm:git:${url}.git</connection>
-        <developerConnection>scm:git:${url}.git</developerConnection>
+        <url>${code.url}</url>
+        <connection>scm:git:${code.url}.git</connection>
+        <developerConnection>scm:git:${code.url}.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <distributionManagement>
@@ -78,24 +100,6 @@
             </roles>
         </developer>
     </developers>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-
-        <!--Compiler versions-->
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-
-        <!--Dependency versions-->
-        <springboot.version>2.0.3.RELEASE</springboot.version>
-        <springfox.version>2.6.1</springfox.version>
-        <mapstruct.version>1.2.0.Final</mapstruct.version>
-        <log4jdbc.version>1.16</log4jdbc.version>
-        <xstream.version>1.4.9</xstream.version>
-        <dom4j.version>1.6.1</dom4j.version>
-        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
-    </properties>
     <build>
         <pluginManagement>
             <plugins>
@@ -112,62 +116,10 @@
                 <inherited>false</inherited>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagBase>${url}/tags</tagBase>
+                    <tagBase>${code.url}/tags</tagBase>
                     <useReleaseProfile>false</useReleaseProfile>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven-enforcer-plugin.version}</version>
-                <executions>
-                    <!--<execution>-->
-                    <!--<id>enforce-versions</id>-->
-                    <!--<goals>-->
-                    <!--<goal>enforce</goal>-->
-                    <!--</goals>-->
-                    <!--<configuration>-->
-                    <!--<rules>-->
-                    <!--&lt;!&ndash;<requireMavenVersion>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<version>2.</version>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</requireMavenVersion>&ndash;&gt;-->
-                    <!--<requireJavaVersion>-->
-                    <!--<version>${java.version}</version>-->
-                    <!--</requireJavaVersion>-->
-                    <!--</rules>-->
-                    <!--</configuration>-->
-                    <!--</execution>-->
-                    <execution>
-                        <id>enforce-banned-dependencies</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <!--<exclude>junit:junit</exclude>-->
-                                        <!--<exclude>org.testng:testng</exclude>-->
-                                        <!--<exclude>com.google.collections:google-collections</exclude>-->
-                                        <exclude>commons-logging:commons-logging</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-api:2.10.0</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-core</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-jul</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-slf4j-impl</exclude>
-                                        <exclude>org.apache.logging.log4j:log4j-to-slf4j</exclude>
-                                        <exclude>org.springframework.boot:spring-boot-starter-log4j2</exclude>
-                                    </excludes>
-                                    <!--<includes>-->
-                                    <!--<include>junit:junit:4.8.2:jar:test</include>-->
-                                    <!--<include>cglib:cglib-nodep:jar:2.2</include>-->
-                                    <!--</includes>-->
-                                </bannedDependencies>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

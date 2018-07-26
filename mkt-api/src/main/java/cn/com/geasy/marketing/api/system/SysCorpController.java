@@ -13,13 +13,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -42,9 +40,7 @@ public class SysCorpController {
 
     @ApiOperation(value = "公司列表")
     @GetMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getCorps(@RequestParam(defaultValue = "0") int pageNum,
-                                             @RequestParam List<Long> ids,
-                                             @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam() LocalDate callTime) {
+    public ResponseEntity<ModelMap> getCorps(@RequestParam(defaultValue = "1") int pageNum) {
         return ResponseUtils.result(this.sysCorpService.selectDtoPage(pageNum));
     }
 

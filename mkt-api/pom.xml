@@ -94,19 +94,6 @@
             <artifactId>imech-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!--全局依赖排除-->
-        <!--<dependency>-->
-        <!--<groupId></groupId>-->
-        <!--<artifactId>log</artifactId>-->
-        <!--<version>2.0.3.RELEASE</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>*</groupId>-->
-        <!--<artifactId>*</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>
@@ -124,12 +111,14 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
         <resources>
             <resource>

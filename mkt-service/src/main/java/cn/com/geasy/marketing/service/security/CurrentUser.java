@@ -69,7 +69,9 @@ public class CurrentUser extends User implements Serializable {
      * 服务号UUID
      */
     private String mpUuid;
-
+    /**
+     * 角色
+     */
     private List<SysRoleDto> roles;
 
     public CurrentUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {

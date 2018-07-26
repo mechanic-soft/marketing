@@ -18,10 +18,7 @@ import java.io.Serializable;
 public class WxContactSecondDto implements Serializable{
 
     private static final long serialVersionUID = 5458432260545192749L;
-    /**
-     * 用户ID
-     */
-    private Long userId;
+
     /**
      * 微信用户信息识别码(唯一)
      */
@@ -144,10 +141,6 @@ public class WxContactSecondDto implements Serializable{
 
     private String encryChatRoomId;
 
-    /**
-     * 是否同步
-     */
-    private Integer isSync;
 
 
 }
