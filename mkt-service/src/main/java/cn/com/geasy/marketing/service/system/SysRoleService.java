@@ -32,6 +32,12 @@ public interface SysRoleService extends SuperService<SysRole> {
      * @return Page&lt;SysRoleDto&gt;
      */
     Page<SysRoleDto> findDtoPage(int pageNum);
+
+    /**
+     * 查询角色，同时级联权限
+     * @return List&lt;SysRoleDto&gt;
+     */
+    List<SysRoleDto> findDtoAll();
     /**
      * 按ID查询角色
      * @param id 角色ID
@@ -52,4 +58,11 @@ public interface SysRoleService extends SuperService<SysRole> {
      * @return List&lt;SysRole&gt; 角色
      */
     List<SysRoleDto> findDtoByUserId(Long userId);
+    /**
+     * 返回匹配指定用户ID的角色
+     *
+     * @param userId 用户ID
+     * @return List&lt;SysRole&gt; 角色
+     */
+    public List<SysRole> findByUserId(Long userId);
 }

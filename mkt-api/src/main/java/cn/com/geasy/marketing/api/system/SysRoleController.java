@@ -42,19 +42,22 @@ public class SysRoleController {
 
     @ApiOperation(value = "获取角色")
     @GetMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getRoles(@RequestParam(defaultValue = "0") int pageNum){
-        return ResponseUtils.result(this.sysRoleService.findDtoPage(pageNum));
+    public ResponseEntity<ModelMap> getRoles(@RequestParam(defaultValue = "0") int pageNum,
+                                             @RequestParam(required = false, defaultValue = "true") boolean isPage) {
+        return isPage ?
+                ResponseUtils.result(this.sysRoleService.findDtoPage(pageNum))
+                : ResponseUtils.result(this.sysRoleService.findDtoAll());
     }
 
     @ApiOperation(value = "角色详情")
     @GetMapping(path = "/roles/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> get(@PathVariable(required = true) Long id){
+    public ResponseEntity<ModelMap> get(@PathVariable(required = true) Long id) {
         return ResponseUtils.result(this.sysRoleService.findDtoById(id));
     }
 
     @ApiOperation(value = "新增角色")
     @PostMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> insert(@RequestBody(required = true) SysRoleDto sysRoleDto){
+    public ResponseEntity<ModelMap> insert(@RequestBody(required = true) SysRoleDto sysRoleDto) {
         SysRole sysRole = SysRoleMapstruct.getInstance.toEntity(sysRoleDto);
         this.sysRoleService.insert(sysRole);
         SysRoleDto savedRoleDto = SysRoleMapstruct.getInstance.toDto(sysRole);
@@ -63,7 +66,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "更新角色")
     @PatchMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysRoleDto sysRoleDto){
+    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysRoleDto sysRoleDto) {
         SysRole sysRole = SysRoleMapstruct.getInstance.toEntity(sysRoleDto);
         this.sysRoleService.updateById(sysRole);
         SysRoleDto savedRoleDto = SysRoleMapstruct.getInstance.toDto(sysRole);

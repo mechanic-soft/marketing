@@ -24,13 +24,21 @@ public interface SysPermissionService extends SuperService<SysPermission> {
      * @return List&lt;SysPermission&gt; 权限及其所关联角色名称
      */
     List<SysPermissionDto> findAllCaseRole();
+
     /**
      * 分页查询
      *
      * @param pageNum 页码
      * @return Page&lt;SysRoleDto&gt;
      */
-    Page<SysPermissionDto> findDtoPage(int pageNum);
+    Page<SysPermissionDto> findDtos(int pageNum);
+    /**
+     * 查询所有权限
+     *
+     * @return List&lt;SysRoleDto&gt;
+     */
+    List<SysPermissionDto> findDtos();
+
     /**
      * 按ID查询
      *
@@ -38,6 +46,7 @@ public interface SysPermissionService extends SuperService<SysPermission> {
      * @return SysRoleDto
      */
     SysPermissionDto findDtoById(Long id);
+
     /**
      * 删除权限，同时删除角色与权限关联信息
      *

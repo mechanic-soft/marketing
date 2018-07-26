@@ -42,33 +42,33 @@ public class SysUserController {
 
     @ApiOperation(value = "获取用户")
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getUsers(@RequestParam (required = false, defaultValue = "0") int pageNum){
-
-        return ResponseUtils.result(this.sysUserService.findPage(pageNum));
+    public ResponseEntity<ModelMap> getUsers(@RequestParam(required = false, defaultValue = "0") int pageNum,
+                                             @RequestParam(required = false, defaultValue = "true") boolean isPage) {
+        return isPage ? ResponseUtils.result(this.sysUserService.findDtos(pageNum)) : ResponseUtils.result(this.sysUserService.findDtos());
     }
 
     @ApiOperation(value = "获取匹配用户ID的用户")
     @GetMapping(path = "/users/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getUser(@PathVariable(required = true) Long id){
+    public ResponseEntity<ModelMap> getUser(@PathVariable(required = true) Long id) {
         SysUserDto sysUserDto = SysUserMapstruct.getInstance.toDto(this.sysUserService.selectById(id));
         return ResponseUtils.result(sysUserDto);
     }
 
     @ApiOperation(value = "新增用户")
     @PostMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> save(@RequestBody(required = true) SysUserDto sysUserDto){
+    public ResponseEntity<ModelMap> save(@RequestBody(required = true) SysUserDto sysUserDto) {
         sysUserDto.setId(null);
         this.sysUserService.insertOrUpdate(sysUserDto);
         return ResponseUtils.result(sysUserDto);
     }
-    
+
     @ApiOperation(value = "更新用户")
     @PatchMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysUserDto sysUserDto){
+    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysUserDto sysUserDto) {
         this.sysUserService.insertOrUpdate(sysUserDto);
         return ResponseUtils.result(sysUserDto);
     }
-    
+
     @ApiOperation(value = "删除用户")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "ids", value = "公司ID", paramType = "body")

@@ -50,20 +50,32 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
-    public Page<SysUserDto> findPage(int pageNum) {
+    public Page<SysUserDto> findDtos(int pageNum) {
         Page<SysUser> page = PageUtils.getPage(pageNum);
         page = super.selectPage(page);
         List<SysUserDto> userDtos = SysUserMapstruct.getInstance.toDtoList(page.getRecords());
 
         ListIterator<SysUserDto> iterator = userDtos.listIterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             SysUserDto userDto = iterator.next();
             userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
             iterator.set(userDto);
         }
-//        List<Long> userIds = userDtos.stream().map(SysUserDto::getId).collect(Collectors.toList());
-
         return PageUtils.getPage(page, userDtos);
+    }
+
+    @Override
+    public List<SysUserDto> findDtos() {
+        List<SysUser> users = super.selectList();
+        List<SysUserDto> userDtos = SysUserMapstruct.getInstance.toDtoList(users);
+
+        ListIterator<SysUserDto> iterator = userDtos.listIterator();
+        while (iterator.hasNext()) {
+            SysUserDto userDto = iterator.next();
+            userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+            iterator.set(userDto);
+        }
+        return userDtos;
     }
 
     @Override
@@ -153,7 +165,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         }
 
         if (StringUtils.isNotBlank(username) && wxUin != null) {
-            userWrapper.where("(username={0} OR wx_uin={1})", userDto.getUsername(),userDto.getWxUin());
+            userWrapper.where("(username={0} OR wx_uin={1})", userDto.getUsername(), userDto.getWxUin());
         } else if (StringUtils.isNotBlank(username)) {
             userWrapper.where("username={0}", userDto.getUsername());
         } else if (wxUin != null) {

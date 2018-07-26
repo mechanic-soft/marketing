@@ -5,13 +5,14 @@ server:
   error:
     path: /error
 
+
 spring:
-  profiles:
-    active: @environment@
+#  profiles:
+#    active: @environment@
   application:
     name: Marketing API
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+#    date-format: yyyy-MM-dd HH:mm:ss``
     time-zone: GMT+8
     serialization:
       indent_output: true

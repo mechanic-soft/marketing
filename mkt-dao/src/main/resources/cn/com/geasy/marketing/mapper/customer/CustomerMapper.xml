@@ -21,5 +21,6 @@
                  ct.ID = #{id}
              </if>
          </where>
+        and ct.status = 1
     </select>
 </mapper>

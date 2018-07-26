@@ -42,8 +42,11 @@ public class SysPermissionController {
 
     @ApiOperation(value = "获取权限")
     @GetMapping(path = "/permissions", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getPermissions(@RequestParam(defaultValue = "0") int pageNum){
-        return ResponseUtils.result(this.sysPermissionService.findDtoPage(pageNum));
+    public ResponseEntity<ModelMap> getPermissions(@RequestParam(defaultValue = "0") int pageNum,
+                                                   @RequestParam(required = false, defaultValue = "true") boolean isPage){
+        return isPage ?
+            ResponseUtils.result(this.sysPermissionService.findDtos(pageNum))
+            : ResponseUtils.result(this.sysPermissionService.findDtos());
     }
 
     @ApiOperation(value = "权限详情")

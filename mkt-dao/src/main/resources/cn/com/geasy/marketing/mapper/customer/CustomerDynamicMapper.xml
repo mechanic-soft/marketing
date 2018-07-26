@@ -41,6 +41,7 @@
         LEFT JOIN customer c on cd.customer_id = c.wx_contact_id
         LEFT JOIN wx_contact wc on c.wx_contact_id = wc.id
         <where>
+
            ${ew.sqlSegment}
         </where>
     </select>
@@ -49,6 +50,7 @@
         SELECT event , count(event) as event_count
         FROM customer_dynamic
         <where>
+            status =1 and
             ${ew.sqlSegment}
         </where>
     </select>
@@ -62,6 +64,7 @@
         FROM
           customer_dynamic
         <where>
+            status =1 and
             ${ew.sqlSegment}
         </where>
     </select>
@@ -77,16 +80,18 @@
         LEFT JOIN customer c ON cd.customer_id = c.wx_contact_id
         LEFT JOIN wx_contact wc ON c.wx_contact_id = wc.id
         <where>
+            cd.status =1 and
             ${ew.sqlSegment}
         </where>
+
     </select>
     <select id="getCustomerIdByCustomerInteractionDynamic" resultType="int" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto">
         SELECT cd.customer_id
         FROM customer_dynamic cd
         <where>
-            <if test="status != null">
-                cd.status = #{status}
-            </if>
+
+              cd.status =1
+
             <if test="event != null">
                AND cd.event = #{event}
             </if>

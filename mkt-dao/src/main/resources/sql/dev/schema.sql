@@ -8,12 +8,12 @@ DROP TABLE IF EXISTS rele_menu_permission;
 DROP TABLE IF EXISTS sys_corp;
 DROP TABLE IF EXISTS sys_log;
 DROP TABLE IF EXISTS sys_visiting_card;
-DROP TABLE IF EXISTS article;
+/*DROP TABLE IF EXISTS article;
 DROP TABLE IF EXISTS article_regular;
 DROP TABLE IF EXISTS article_like;
 DROP TABLE IF EXISTS article_read;
 DROP TABLE IF EXISTS article_shared;
-DROP TABLE IF EXISTS article_subscription;
+DROP TABLE IF EXISTS article_subscription;*/
 drop table if exists chat_records;
 drop table if exists customer;
 drop table if exists customer_dynamic;
@@ -196,7 +196,7 @@ CREATE TABLE sys_visiting_card (
 /*==============================================================*/
 /* Table: 文章表                                                 */
 /*==============================================================*/
-CREATE TABLE article (
+/*CREATE TABLE article (
   id                   BIGINT PRIMARY KEY NOT NULL,
   source_url           VARCHAR(1024)      NULL, -- 转载文章的原始链接
   target_url           VARCHAR(1024)      NULL, -- 生成的自己的链接
@@ -214,12 +214,12 @@ CREATE TABLE article (
   create_time          TIMESTAMP          NULL, -- 创建记录的时间
   update_user          BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time          TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 非微信文章信息正则规则                                   */
 /*==============================================================*/
-CREATE TABLE article_regular (
+/*CREATE TABLE article_regular (
   id           BIGINT PRIMARY KEY NOT NULL,
   domain       varchar(100)       NULL, -- 网站域名
   title_reg    varchar(500)       NULL, -- title的正则提取规则
@@ -230,12 +230,12 @@ CREATE TABLE article_regular (
   create_time  TIMESTAMP          NULL, -- 创建记录的时间
   update_user  BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time  TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章喜欢状态表                                          */
 /*==============================================================*/
-CREATE TABLE article_like (
+/*CREATE TABLE article_like (
   id              BIGINT PRIMARY KEY  NOT NULL,
   article_info_id BIGINT              NOT NULL, -- 文章id
   user_id         BIGINT              NOT NULL, -- 用户
@@ -245,12 +245,12 @@ CREATE TABLE article_like (
   create_time     TIMESTAMP           NULL, -- 创建记录的时间
   update_user     BIGINT              NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP           NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章阅读表                                              */
 /*==============================================================*/
-CREATE TABLE article_read (
+/*CREATE TABLE article_read (
   id              BIGINT PRIMARY KEY NOT NULL,
   shared_info_id  BIGINT             NULL, -- 分享信息的id
   article_info_id BIGINT             NOT NULL, -- 文章id
@@ -263,12 +263,12 @@ CREATE TABLE article_read (
   create_time     TIMESTAMP          NULL, -- 创建记录的时间
   update_user     BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章分享表                                              */
 /*==============================================================*/
-CREATE TABLE article_shared (
+/*CREATE TABLE article_shared (
   id              BIGINT PRIMARY KEY NOT NULL,
   parent_id       BIGINT             NULL, -- 上游分享人
   article_info_id BIGINT             NOT NULL, -- 文章id
@@ -278,12 +278,12 @@ CREATE TABLE article_shared (
   create_time     TIMESTAMP          NULL, -- 创建记录的时间
   update_user     BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章订阅表                                              */
 /*==============================================================*/
-CREATE TABLE article_subscription (
+/*CREATE TABLE article_subscription (
   id                   BIGINT PRIMARY KEY  NOT NULL,
   subscription_user_id BIGINT              NOT NULL, -- 被订阅的人id
   user_id              BIGINT              NOT NULL, -- 普通用户id
@@ -293,7 +293,7 @@ CREATE TABLE article_subscription (
   create_time          TIMESTAMP           NULL, -- 创建记录的时间
   update_user          BIGINT              NULL, -- 记录最后一次更新的用户编号
   update_time          TIMESTAMP           NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 聊天记录表                                             */

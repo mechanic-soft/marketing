@@ -135,7 +135,7 @@ public class SysMenuMapperTest extends AbstractTransSpringBootDbunitTests {
 
         Wrapper<SysRoleDto> wrapper = new EntityWrapper<>();
         wrapper.eq("id", 1L);
-        List<SysRoleDto> roleDtoList = roleMapper.findDtoPage(wrapper, roleDtoPage);
+        List<SysRoleDto> roleDtoList = roleMapper.findDtos(wrapper, roleDtoPage);
 
         roleDtoPage.setRecords(roleDtoList);
 
