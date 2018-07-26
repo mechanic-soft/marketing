@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.service.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import cn.com.geasy.marketing.domain.entity.system.SysUser;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
@@ -18,6 +19,12 @@ import java.util.List;
  * @version 1.0.0
  */
 public interface SysUserService extends SuperService<SysUser> {
+    /**
+     * 用户分页列表
+     * @param pageNum 页码
+     * @return Page&lt;SysUserDto&gt;
+     */
+    Page<SysUserDto> findPage(int pageNum);
     /**
      * 返回匹配指定登录账户的用户
      *
@@ -55,4 +62,29 @@ public interface SysUserService extends SuperService<SysUser> {
      * @return boolean
      */
     boolean insertOrUpdate(SysUserDto user) throws ServiceException;
+
+    /**
+     * 验证UIN是否存在
+     *
+     * @param wxUin 微信UIN
+     * @return 存在返回true，不存在返回false
+     */
+    boolean wxUinIsExist(Long wxUin);
+
+    /**
+     * 验证UIN是否存在
+     *
+     * @param wxUin    微信UIN
+     * @param username 用户名
+     * @return 存在返回true，不存在返回false
+     */
+    boolean wxUinIsExist(Long wxUin, String username);
+
+    /**
+     * 验证用户名或UIN是否存在
+     *
+     * @param userDto 用户信息
+     * @return 存在返回true，不存在返回false
+     */
+    boolean usernameOrWxUinIsExist(SysUserDto userDto);
 }

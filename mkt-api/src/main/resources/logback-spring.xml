@@ -7,7 +7,7 @@
     <conversionRule conversionWord="wEx"
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
-    <property name="LOG_FILE" value="app_logs/marketing"/>
+    <property name="LOG_FILE" value="logs/marketing"/>
     <!--文件输出的格式设置 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 日志日常打印文件 -->
@@ -54,15 +54,14 @@
         </filter>
     </appender>
 
-    <logger name="cn.com.geasy.marketing.listener" level="DEBUG"/>
     <logger name="cn.com.geasy.marketing" level="DEBUG"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="springfox.documentation" level="WARN"/>
     <logger name="com.baomidou" level="WARN"/>
     <logger name="org.apache.ibatis" level="WARN"/>
     <logger name="jdbc.resultsettable" level="DEBUG"/>
-    <logger name="jdbc.sqltiming" level="OFF"/>
-    <logger name="jdbc.sqlonly" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
     <logger name="jdbc.connection" level="DEBUG"/>
     <logger name="jdbc.audit" level="OFF"/>
     <logger name="jdbc.resultset" level="OFF"/>

@@ -46,7 +46,7 @@ public class SysMenuMapperTest extends AbstractTransSpringBootDbunitTests {
     })
     @Test
     public void testSelectByUserId() {
-        List<SysRole> sysRoles = roleMapper.selectByUserId(2L);
+        List<SysRole> sysRoles = roleMapper.findByUserId(2L);
 
         assertThat(sysRoles).isNotNull();
         assertThat(sysRoles.size()).isEqualTo(3);

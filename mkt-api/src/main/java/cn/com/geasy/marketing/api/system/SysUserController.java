@@ -42,8 +42,9 @@ public class SysUserController {
 
     @ApiOperation(value = "获取用户")
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getUsers(){
-        return ResponseUtils.result(this.sysUserService.selectList());
+    public ResponseEntity<ModelMap> getUsers(@RequestParam (required = false, defaultValue = "0") int pageNum){
+
+        return ResponseUtils.result(this.sysUserService.findPage(pageNum));
     }
 
     @ApiOperation(value = "获取匹配用户ID的用户")

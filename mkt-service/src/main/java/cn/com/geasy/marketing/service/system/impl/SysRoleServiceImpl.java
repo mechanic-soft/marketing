@@ -84,6 +84,16 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
     }
 
     /**
+     * 返回匹配指定用户ID的角色
+     *
+     * @param userId 用户ID
+     * @return List&lt;SysRole&gt; 角色
+     */
+    public List<SysRoleDto> findDtoByUserId(Long userId){
+        return SysRoleMapstruct.getInstance.toDtoList(baseMapper.findByUserId(userId));
+    }
+
+    /**
      * 返回将包含关联权限的角色
      * @param role 角色信息
      * @return SysRoleDto

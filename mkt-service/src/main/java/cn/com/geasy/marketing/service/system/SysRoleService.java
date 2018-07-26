@@ -38,4 +38,18 @@ public interface SysRoleService extends SuperService<SysRole> {
      * @return SysRoleDto
      */
     SysRoleDto findDtoById(Long id);
+
+//    /**
+//     * 按用户ID查询角色
+//     * @param userIds 用户ID
+//     * @return List&lt;SysRoleDto&gt;
+//     */
+//    List<SysRoleDto> findByUserIds(List<Long> userIds);
+    /**
+     * 返回匹配指定用户ID的角色
+     *
+     * @param userId 用户ID
+     * @return List&lt;SysRole&gt; 角色
+     */
+    List<SysRoleDto> findDtoByUserId(Long userId);
 }
