@@ -46,6 +46,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
             Task task = new Task();
             task.setTitle(taskDto.getTitle());
             task.setContent(taskDto.getContent());
+            task.setCreateUser(userId);
             //保存到task表
             this.baseMapper.insert(task);
             Long taskId = task.getId();

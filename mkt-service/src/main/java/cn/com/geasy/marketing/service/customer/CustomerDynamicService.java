@@ -56,4 +56,11 @@ public interface CustomerDynamicService extends SuperService<CustomerDynamic> {
      * @return 返回客户互动统计数据
      */
     Page<CustomerInteractionDynamicStatisticsDto> getCustomerInteractionDynamicStatistics(LocalDate startDate, int pageNum);
+
+    /***
+     * 获取客户动态表的客户id
+     * @param customerDynamicDto
+     * @return List<Long> 返回存放客户id的list集合
+     */
+    List<Long> getCustomerIdByCustomerInteractionDynamic(CustomerDynamicDto customerDynamicDto);
 }

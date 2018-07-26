@@ -56,3 +56,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 #    call-setters-on-nulls: true
     return-instance-for-empty-row: true
+
+logging:
+  register-shutdown-hook: false
+  config: classpath:logback-spring.xml
