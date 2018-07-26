@@ -567,6 +567,7 @@ CREATE TABLE wx_contact (
   chat_room_id        TINYINT,
   keyword             VARCHAR(256),
   wncry_chat_room_id  VARCHAR(256),
+  encryChatRoomId     VARCHAR(256),
   is_sync             TINYINT, -- 是否同步(0=未同步，1=已同步)
   status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
   create_user         BIGINT                  NULL, -- 创建记录的用户编号

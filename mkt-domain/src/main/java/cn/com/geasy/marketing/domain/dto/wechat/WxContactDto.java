@@ -30,4 +30,5 @@ public class WxContactDto implements Serializable{
      *
      */
     private String nickname;
+
 }

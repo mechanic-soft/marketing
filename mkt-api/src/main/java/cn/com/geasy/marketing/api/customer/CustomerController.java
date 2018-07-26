@@ -2,6 +2,7 @@ package cn.com.geasy.marketing.api.customer;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
+import cn.com.geasy.marketing.domain.dto.wechat.WxContactSecondDto;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.tag.TagDtoService;
 import cn.com.geasy.marketing.utils.SessionUtils;
@@ -103,5 +104,13 @@ public class CustomerController {
         tagDto.setCustomerId(customerId);
         return ResponseUtils.result(tagDtoSrv.selectTagDtoList(tagDto));
     }
+
+
+    @ApiOperation(value = "同步微信客户列表")
+    @PostMapping(path = "/customers/wxUsers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> synchronizeWxUserList(@RequestBody List<WxContactSecondDto> list){
+        return ResponseUtils.result(customerSrv.synchronizeWxUserList(list));
+    }
+
 
 }
