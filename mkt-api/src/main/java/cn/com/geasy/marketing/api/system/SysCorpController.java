@@ -6,6 +6,8 @@ package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysCorpDto;
 import cn.com.geasy.marketing.service.system.SysCorpService;
+import com.gitee.mechanic.core.enums.HttpCode;
+import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -65,6 +67,9 @@ public class SysCorpController {
     @PutMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody SysCorpDto sysCorp) {
         //TODO：将更新和保存拆分
+        if(sysCorp.getId() == null){
+            throw new ServiceException(HttpCode.PARAMS_ERROR,"id不能为空");
+        }
         return ResponseUtils.result(this.sysCorpService.save(sysCorp));
     }
 

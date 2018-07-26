@@ -63,7 +63,7 @@ public class TagController {
     }
 
     @ApiOperation(value = "标签类别")
-    @GetMapping(path = "/tagTyPes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/tagTypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getTagsTypeList(){
         return ResponseUtils.result(tagService.findTagType());
     }

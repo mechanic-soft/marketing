@@ -99,7 +99,7 @@ public class CustomerController {
 
     @ApiOperation(value = "客户标签列表查询")
     @GetMapping(path = "/customers/{customerId}/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> selectTagList(@RequestParam(required = true) Long customerId) {
+    public ResponseEntity<ModelMap> selectTagList(@PathVariable(required = true) Long customerId) {
         TagDto tagDto = new TagDto();
         tagDto.setCustomerId(customerId);
         return ResponseUtils.result(tagDtoSrv.selectTagDtoList(tagDto));
