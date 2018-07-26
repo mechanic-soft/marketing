@@ -20,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 规则
@@ -45,11 +46,11 @@ public class RuleController {
     public ResponseEntity<ModelMap> selectPage(
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @RequestParam(required = false) LocalDate createTime,
-            @RequestParam(required = true) int pageNum,
-            @RequestParam(required = true) int pageSize){
+            @RequestParam(required = true) Integer pageNum,
+            @RequestParam(required = false) Integer pageSize){
         RuleDto ruleDto = new RuleDto();
         ruleDto.setCreateTime(createTime);
-        return ResponseUtils.result(ruleService.selectDtoPage(pageNum,pageSize,ruleDto));
+        return ResponseUtils.result(ruleService.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,ruleDto));
     }
 
     @ApiOperation(value = "今日提醒")
@@ -76,4 +77,9 @@ public class RuleController {
         return ResponseUtils.result(this.ruleService.findRuleByRuleId(ruleId));
     }
 
+    /*@ApiOperation(value = "今日提醒跳转加微客户列表")
+    @GetMapping(path = "/chatConsumers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> findChatConsumersList(@RequestParam List<Long> customerList, @RequestParam(defaultValue = "1",required = false) int pageNum){
+        return ResponseUtils.result(ruleService.getChatConsumersList(customerList,pageNum));
+    }*/
 }

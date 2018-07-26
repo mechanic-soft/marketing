@@ -44,13 +44,13 @@ public class TaskController {
     public ResponseEntity<ModelMap> selectPage(
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @RequestParam(required = false) LocalDate createTime,
-            @RequestParam(required = true) int pageNum,
-            @RequestParam(required = true) int pageSize)
+            @RequestParam(required = true) Integer pageNum,
+            @RequestParam(required = false) Integer pageSize)
     {
         //localDateToStr(callTimeStart);callTimeStart,callTimeEnd
         TaskDto customerDto = new TaskDto();
         customerDto.setCreateTime(createTime);
-        return ResponseUtils.result(taskService.selectDtoPage(pageNum,pageSize,customerDto));
+        return ResponseUtils.result(taskService.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,customerDto));
     }
 
     @ApiOperation(value = "新建任务信息")
