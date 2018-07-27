@@ -55,14 +55,12 @@ public class SysCorpController {
     @ApiOperation(value = "新增公司")
     @PostMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> insert(@RequestBody SysCorpDto sysCorp) {
-        //TODO：将更新和保存拆分
         return ResponseUtils.result(this.sysCorpService.save(sysCorp));
     }
 
     @ApiOperation(value = "更新公司")
-    @PutMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(path = "/corps", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody SysCorpDto sysCorp) {
-        //TODO：将更新和保存拆分
         if(sysCorp.getId() == null){
             throw new ServiceException(HttpCode.PARAMS_ERROR,"id不能为空");
         }

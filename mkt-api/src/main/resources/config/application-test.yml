@@ -1,20 +1,20 @@
+# SSL 配置
+server:
+  port: 8443
+  ssl:
+#    key-store: /home/tvi/apps/marketing/cert/marketing-server.p12
+#    key-store-password: marketing
+#    key-store-type: PKCS12
+#    key-alias: 1
+    key-store: /home/tvi/marketing/cert/tomcat/214866030780708.pfx
+    key-store-password: 214866030780708
+    key-store-type: PKCS12
+
+# 数据库配置
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rdsco67s7eooc0j49729.mysql.rds.aliyuncs.com:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
+    #url: jdbc:mysql://192.168.3.88:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
     username: marketing
-    url: jdbc:mysql://192.168.3.88:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
-    password: marketing
-
-logging:
-  register-shutdown-hook: false
-  level:
-    ROOT: info
-    com.baomidou: off
-    org.apache.ibatis: off
-    cn.com.geasy.marketing: off
-    jdbc.resultsettable: info
-    jdbc.sqltiming: debug
-    jdbc.sqlonly: off
-    jdbc.connection: off
-    jdbc.audit: off
-    jdbc.resultset: off
+    password: marketing#2018

@@ -579,7 +579,7 @@ CREATE TABLE wx_contact (
 /*==============================================================*/
 /* Table: 服务号用户                                              */
 /*==============================================================*/
-CREATE TABLE mp_user (
+/*CREATE TABLE mp_user (
   id              BIGINT PRIMARY KEY      NOT NULL,
   mp_nickname     VARCHAR(256)            NULL, -- 昵称
   mp_head_img_url VARCHAR(1024)           NULL, -- 头像URL
@@ -595,4 +595,4 @@ CREATE TABLE mp_user (
   create_time     TIMESTAMP               NULL, -- 创建记录的时间
   update_user     BIGINT                  NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP               NULL -- 记录最后一次更新时间
-);
+);*/
