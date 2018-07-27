@@ -15,17 +15,39 @@
     </resultMap>
 
     <select id="findUncontactCustomer" resultMap="Base_Result_Map" parameterType="java.util.Map">
-        SELECT * FROM (SELECT r.*,wc.head_img_url,wc.nickname FROM wx_contact wc INNER JOIN  (SELECT a.id,a.customer_id,a.wx_username, a.msg_type,a.content,a.url, a.is_send,a.send_time
-        FROM chat_records a LEFT JOIN chat_records b ON a.wx_username = b.wx_username  AND a.send_time <![CDATA[ < ]]> b.send_time
-        <where>
-            <if test="userId!=null">
-                a.create_user= ${userId}
-            </if>
-        </where>
-        GROUP BY a.wx_username, a.send_time HAVING COUNT(b.id) <![CDATA[ < ]]> 1
-        <if test="isSort==1">
-            ORDER BY a.send_time DESC
-        </if>
-        ) r ON wc.username=r.wx_username) t ORDER BY t.send_time ASC
+        SELECT t3.*,t1.* FROM (
+          select t.id,t.head_img_url,t.nick_name,t.user_id from wx_contact t
+            <where>
+                <if test="userId!=null">
+                    t.create_user= ${userId}
+                </if>
+            </where>
+           ) t1
+        left join customer t2 on t1.id = t2.wx_contact_id
+        left join  (
+        <!--按用户分组获取最新一条聊天记录（mysql 分组 求top）-->
+                        select a1.*  from (
+                            select a.id,a.customer_id,a.wx_username,a.msg_type,a.content,a.url,a.is_send,a.send_time,a.create_user FROM chat_records a
+                            <where>
+                                <if test="userId!=null">
+                                    a.create_user= ${userId}
+                                </if>
+                            </where>
+                        ) a1 left join (
+                            select b.* from chat_records b
+                            <where>
+                                <if test="userId!=null">
+                                    b.create_user= ${userId}
+                                </if>
+                            </where>
+                        ) b1 ON a1.wx_username = b1.wx_username AND a1.send_time <![CDATA[ < ]]> b1.send_time
+
+                        GROUP BY a1.wx_username,a1.send_time HAVING COUNT(b1.id) <![CDATA[ < ]]>  1
+                        <if test="isSort==1">
+                            ORDER BY a1.send_time DESC
+                        </if>
+            )t3 on t3.customer_id = t2.id
+        order by t3.send_time
+        <!-- 关联关系：chat_records .customer_id  __ (customer.id __customer.wx_contact_id )  __ wx_contact.id  -->
     </select>
 </mapper>
