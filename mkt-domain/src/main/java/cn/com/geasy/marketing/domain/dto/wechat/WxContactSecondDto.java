@@ -26,11 +26,11 @@ public class WxContactSecondDto implements Serializable{
     /**
      * 加密的微信号(唯一)
      */
-    private String username;
+    private String userName;
     /**
      * 微信昵称
      */
-    private String nickname;
+    private String nickName;
     /**
      * 头像URL
      */
@@ -133,7 +133,7 @@ public class WxContactSecondDto implements Serializable{
     /**
      *
      */
-    private String keyword;
+    private String keyWord;
     /**
      *
      */
