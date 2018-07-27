@@ -61,10 +61,10 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         CustomerDto dbCustomerDto = null;
         //步骤一:根据微信昵称匹配对应的微信联系人记录
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
-        String nickname=customerDto.getNickname();
+        String nickname=customerDto.getNickName();
         ew.where("user_id = {0}",SessionUtils.getUserId());
         if(StringUtils.isNotBlank(nickname)){
-            ew.andNew("nickname = {0}",nickname);
+            ew.andNew("nick_name = {0}",nickname);
         }
         List<WxContact> list = wxContactService.selectList(ew);
         //步骤二:更新该记录的微信联系人ID   设置关联
@@ -72,7 +72,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
             WxContact dbWxContact =  list.get(0);
             Customer customer = new Customer();
             customer.setWxContactId(dbWxContact.getId());
-            customer.setWxId(dbWxContact.getUsername());
+            customer.setWxId(dbWxContact.getUserName());
             customer.setId(customerDto.getId());
             //设置修改为当前用户
             customer.setUpdateUser(SessionUtils.getUserId());
@@ -247,17 +247,17 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return reles;
     }
 
+    /**
+     * 同步微信联系人信息
+     *
+     *
+     * @param list
+     * @return
+     */
     @Override
     public String synchronizeWxUserList(List<WxContactSecondDto> list) {
-        List<WxContact> wxContacts = WxContactSecondMapstruct.getInstance.toEntityList(list);
-        for (WxContact item:wxContacts) {
-            item.setUpdateUser(SessionUtils.getUserId());
-            item.setCreateUser(SessionUtils.getUserId());
-            item.setUserId(SessionUtils.getUserId());
-            item.setUpdateTime(LocalDateTime.now());
-            item.setCreateTime(LocalDateTime.now());
-        }
-        boolean flag = wxContactService.insertBatch(wxContacts);
+        boolean flag = wxContactService.inserOrUpdateBatchByUin(list);
+
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
     }
 }

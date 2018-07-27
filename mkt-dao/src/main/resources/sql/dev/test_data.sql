@@ -1,6 +1,6 @@
-INSERT INTO wx_contact (id, nickname, head_img_url) VALUES (1, '老腊肉', 'http://123.com');
-INSERT INTO wx_contact (id, nickname, head_img_url) VALUES (2, '小鲜肉', 'http://1234.com');
-INSERT INTO wx_contact (id, nickname, head_img_url) VALUES (3, '滚刀肉', 'http://12345.com');
+INSERT INTO wx_contact (id, nick_name, head_img_url) VALUES (1, '老腊肉', 'http://123.com');
+INSERT INTO wx_contact (id, nick_name, head_img_url) VALUES (2, '小鲜肉', 'http://1234.com');
+INSERT INTO wx_contact (id, nick_name, head_img_url) VALUES (3, '滚刀肉', 'http://12345.com');
 
 INSERT INTO customer (ID, wx_contact_id, user_id) VALUES (1, 1, 1);
 INSERT INTO customer (ID, wx_contact_id, user_id) VALUES (2, 2, 2);

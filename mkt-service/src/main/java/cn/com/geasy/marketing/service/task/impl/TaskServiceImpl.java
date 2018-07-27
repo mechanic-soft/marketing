@@ -74,11 +74,7 @@ public class TaskServiceImpl extends SuperServiceImpl<TaskMapper, Task> implemen
             Task task = new Task();
             task.setTitle(taskDto.getTitle());
             task.setContent(taskDto.getContent());
-            if (taskDto.getId() !=null ){
-                task.setId(taskDto.getId());
-            }else{
-                return false;
-            }
+            task.setId(taskDto.getId());
             ArrayList<TaskUser> updateTaskUserList = new ArrayList<TaskUser>();
             ArrayList<TaskUser> addTaskUserList = new ArrayList<TaskUser>();
             HashMap<String,Object> oldTaskUserMap = new HashMap<String,Object>();

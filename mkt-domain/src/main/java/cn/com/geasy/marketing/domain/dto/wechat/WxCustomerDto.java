@@ -38,7 +38,7 @@ public class WxCustomerDto implements Serializable{
     /**
      * 微信昵称
      */
-    private String nickname;
+    private String nickName;
     /**
      * 消息类型0=文本,1=图片,2=文件)
      */
