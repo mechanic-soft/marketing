@@ -538,15 +538,15 @@ CREATE TABLE wx_contact (
   id                  BIGINT PRIMARY KEY      NOT NULL,
   user_id             BIGINT                  NULL,
   uin                 BIGINT                  NULL, -- 微信用户信息识别码(唯一)
-  user_name            VARCHAR(255)            NULL, -- 加密的微信号(唯一)
-  nick_name            VARCHAR(255)            NULL, -- 微信昵称
+  user_name           VARCHAR(255)            NULL, -- 加密的微信号(唯一)
+  nick_name           VARCHAR(255)            NULL, -- 微信昵称
   head_img_url        VARCHAR(2048)           NULL, -- 头像URL
   contact_flag        INT,
   member_count        INT,
   member_list         VARCHAR(256),
   remark_name         VARCHAR(256),
   hide_input_bar_flag INT,
-  sex                 INT                 	  NULL, -- 微信性别
+  sex                 INT                     NULL, -- 微信性别
   signature           VARCHAR(2048)           NULL, -- 微信签名
   verify_flag         INT,
   owner_uin           INT,
@@ -565,9 +565,9 @@ CREATE TABLE wx_contact (
   uni_friend          INT,
   display_name        VARCHAR(256),
   chat_room_id        INT,
-  key_word             VARCHAR(256),
+  key_word            VARCHAR(256),
   wncry_chat_room_id  VARCHAR(256),
-  encryChatRoomId     VARCHAR(256),
+  encry_chat_room_id  VARCHAR(256),
   is_sync             TINYINT, -- 是否同步(0=未同步，1=已同步)
   status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
   create_user         BIGINT                  NULL, -- 创建记录的用户编号
