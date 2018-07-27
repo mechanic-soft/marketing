@@ -6,7 +6,7 @@
         <result property="customerId" column="customer_id" javaType="Long"/>
         <result property="wxUsername" column="wx_username" jdbcType="VARCHAR" javaType="String"/>
         <result property="headImgUrl" column="head_img_url" jdbcType="VARCHAR" javaType="String"/>
-        <result property="nickname" column="nickname" jdbcType="VARCHAR" javaType="String"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR" javaType="String"/>
         <result property="msgType" column="msg_type" jdbcType="TINYINT" javaType="Integer"/>
         <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
         <result property="url" column="url" jdbcType="VARCHAR" javaType="String"/>
@@ -15,7 +15,7 @@
     </resultMap>
 
     <select id="findUncontactCustomer" resultMap="Base_Result_Map" parameterType="java.util.Map">
-        SELECT * FROM (SELECT r.*,wc.head_img_url,wc.nickname FROM wx_contact wc INNER JOIN  (SELECT a.id,a.customer_id,a.wx_username, a.msg_type,a.content,a.url, a.is_send,a.send_time
+        SELECT * FROM (SELECT r.*,wc.head_img_url,wc.nick_name FROM wx_contact wc INNER JOIN  (SELECT a.id,a.customer_id,a.wx_username, a.msg_type,a.content,a.url, a.is_send,a.send_time
         FROM chat_records a LEFT JOIN chat_records b ON a.wx_username = b.wx_username  AND a.send_time <![CDATA[ < ]]> b.send_time
         <where>
             <if test="userId!=null">
@@ -26,6 +26,41 @@
         <if test="isSort==1">
             ORDER BY a.send_time DESC
         </if>
-        ) r ON wc.username=r.wx_username) t ORDER BY t.send_time ASC
+        ) r ON wc.user_name=r.wx_user_name WHERE wc.status = 1 ) t ORDER BY t.send_time ASC
+    </select>
+
+    <select id="getChatConsumersByWxContactIdList" resultMap="Base_Result_Map" parameterType="java.util.Map">
+        SELECT * FROM (
+                SELECT r.*,wc.head_img_url,wc.nick_name
+                FROM wx_contact wc
+                INNER JOIN customer c ON c.wx_contact_id = wc.id
+                INNER JOIN  (
+                      SELECT a.id,a.customer_id,a.wx_user_name, a.msg_type,a.content,a.url, a.is_send,a.send_time
+                      FROM chat_records a
+                      LEFT JOIN chat_records b ON a.wx_user_name = b.wx_user_name  AND a.send_time <![CDATA[ > ]]> b.send_time
+        <where>
+             a.status = 1
+            <if test="userId!=null">
+               AND a.create_user= ${userId}
+            </if>
+        </where>
+        GROUP BY a.wx_user_name, a.send_time HAVING COUNT(b.id) <![CDATA[ < ]]> 1
+        <if test="isSort==1">
+            ORDER BY a.send_time DESC
+        </if>
+        ) r ON c.id = r.customer_id
+        WHERE 1 = 1 AND wc.status = 1
+                 AND r.send_time  &gt;= '${startTime} 00:00:00'
+                 AND r.send_time  &lt;=  '${endTime} 23:59:59'
+        <if test="wxContactIdList !=null and wxContactIdList.size >0">
+                 AND wc.id IN
+                <foreach collection="wxContactIdList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                <if test="orderByStr !=null">
+                    ORDER BY  INSTR  ${orderByStr}
+                </if>
+           </if>
+        ) t ORDER BY t.send_time ASC
     </select>
 </mapper>

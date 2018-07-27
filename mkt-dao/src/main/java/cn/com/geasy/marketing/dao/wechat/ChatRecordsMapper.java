@@ -20,4 +20,6 @@ import java.util.Map;
  */
 public interface ChatRecordsMapper extends SuperMapper<ChatRecords> {
     public List<WxCustomerDto> findUncontactCustomer(Page<WxCustomerDto> page,Map<String, Object> map);
+
+    public List<WxCustomerDto> getChatConsumersByWxContactIdList(Page<WxCustomerDto> page,Map<String, Object> map);
 }

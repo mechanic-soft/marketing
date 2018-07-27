@@ -61,10 +61,10 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         CustomerDto dbCustomerDto = null;
         //步骤一:根据微信昵称匹配对应的微信联系人记录
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
-        String nickname=customerDto.getNickname();
+        String nickname=customerDto.getNickName();
         ew.where("user_id = {0}",SessionUtils.getUserId());
         if(StringUtils.isNotBlank(nickname)){
-            ew.andNew("nickname = {0}",nickname);
+            ew.andNew("nick_name = {0}",nickname);
         }
         List<WxContact> list = wxContactService.selectList(ew);
         //步骤二:更新该记录的微信联系人ID   设置关联

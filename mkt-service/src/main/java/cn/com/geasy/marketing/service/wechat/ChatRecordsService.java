@@ -10,6 +10,7 @@ import cn.com.geasy.marketing.domain.entity.wechat.ChatRecords;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -23,4 +24,5 @@ public interface ChatRecordsService extends SuperService<ChatRecords> {
     public String save(ChatRecordsDto chatRecordsDto);
     public Page<ChatRecordsDto> findChatRecordsByCondition(String username, String keyword, int pageNum);
     public Page<WxCustomerDto> getChatConsumersList(Integer isSort,Integer pageNum);
+    public Page<WxCustomerDto> getChatConsumersByWxContactIdList(List<Long> wxContactIdList, LocalDate startTime,LocalDate endTime, Integer pageNum);
 }

@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +122,28 @@ public class ChatRecordsServiceImpl extends SuperServiceImpl<ChatRecordsMapper, 
         map.put("isSort",isSort);
         Page<WxCustomerDto> page = PageUtils.getPage(pageNum);
         List<WxCustomerDto> list = baseMapper.findUncontactCustomer(page,map);
+        return page.setRecords(list);
+    }
+
+    @Override
+    public Page<WxCustomerDto> getChatConsumersByWxContactIdList(List<Long> wxContactIdList,LocalDate startTime,LocalDate endTime, Integer pageNum) {
+        Map<String,Object> map = new HashMap<String,Object>(5);
+        StringBuffer orderByStr = new StringBuffer();
+        orderByStr.append("(',");
+        for (int i = 0; i < wxContactIdList.size(); i++) {
+            String wxContactId = wxContactIdList.get(i).toString();
+            orderByStr.append(wxContactId+",");
+            if(i==wxContactIdList.size()-1){
+                orderByStr.append("'");
+            }
+        }
+        orderByStr.append(",CONCAT(',',wc.id,','))");
+        map.put("wxContactIdList",wxContactIdList);
+        map.put("orderByStr",orderByStr);
+        map.put("startTime",startTime);
+        map.put("endTime",endTime);
+        Page<WxCustomerDto> page = PageUtils.getPage(pageNum);
+        List<WxCustomerDto> list = baseMapper.getChatConsumersByWxContactIdList(page,map);
         return page.setRecords(list);
     }
 }

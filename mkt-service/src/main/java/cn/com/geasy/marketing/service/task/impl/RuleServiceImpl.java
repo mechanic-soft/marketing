@@ -10,6 +10,7 @@ import cn.com.geasy.marketing.dao.task.RuleMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto;
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
+import cn.com.geasy.marketing.domain.dto.wechat.WxCustomerDto;
 import cn.com.geasy.marketing.domain.entity.article.ArticleRead;
 import cn.com.geasy.marketing.domain.entity.article.ArticleSubscription;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
@@ -35,6 +36,7 @@ import cn.com.geasy.marketing.utils.SessionUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
+import com.gitee.mechanic.mybatis.utils.PageUtils;
 import com.mysql.jdbc.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,12 +69,6 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
     @Autowired
     private ChatRecordsService chatRecordsService;
 
-/*    @Autowired
-    private ArticleReadService articleReadService;
-
-    @Autowired
-    private ArticleSubscriptionService articleSubscriptionService;*/
-
     @Autowired
     private CustomerService customerService;
 
@@ -96,15 +92,17 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
             List<RuleCustomerLabel> returnRuleCustomerLabelList = new ArrayList<RuleCustomerLabel>();
             List<RuleTriggerAction> returnRuleTriggerActionList = new ArrayList<RuleTriggerAction>();
             if(ruleList.size() > 0 ){
-                //取出第一个规则
+                //取出排序后最前一个规则
                 Rule rule = ruleList.get(0);
                 Long ruleId = rule.getId();
                 LocalDate endDate = rule.getEndDate();
                 LocalDate startDate = rule.getStartDate();
-                returnRuleDto.setTitle(rule.getTitle());
-                returnRuleDto.setContent(rule.getContent());
-                //根据当前时间是否符合在规则
+                //根据当前时间判断是否符合在规则时间内
                 if(newLocalDate.isBefore(endDate) || newLocalDate.isEqual(endDate)){
+                    returnRuleDto.setTitle(rule.getTitle());
+                    returnRuleDto.setContent(rule.getContent());
+                    returnRuleDto.setStartDate(startDate);
+                    returnRuleDto.setEndDate(endDate);
                     HashMap<String,Object> columnMap = new HashMap<String,Object>(2);
                     columnMap.put("rule_id",ruleId);
                     columnMap.put("status",Const.ONE);
@@ -117,7 +115,6 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     List<Long> releCustomerTagList = new ArrayList<Long>();
                     if(returnRuleCustomerLabelList.size() > 0 ){
                         EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
-
                         StringBuffer sql =  new StringBuffer();
                         sql.append("status = 1 ");
                         for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
@@ -436,6 +433,4 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         page.setRecords(ruleDtoList);
         return page;
     }
-
-
 }

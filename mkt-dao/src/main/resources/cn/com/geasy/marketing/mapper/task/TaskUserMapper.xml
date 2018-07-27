@@ -25,7 +25,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM rele_user_task su
-        WHERE su.user_id = #{userId}  AND su.status != 0
+        WHERE su.user_id = #{userId}  AND su.status = 1
         ORDER BY su.create_time DESC
     </select>
 </mapper>

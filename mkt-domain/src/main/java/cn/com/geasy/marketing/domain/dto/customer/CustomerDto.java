@@ -25,7 +25,7 @@ public class CustomerDto implements Serializable {
 
 
     /**昵称*/
-    private String nickname;
+    private String nickName;
 
     /**微信用户头像URL*/
     private String headImgUrl;
@@ -75,8 +75,8 @@ public class CustomerDto implements Serializable {
     private Long userId;
 
 
-    public CustomerDto(String nickname, Integer isAddWechat, List<Long> tagIds, LocalDate callTimeStart, LocalDate callTimeEnd,Long userId) {
-        this.nickname = nickname;
+    public CustomerDto(String nickName, Integer isAddWechat, List<Long> tagIds, LocalDate callTimeStart, LocalDate callTimeEnd,Long userId) {
+        this.nickName = nickName;
         this.tagIds = tagIds;
         this.isAddWechat = isAddWechat;
         this.callTimeStart = callTimeStart;

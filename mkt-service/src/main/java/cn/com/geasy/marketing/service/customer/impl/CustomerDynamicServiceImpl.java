@@ -55,7 +55,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
 
         //根据昵称匹配微信联系人
         EntityWrapper<WxContact> wxContactEntityWrapper = new EntityWrapper<>();
-        wxContactEntityWrapper.eq("nickname",customerDynamicDto.getNickname());
+        wxContactEntityWrapper.eq("nick_name",customerDynamicDto.getNickname());
         List<WxContact> wxContacts = this.wxContactMapper.selectList(wxContactEntityWrapper);
 
         if(CollectionUtils.isEmpty(wxContacts)){
@@ -116,7 +116,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         Long userId = SessionUtils.getUserId();
         Page<CustomerInteractionDynamicStatisticsDto> page = PageUtils.getPage(pageNum);
         EntityWrapper<CustomerInteractionDynamicStatisticsDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).groupBy("customer_id,nickname,head_img_url");
+        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).groupBy("customer_id,nick_name,head_img_url");
         List<CustomerInteractionDynamicStatisticsDto> customerInteractionDynamicStatisticsDtos = customerDynamicMapper.getCustomerInteractionDynamicStatistics(page, wrapper);
 
         if(CollectionUtils.isEmpty(customerInteractionDynamicStatisticsDtos)){
