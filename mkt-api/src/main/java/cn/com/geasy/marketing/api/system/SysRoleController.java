@@ -5,8 +5,6 @@
 package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
-import cn.com.geasy.marketing.domain.entity.system.SysRole;
-import cn.com.geasy.marketing.mapstruct.system.SysRoleMapstruct;
 import cn.com.geasy.marketing.service.system.SysRoleService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
@@ -58,19 +56,13 @@ public class SysRoleController {
     @ApiOperation(value = "新增角色")
     @PostMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> insert(@RequestBody(required = true) SysRoleDto sysRoleDto) {
-        SysRole sysRole = SysRoleMapstruct.getInstance.toEntity(sysRoleDto);
-        this.sysRoleService.insert(sysRole);
-        SysRoleDto savedRoleDto = SysRoleMapstruct.getInstance.toDto(sysRole);
-        return ResponseUtils.result(savedRoleDto);
+        return ResponseUtils.result(this.sysRoleService.save(sysRoleDto) ? "更新成功" : "更新失败");
     }
 
     @ApiOperation(value = "更新角色")
     @PatchMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysRoleDto sysRoleDto) {
-        SysRole sysRole = SysRoleMapstruct.getInstance.toEntity(sysRoleDto);
-        this.sysRoleService.updateById(sysRole);
-        SysRoleDto savedRoleDto = SysRoleMapstruct.getInstance.toDto(sysRole);
-        return ResponseUtils.result(savedRoleDto);
+        return ResponseUtils.result(this.sysRoleService.save(sysRoleDto) ? "更新成功" : "更新失败");
     }
 
 

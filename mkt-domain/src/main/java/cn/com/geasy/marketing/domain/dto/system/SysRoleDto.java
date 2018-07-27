@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.domain.dto.system;
 
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,5 +38,5 @@ public class SysRoleDto implements Serializable {
     /**
      * 权限
      */
-    private List<SysPermissionDto> permissions;
+    private List<SysPermissionDto> permissions = Lists.newArrayList();
 }

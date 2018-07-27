@@ -5,6 +5,7 @@
 package cn.com.geasy.marketing.service.system.impl;
 
 import cn.com.geasy.marketing.dao.system.SysRoleMapper;
+import cn.com.geasy.marketing.domain.dto.system.SysPermissionDto;
 import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import cn.com.geasy.marketing.domain.entity.system.ReleRolePermission;
 import cn.com.geasy.marketing.domain.entity.system.ReleUserRole;
@@ -133,5 +134,32 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
             }
         }
         return roleDto;
+    }
+
+    @Override
+    public boolean save(SysRoleDto roleDto) {
+
+        boolean success = false;
+
+        //保存角色
+        SysRole role = SysRoleMapstruct.getInstance.toEntity(roleDto);
+        success = super.insertOrUpdate(role);
+
+        Long roleId = role.getId();
+        //删除该角色的所有权限关联
+        Wrapper<ReleRolePermission> rolePermissionWrapper = new EntityWrapper<>();
+        rolePermissionWrapper.eq("role_id", roleId);
+        success = this.rolePermissionService.delete(rolePermissionWrapper);
+
+        //保存该角色的所有权限关联
+        List<SysPermissionDto> permissionDtos = roleDto.getPermissions();
+        for (SysPermissionDto permissionDto : permissionDtos){
+            Long permissionId = permissionDto.getId();
+            ReleRolePermission rolePermission = new ReleRolePermission();
+            rolePermission.setRoleId(roleId);
+            rolePermission.setPermissionId(permissionId);
+            success = this.rolePermissionService.insert(rolePermission);
+        }
+        return success;
     }
 }
