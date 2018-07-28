@@ -4,8 +4,8 @@
     <resultMap id="CustomerDtoMap" type="cn.com.geasy.marketing.domain.dto.customer.CustomerDto">
         <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
         <result property="headImgUrl" column="head_img_url" jdbcType="VARCHAR" javaType="String"/>
-        <result property="nickname" column="nickname" jdbcType="VARCHAR" javaType="String"/>
-        <result property="wxId" column="username" jdbcType="VARCHAR" javaType="String"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR" javaType="String"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR" javaType="String"/>
         <result property="remark" column="remark" jdbcType="VARCHAR" javaType="String"/>
         <result property="phone" column="phone" jdbcType="VARCHAR" javaType="Long"/>
         <result property="maturity" column="maturity" jdbcType="TINYINT" javaType="Integer"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="findById" resultMap="CustomerDtoMap" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDto">
-        SELECT ct.ID,wx.head_img_url,wx.nickname,wx.username,ct.remark,ct.phone,ct.maturity,wx.is_sync,ct.is_open_account
+        SELECT ct.ID,wx.head_img_url,wx.nick_name,wx.user_name,ct.remark,ct.phone,ct.maturity,wx.is_sync,ct.is_open_account
         FROM customer ct INNER JOIN wx_contact wx ON ct.wx_contact_id = wx.ID
          <where>
              <if test="id != null">

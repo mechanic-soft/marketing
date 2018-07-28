@@ -6,9 +6,12 @@ package cn.com.geasy.marketing.service.task;
 
 
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
+import cn.com.geasy.marketing.domain.dto.wechat.WxCustomerDto;
 import cn.com.geasy.marketing.domain.entity.task.Rule;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperService;
+
+import java.util.List;
 
 /**
  * 规则服务接口
@@ -52,6 +55,7 @@ public interface RuleService extends SuperService<Rule> {
      *
      * @param pageNum 页码
      * @param pageSize 页大小
+     * @param ruleDto  条件对象
      * @return Page&lt;RuleDto&gt; 待办任务分页列表
      */
     Page<RuleDto> selectDtoPage(int pageNum, int pageSize, RuleDto ruleDto);

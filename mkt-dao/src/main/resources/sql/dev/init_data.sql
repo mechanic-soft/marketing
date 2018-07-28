@@ -315,18 +315,18 @@ INSERT INTO rele_role_permission VALUES (2019, 3, 3006, 1, 1, CURRENT_TIMESTAMP(
 /* Data: 系统菜单                                                */
 /*==============================================================*/
 INSERT INTO sys_menu VALUES (1,  0, '任务代办', '', 1401, 1, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (2,  0, '新建任务', '', 1401, 2, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (3,  0, '客户管理', '', 1601, 3, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (4,  0, '客户动态', '', 1701, 4, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (5,  0, '聊天会话', '', 1802, 5, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (7,  0, '标签管理', '', 1903, 6, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (2,  0, '新建任务', '/task', 1401, 2, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (3,  0, '客户管理', '/clientManage', 1601, 3, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (4,  0, '客户动态', '/clientDynamic', 1701, 4, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (5,  0, '聊天会话', '/chatSession', 1802, 5, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (7,  0, '标签管理', '/tagManage', 1903, 6, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
 INSERT INTO sys_menu VALUES (8,  0, '系统管理', '', 1101, 7, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (9,  1, '我的代办', '', 1402, 1, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (10, 1, '新建规则', '', 1501, 2, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (11, 8, '公司注册', '', 1305, 1, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (12, 8, '用户管理', '', 1004, 5, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (13, 8, '权限管理', '', 1101, 4, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
-INSERT INTO sys_menu VALUES (14, 8, '日志管理', '', 2001, 3, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (9,  1, '我的代办', '/dynamics', 1402, 1, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (10, 1, '新建规则', '/rule', 1501, 2, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (11, 8, '公司注册', '/company', 1305, 1, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (12, 8, '用户管理', '/user', 1004, 5, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (13, 8, '权限管理', '/permissionList', 1101, 4, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
+INSERT INTO sys_menu VALUES (14, 8, '日志管理', '/logList', 2001, 3, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
 INSERT INTO sys_menu VALUES (15, 14, 'xxxxx',  '', 2001, 2, 1, 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);
 
 /*==============================================================*/

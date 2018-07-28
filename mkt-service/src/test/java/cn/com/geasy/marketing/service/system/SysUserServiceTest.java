@@ -24,8 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         @DatabaseSetup(value = "/dbunit/init/sys_user.setUp.xml")
 })
 public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
-    //    @MockBean
-//    private SysUserMapper userMapper;
+
     @Autowired
     private SysUserService userService;
 
@@ -45,8 +44,6 @@ public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
         expect.setWxHeadImgUrl("WxHeadImgUrl");
         expect.setWxSex(1);
         expect.setWxSignature("signature");
-
-//        given(this.userMapper.findByUsername(anyString())).willReturn(expect);
 
         SysUserDto actual = this.userService.findByUsername("admin");
 

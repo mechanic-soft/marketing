@@ -4,16 +4,16 @@ DROP TABLE IF EXISTS sys_permission;
 DROP TABLE IF EXISTS rele_user_role;
 DROP TABLE IF EXISTS rele_role_permission;
 DROP TABLE IF EXISTS sys_menu;
-DROP TABLE IF EXISTS rele_menu_permission;
+/*DROP TABLE IF EXISTS rele_menu_permission;*/
 DROP TABLE IF EXISTS sys_corp;
 DROP TABLE IF EXISTS sys_log;
 DROP TABLE IF EXISTS sys_visiting_card;
-DROP TABLE IF EXISTS article;
+/*DROP TABLE IF EXISTS article;
 DROP TABLE IF EXISTS article_regular;
 DROP TABLE IF EXISTS article_like;
 DROP TABLE IF EXISTS article_read;
 DROP TABLE IF EXISTS article_shared;
-DROP TABLE IF EXISTS article_subscription;
+DROP TABLE IF EXISTS article_subscription;*/
 drop table if exists chat_records;
 drop table if exists customer;
 drop table if exists customer_dynamic;
@@ -134,7 +134,7 @@ CREATE TABLE sys_menu (
 /*==============================================================*/
 /* Table: 菜单权限关联表                                          */
 /*==============================================================*/
-CREATE TABLE rele_menu_permission (
+/*CREATE TABLE rele_menu_permission (
   id          BIGINT PRIMARY KEY       NOT NULL, -- ID
   menu_id     BIGINT                   NOT NULL, -- 父级id
   permission  BIGINT                   NOT NULL, -- 菜单名
@@ -143,7 +143,7 @@ CREATE TABLE rele_menu_permission (
   create_time TIMESTAMP                NULL, -- 创建记录的时间
   update_user BIGINT                   NULL, -- 记录最后一次更新的用户编号
   update_time TIMESTAMP                NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 公司信息表                                              */
@@ -196,7 +196,7 @@ CREATE TABLE sys_visiting_card (
 /*==============================================================*/
 /* Table: 文章表                                                 */
 /*==============================================================*/
-CREATE TABLE article (
+/*CREATE TABLE article (
   id                   BIGINT PRIMARY KEY NOT NULL,
   source_url           VARCHAR(1024)      NULL, -- 转载文章的原始链接
   target_url           VARCHAR(1024)      NULL, -- 生成的自己的链接
@@ -214,12 +214,12 @@ CREATE TABLE article (
   create_time          TIMESTAMP          NULL, -- 创建记录的时间
   update_user          BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time          TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 非微信文章信息正则规则                                   */
 /*==============================================================*/
-CREATE TABLE article_regular (
+/*CREATE TABLE article_regular (
   id           BIGINT PRIMARY KEY NOT NULL,
   domain       varchar(100)       NULL, -- 网站域名
   title_reg    varchar(500)       NULL, -- title的正则提取规则
@@ -230,12 +230,12 @@ CREATE TABLE article_regular (
   create_time  TIMESTAMP          NULL, -- 创建记录的时间
   update_user  BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time  TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章喜欢状态表                                          */
 /*==============================================================*/
-CREATE TABLE article_like (
+/*CREATE TABLE article_like (
   id              BIGINT PRIMARY KEY  NOT NULL,
   article_info_id BIGINT              NOT NULL, -- 文章id
   user_id         BIGINT              NOT NULL, -- 用户
@@ -245,12 +245,12 @@ CREATE TABLE article_like (
   create_time     TIMESTAMP           NULL, -- 创建记录的时间
   update_user     BIGINT              NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP           NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章阅读表                                              */
 /*==============================================================*/
-CREATE TABLE article_read (
+/*CREATE TABLE article_read (
   id              BIGINT PRIMARY KEY NOT NULL,
   shared_info_id  BIGINT             NULL, -- 分享信息的id
   article_info_id BIGINT             NOT NULL, -- 文章id
@@ -264,11 +264,11 @@ CREATE TABLE article_read (
   update_user     BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP          NULL -- 记录最后一次更新时间
 );
-
+*/
 /*==============================================================*/
 /* Table: 文章分享表                                              */
 /*==============================================================*/
-CREATE TABLE article_shared (
+/*CREATE TABLE article_shared (
   id              BIGINT PRIMARY KEY NOT NULL,
   parent_id       BIGINT             NULL, -- 上游分享人
   article_info_id BIGINT             NOT NULL, -- 文章id
@@ -278,12 +278,12 @@ CREATE TABLE article_shared (
   create_time     TIMESTAMP          NULL, -- 创建记录的时间
   update_user     BIGINT             NULL, -- 记录最后一次更新的用户编号
   update_time     TIMESTAMP          NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 文章订阅表                                              */
 /*==============================================================*/
-CREATE TABLE article_subscription (
+/*CREATE TABLE article_subscription (
   id                   BIGINT PRIMARY KEY  NOT NULL,
   subscription_user_id BIGINT              NOT NULL, -- 被订阅的人id
   user_id              BIGINT              NOT NULL, -- 普通用户id
@@ -293,7 +293,7 @@ CREATE TABLE article_subscription (
   create_time          TIMESTAMP           NULL, -- 创建记录的时间
   update_user          BIGINT              NULL, -- 记录最后一次更新的用户编号
   update_time          TIMESTAMP           NULL -- 记录最后一次更新时间
-);
+);*/
 
 /*==============================================================*/
 /* Table: 聊天记录表                                             */
@@ -538,15 +538,15 @@ CREATE TABLE wx_contact (
   id                  BIGINT PRIMARY KEY      NOT NULL,
   user_id             BIGINT                  NULL,
   uin                 BIGINT                  NULL, -- 微信用户信息识别码(唯一)
-  user_name            VARCHAR(255)            NULL, -- 加密的微信号(唯一)
-  nick_name            VARCHAR(255)            NULL, -- 微信昵称
+  user_name           VARCHAR(255)            NULL, -- 加密的微信号(唯一)
+  nick_name           VARCHAR(255)            NULL, -- 微信昵称
   head_img_url        VARCHAR(2048)           NULL, -- 头像URL
   contact_flag        INT,
   member_count        INT,
   member_list         VARCHAR(256),
   remark_name         VARCHAR(256),
   hide_input_bar_flag INT,
-  sex                 INT                 	  NULL, -- 微信性别
+  sex                 INT                     NULL, -- 微信性别
   signature           VARCHAR(2048)           NULL, -- 微信签名
   verify_flag         INT,
   owner_uin           INT,
@@ -565,9 +565,9 @@ CREATE TABLE wx_contact (
   uni_friend          INT,
   display_name        VARCHAR(256),
   chat_room_id        INT,
-  key_word             VARCHAR(256),
+  key_word            VARCHAR(256),
   wncry_chat_room_id  VARCHAR(256),
-  encryChatRoomId     VARCHAR(256),
+  encry_chat_room_id  VARCHAR(256),
   is_sync             TINYINT, -- 是否同步(0=未同步，1=已同步)
   status              TINYINT DEFAULT 1       NOT NULL, -- 状态(0=删除,1=正常)
   create_user         BIGINT                  NULL, -- 创建记录的用户编号

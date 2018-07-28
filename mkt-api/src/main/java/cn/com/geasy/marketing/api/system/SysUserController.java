@@ -58,8 +58,7 @@ public class SysUserController {
     @PostMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody(required = true) SysUserDto sysUserDto) {
         sysUserDto.setId(null);
-        this.sysUserService.insertOrUpdate(sysUserDto);
-        return ResponseUtils.result(sysUserDto);
+        return ResponseUtils.result(this.sysUserService.insertOrUpdate(sysUserDto)? "新增成功" : "新增失败");
     }
 
     @ApiOperation(value = "更新用户")

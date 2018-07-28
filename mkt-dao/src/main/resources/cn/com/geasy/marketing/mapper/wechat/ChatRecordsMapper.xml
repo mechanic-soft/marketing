@@ -6,7 +6,7 @@
         <result property="customerId" column="customer_id" javaType="Long"/>
         <result property="wxUsername" column="wx_username" jdbcType="VARCHAR" javaType="String"/>
         <result property="headImgUrl" column="head_img_url" jdbcType="VARCHAR" javaType="String"/>
-        <result property="nickname" column="nickname" jdbcType="VARCHAR" javaType="String"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR" javaType="String"/>
         <result property="msgType" column="msg_type" jdbcType="TINYINT" javaType="Integer"/>
         <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
         <result property="url" column="url" jdbcType="VARCHAR" javaType="String"/>
@@ -49,5 +49,40 @@
             )t3 on t3.customer_id = t2.id
         order by t3.send_time
         <!-- 关联关系：chat_records .customer_id  __ (customer.id __customer.wx_contact_id )  __ wx_contact.id  -->
+    </select>
+
+    <select id="getChatConsumersByWxContactIdList" resultMap="Base_Result_Map" parameterType="java.util.Map">
+        SELECT * FROM (
+        SELECT r.*,wc.head_img_url,wc.nick_name
+        FROM wx_contact wc
+        INNER JOIN customer c ON c.wx_contact_id = wc.id
+        INNER JOIN  (
+        SELECT a.id,a.customer_id,a.wx_user_name, a.msg_type,a.content,a.url, a.is_send,a.send_time
+        FROM chat_records a
+        LEFT JOIN chat_records b ON a.wx_user_name = b.wx_user_name  AND a.send_time <![CDATA[ > ]]> b.send_time
+        <where>
+            a.status = 1
+            <if test="userId!=null">
+                AND a.create_user= ${userId}
+            </if>
+        </where>
+        GROUP BY a.wx_user_name, a.send_time HAVING COUNT(b.id) <![CDATA[ < ]]> 1
+        <if test="isSort==1">
+            ORDER BY a.send_time DESC
+        </if>
+        ) r ON c.id = r.customer_id
+        WHERE 1 = 1 AND wc.status = 1
+        AND r.send_time  &gt;= '${startTime} 00:00:00'
+        AND r.send_time  &lt;=  '${endTime} 23:59:59'
+        <if test="wxContactIdList !=null and wxContactIdList.size >0">
+            AND wc.id IN
+            <foreach collection="wxContactIdList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <if test="orderByStr !=null">
+                ORDER BY  INSTR  ${orderByStr}
+            </if>
+        </if>
+        ) t ORDER BY t.send_time ASC
     </select>
 </mapper>
