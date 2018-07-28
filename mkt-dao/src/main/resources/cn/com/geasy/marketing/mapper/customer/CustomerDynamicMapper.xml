@@ -85,7 +85,7 @@
         </where>
 
     </select>
-    <select id="getCustomerIdByCustomerInteractionDynamic" resultType="int" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto">
+    <select id="getCustomerIdByCustomerInteractionDynamic" resultType="Long" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto">
         SELECT cd.customer_id
         FROM customer_dynamic cd
         <where>

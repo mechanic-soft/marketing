@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.domain.dto.wechat;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class ChatRecordsDto  implements Serializable {
     /**
      * 聊天记录ID
      */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     /**
      * 客户id
@@ -38,6 +40,11 @@ public class ChatRecordsDto  implements Serializable {
      * 微信用户名称
      */
     private String wxUsername;
+
+    /**
+     * 微信昵称
+     */
+    private String wxNickName;
 
     /**
      *消息类型

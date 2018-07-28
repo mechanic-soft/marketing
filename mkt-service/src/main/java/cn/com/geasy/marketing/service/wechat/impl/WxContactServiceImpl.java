@@ -32,7 +32,8 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
 
     /**
      * 同步微信联系人信息
-     * uin 是唯一字段，有则更新，没有则插入
+     * 以当前用户userId 下，昵称判断唯一性，有则更新，没有则插入 (存在唯一性问题)
+     *
      * @param list
      * @return
      */
@@ -41,24 +42,24 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
     public boolean inserOrUpdateBatchByUin(List<WxContactSecondDto> list) {
 
         List<WxContact> wxContacts = WxContactSecondMapstruct.getInstance.toEntityList(list);
-        List<Long> uins = new ArrayList<>();
-        List<Long> existUnis = new ArrayList<>();//数据库中已经存在的uin
+        List<String> nickNames = new ArrayList<>();
+        List<String> existNickNames = new ArrayList<>();//数据库中已经存在的昵称
         wxContacts.forEach(wxContact ->{
-            uins.add(wxContact.getUin());
+            nickNames.add(wxContact.getNickName());
         });
         EntityWrapper ew =new EntityWrapper<>();
-        ew.in("uin",uins);
+        ew.in("nick_name",nickNames).eq("user_id",SessionUtils.getUserId().toString());
         List<WxContact> existWxContacts =this.selectList(ew);
         existWxContacts.forEach(existWxContact->{
-            existUnis.add(existWxContact.getUin());
+            existNickNames.add(existWxContact.getNickName());
         });
-        log.debug(existUnis.toString());
+        log.debug(existNickNames.toString());
 
         List<WxContact> wxContactsInsert = new ArrayList<>();
         List<WxContact> wxContactsUpdate = new ArrayList<>();
         for (WxContact item:wxContacts) {
             item.setUserId(SessionUtils.getUserId());
-            if(existUnis.contains(item.getUin())){
+            if(existNickNames.contains(item.getNickName())){
                 item.setUpdateTime(LocalDateTime.now());
                 item.setUpdateUser(SessionUtils.getUserId());
                 wxContactsUpdate.add(item);
@@ -68,13 +69,13 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
                 wxContactsInsert.add(item);
             }
         }
-        //uin 是唯一字段，有则更新，没有则插入
+        // 以当前用户userId 下，昵称判断唯一性，有则更新，没有则插入 (存在唯一性问题)
         if(CollectionUtils.isNotEmpty(wxContactsInsert)) {
             this.insertBatch(wxContactsInsert);
         }
         wxContactsUpdate.forEach(wxContactUpdate->{
             EntityWrapper wxContactUpdateWrapper =new EntityWrapper<>();
-            wxContactUpdateWrapper.eq("uin",wxContactUpdate.getUin());
+            wxContactUpdateWrapper.eq("nick_name",wxContactUpdate.getNickName()).eq("user_id",SessionUtils.getUserId().toString());
             this.update(wxContactUpdate,wxContactUpdateWrapper);
         });
         return true;
