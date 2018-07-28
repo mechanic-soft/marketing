@@ -299,19 +299,19 @@ CREATE TABLE sys_visiting_card (
 /* Table: 聊天记录表                                             */
 /*==============================================================*/
 CREATE TABLE chat_records (
-  id          BIGINT PRIMARY KEY               NOT NULL,
-  customer_id BIGINT                           NOT NULL,
-  wx_username VARCHAR(256)                     NULL,
-  msg_type    TINYINT DEFAULT 0                NULL, -- 消息类型(0=文本,1=图片,2=表情,3=文件)
-  content     VARCHAR(1024)                    NULL,
-  url         VARCHAR(256)                     NULL,
-  is_send     TINYINT                          NULL, -- 状态(0=接收,1=发送)
-  send_time   TIMESTAMP                        NULL,
-  status      TINYINT DEFAULT 1                NOT NULL, -- 状态(0=删除,1=正常)
-  create_user BIGINT                           NULL, -- 创建记录的用户编号
-  create_time TIMESTAMP                        NULL, -- 创建记录的时间
-  update_user BIGINT                           NULL, -- 记录最后一次更新的用户编号
-  update_time TIMESTAMP                        NULL -- 记录最后一次更新时间
+  id          BIGINT PRIMARY KEY NOT NULL,
+  customer_id BIGINT             NOT NULL,
+  wx_username VARCHAR(256)       NULL,
+  msg_type    TINYINT DEFAULT 0  NULL, -- 消息类型(0=文本,1=图片,2=表情,3=文件)
+  content     VARCHAR(1024)      NULL,
+  url         VARCHAR(256)       NULL,
+  is_send     TINYINT            NULL, -- 状态(0=接收,1=发送)
+  send_time   TIMESTAMP          NULL,
+  status      TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
+  create_user BIGINT             NULL, -- 创建记录的用户编号
+  create_time TIMESTAMP          NULL, -- 创建记录的时间
+  update_user BIGINT             NULL, -- 记录最后一次更新的用户编号
+  update_time TIMESTAMP          NULL -- 记录最后一次更新时间
 );
 
 
@@ -347,7 +347,7 @@ CREATE TABLE customer (
   remark             VARCHAR(256)       NULL, -- 备注(同步)
   maturity           TINYINT            NULL, -- 客户成熟度
   is_open_account    TINYINT            NULL, -- 是否开户
-  callcenter_user_id VARCHAR(64)        NULL, -- 外呼平台用户ID
+  callcenter_user_id VARCHAR(64)        NULL, -- 外呼平台用户ID(同步)理财经理ID
   user_id            BIGINT             NULL, -- 客户id
   corp_id            BIGINT             NULL, -- 公司ID
   status             TINYINT DEFAULT 1  NOT NULL, -- 状态(0=删除,1=正常)
@@ -363,7 +363,7 @@ CREATE TABLE customer (
 CREATE TABLE customer_dynamic (
   id            BIGINT PRIMARY KEY                  NOT NULL,
   customer_id   BIGINT                              NOT NULL, -- 客户ID
-  event         TINYINT                             NULL, -- 事件(0=阅读,1=订阅,2=联系)
+  event         TINYINT                             NULL, -- 事件(0=阅读,1=订阅,2=联系,3=转发)
   event_date    TIMESTAMP                           NULL, -- 发生日期
   article_id    BIGINT                              NULL, -- 文章ID
   article_title VARCHAR(512)                        NULL, -- 文章标题
