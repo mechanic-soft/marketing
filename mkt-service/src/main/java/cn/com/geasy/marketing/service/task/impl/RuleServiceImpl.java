@@ -22,8 +22,6 @@ import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
 import cn.com.geasy.marketing.domain.entity.wechat.ChatRecords;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
-import cn.com.geasy.marketing.service.article.ArticleReadService;
-import cn.com.geasy.marketing.service.article.ArticleSubscriptionService;
 import cn.com.geasy.marketing.service.customer.CustomerDynamicService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
