@@ -59,19 +59,19 @@ public class SysMenuController {
 
     @ApiOperation(value = "新增菜单")
     @PostMapping(path = "/menus", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> insert(@RequestBody(required = true) SysMenuDto SysMenuDto){
-        SysMenu SysMenu = SysMenuMapstruct.getInstance.toEntity(SysMenuDto);
-        this.menuService.insert(SysMenu);
-        SysMenuDto savedRoleDto = SysMenuMapstruct.getInstance.toDto(SysMenu);
+    public ResponseEntity<ModelMap> insert(@RequestBody(required = true) SysMenuDto sysMenuDto){
+        SysMenu sysMenu = SysMenuMapstruct.getInstance.toEntity(sysMenuDto);
+        this.menuService.insert(sysMenu);
+        SysMenuDto savedRoleDto = SysMenuMapstruct.getInstance.toDto(sysMenu);
         return ResponseUtils.result(savedRoleDto);
     }
 
     @ApiOperation(value = "更新菜单")
     @PatchMapping(path = "/menus", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysMenuDto SysMenuDto){
-        SysMenu SysMenu = SysMenuMapstruct.getInstance.toEntity(SysMenuDto);
-        this.menuService.updateById(SysMenu);
-        SysMenuDto savedMenuDto = SysMenuMapstruct.getInstance.toDto(SysMenu);
+    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysMenuDto sysMenuDto){
+        SysMenu sysMenu = SysMenuMapstruct.getInstance.toEntity(sysMenuDto);
+        this.menuService.updateById(sysMenu);
+        SysMenuDto savedMenuDto = SysMenuMapstruct.getInstance.toDto(sysMenu);
         return ResponseUtils.result(savedMenuDto);
     }
 

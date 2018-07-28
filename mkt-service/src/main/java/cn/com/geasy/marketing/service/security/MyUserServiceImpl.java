@@ -27,7 +27,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @Service
-public class MyUserService implements UserDetailsService {
+public class MyUserServiceImpl implements UserDetailsService {
 
     @Autowired
     private SysUserMapper userMapper;

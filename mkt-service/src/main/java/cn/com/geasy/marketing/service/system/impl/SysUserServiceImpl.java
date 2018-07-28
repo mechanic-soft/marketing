@@ -105,14 +105,14 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         this.userRoleService.delete(userRoleEntityWrapper);
         return super.baseMapper.deleteBatchIds(ids);
     }
-
+    @Override
     public void updateByUsername(SysUserDto userDto) throws ServiceException {
         if (wxUinIsExist(userDto.getWxUin(), userDto.getUsername())) {
             throw new ServiceException(HttpCode.SQL_DATA_ERROR, "微信UIN[" + userDto.getWxUin() + "]已存在。");
         }
         baseMapper.updateByUsername(userDto);
     }
-
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     public boolean insertOrUpdate(SysUserDto userDto) throws ServiceException {
 
@@ -154,6 +154,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
      * @param wxUin 微信UIN
      * @return 存在返回true，不存在返回false
      */
+    @Override
     public boolean wxUinIsExist(Long wxUin) {
         return wxUinIsExist(wxUin, null);
     }
@@ -165,6 +166,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
      * @param username 用户名
      * @return 存在返回true，不存在返回false
      */
+    @Override
     public boolean wxUinIsExist(Long wxUin, String username) {
         Wrapper<SysUser> wrapper = new EntityWrapper<>();
         wrapper.eq("wx_uin", wxUin);
@@ -180,6 +182,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
      * @param userDto 用户信息
      * @return 存在返回true，不存在返回false
      */
+    @Override
     public boolean usernameOrWxUinIsExist(SysUserDto userDto) {
 
         Wrapper<SysUser> userWrapper = new EntityWrapper<>();

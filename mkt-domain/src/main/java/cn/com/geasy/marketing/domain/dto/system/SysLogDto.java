@@ -20,6 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysLogDto implements Serializable {
+    private static final long serialVersionUID = -4473362779867450224L;
     /**
      * ID
      */

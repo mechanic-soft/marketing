@@ -56,18 +56,18 @@ public class SysLogControler {
     @ApiOperation(value = "新增日志")
     @PostMapping(path = "/logs", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> insert(@RequestBody SysLogDto sysLogDto) {
-        SysLog SysLog = SysLogMapstruct.getInstance.toEntity(sysLogDto);
-        this.sysLogService.insert(SysLog);
-        SysLogDto savedRoleDto = SysLogMapstruct.getInstance.toDto(SysLog);
+        SysLog sysLog = SysLogMapstruct.getInstance.toEntity(sysLogDto);
+        this.sysLogService.insert(sysLog);
+        SysLogDto savedRoleDto = SysLogMapstruct.getInstance.toDto(sysLog);
         return ResponseUtils.result(savedRoleDto);
     }
 
     @ApiOperation(value = "更新日志")
     @PutMapping(path = "/logs", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> update(@RequestBody SysLogDto sysLogDto) {
-        SysLog SysLog = SysLogMapstruct.getInstance.toEntity(sysLogDto);
-        this.sysLogService.updateById(SysLog);
-        SysLogDto savedRoleDto = SysLogMapstruct.getInstance.toDto(SysLog);
+        SysLog sysLog = SysLogMapstruct.getInstance.toEntity(sysLogDto);
+        this.sysLogService.updateById(sysLog);
+        SysLogDto savedRoleDto = SysLogMapstruct.getInstance.toDto(sysLog);
         return ResponseUtils.result(savedRoleDto);
     }
 

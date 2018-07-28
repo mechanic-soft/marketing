@@ -24,6 +24,7 @@ import java.util.List;
  */
 @Service
 public class SysLogServiceImpl extends SuperServiceImpl<SysLogMapper, SysLog> implements SysLogService {
+    @Override
     public Page<SysLogDto> selectDtoPage(int pageNum) {
         Page<SysLog> page = PageUtils.getPage(pageNum);
         page = super.selectPage(page);
