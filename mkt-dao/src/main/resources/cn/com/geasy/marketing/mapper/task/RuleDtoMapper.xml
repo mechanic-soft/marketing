@@ -5,6 +5,8 @@
         <id property="id" column="id" jdbcType="BIGINT" javaType="Long"/>
         <result property="title" column="title" jdbcType="VARCHAR" javaType="String"/>
         <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
+        <result  property="startDate" column="startDate"  jdbcType="TIMESTAMP" />
+        <result  property="endDate" column="endDate"  jdbcType="TIMESTAMP" />
         <!-- create user -->
         <result property="createUserName" column="createUserName" jdbcType="VARCHAR" javaType="String"/>
         <result  property="createTime" column="createTime"  jdbcType="TIMESTAMP" />
@@ -15,7 +17,7 @@
                 SELECT DISTINCT (t1.id)
                 ,DATE_FORMAT(t1.create_time, '%Y-%m-%d') AS createTime
                 ,t1.title
-                ,t1.content
+                ,t1.content,t1.start_date AS startDate,t1.end_date AS endDate
                 ,t2.username AS createUserName
                 FROM rule t1
                 LEFT JOIN sys_user t2 ON t1.create_user = t2.id
