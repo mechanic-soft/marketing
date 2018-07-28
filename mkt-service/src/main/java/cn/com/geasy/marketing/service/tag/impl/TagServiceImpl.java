@@ -46,7 +46,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     private TagDtoService tagDtoService;
 
     @Autowired
-    private TagTreeDtoService TagTreeDtoSrv;
+    private TagTreeDtoService tagTreeDtoSrv;
     @Override
     public List<Tag> findTagByArticleId(Long articleId) {
         return baseMapper.findTagByArticleId(articleId);
@@ -118,6 +118,6 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     @Override
     public List findTagType() {
 
-        return TagTreeDtoSrv.findTagTree();
+        return tagTreeDtoSrv.findTagTree();
     }
 }
