@@ -78,6 +78,7 @@ public class RuleDto implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate createTime;
 
     @JsonIgnore
