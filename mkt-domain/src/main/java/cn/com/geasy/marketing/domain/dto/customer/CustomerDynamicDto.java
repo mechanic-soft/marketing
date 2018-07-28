@@ -1,5 +1,6 @@
 package cn.com.geasy.marketing.domain.dto.customer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class CustomerDynamicDto  implements Serializable{
     /**
      * 发生日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
     /**
      * 文章ID
