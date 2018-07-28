@@ -73,6 +73,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
         return baseMapper.findDtos(null);
     }
 
+    @Override
     public Page<SysRoleDto> findDtoPage(int pageNum) {
         Page<SysRoleDto> page = PageUtils.getPage(pageNum);
         List<SysRoleDto> roleDtos = baseMapper.findDtos(null, page);
@@ -95,6 +96,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
      * @param userId 用户ID
      * @return List&lt;SysRole&gt; 角色
      */
+    @Override
     public List<SysRoleDto> findDtoByUserId(Long userId){
         return SysRoleMapstruct.getInstance.toDtoList(baseMapper.findByUserId(userId));
     }
@@ -105,6 +107,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
      * @param userId 用户ID
      * @return List&lt;SysRole&gt; 角色
      */
+    @Override
     public List<SysRole> findByUserId(Long userId){
         return baseMapper.findByUserId(userId);
     }

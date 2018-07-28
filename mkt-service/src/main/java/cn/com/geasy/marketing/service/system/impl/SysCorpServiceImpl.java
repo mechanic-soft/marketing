@@ -25,6 +25,7 @@ import java.util.List;
 @Service
 public class SysCorpServiceImpl extends SuperServiceImpl<SysCorpMapper, SysCorp> implements SysCorpService {
 
+    @Override
     public Page<SysCorpDto> selectDtoPage(int pageNum) {
         Page<SysCorp> page = PageUtils.getPage(pageNum);
         page = super.selectPage(page);

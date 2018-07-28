@@ -7,7 +7,7 @@ package cn.com.geasy.marketing.config;
 import cn.com.geasy.marketing.security.MyAuthenctiationFailureHandler;
 import cn.com.geasy.marketing.security.MyAuthenctiationSuccessHandler;
 import cn.com.geasy.marketing.security.MyFilterSecurityInterceptor;
-import cn.com.geasy.marketing.service.security.MyUserService;
+import cn.com.geasy.marketing.service.security.MyUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +44,7 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserDetailsService userService() {
-        return new MyUserService();
+        return new MyUserServiceImpl();
     }
 
     @Override
