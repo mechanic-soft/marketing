@@ -32,6 +32,13 @@ public interface SysUserService extends SuperService<SysUser> {
      * @return List&lt;SysUserDto&gt;
      */
     List<SysUserDto> findDtos();
+
+    /**
+     * 返回匹配指定ID的用户
+     * @param id 用户ID
+     * @return SysUserDto
+     */
+    SysUserDto findDtoById(Long id);
     /**
      * 返回匹配指定登录账户的用户
      *

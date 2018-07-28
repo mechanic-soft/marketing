@@ -80,6 +80,14 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
+    public SysUserDto findDtoById(Long id) {
+        SysUser user = super.selectById(id);
+        SysUserDto userDto = SysUserMapstruct.getInstance.toDto(user);
+        userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+        return userDto;
+    }
+
+    @Override
     public SysUserDto findByUsername(String username) {
         return super.baseMapper.findByUsername(username);
     }
@@ -111,31 +119,31 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         if (usernameOrWxUinIsExist(userDto)) {
             throw new ServiceException(HttpCode.SQL_DATA_ERROR, "用户名或微信UIN已存在");
         }
-        boolean success = false;
 
-         //密码加密
+        //密码加密
         String password = SecurityPasswordUtils.encrypt(userDto.getPassword());
         userDto.setPassword(password);
 
         //保存用户
         SysUser user = SysUserMapstruct.getInstance.toEntity(userDto);
-        success = super.insertOrUpdate(user);
+        boolean success = super.insertOrUpdate(user);
+        if (success) {
+            Long userId = user.getId();
+            //删除该用户的所有角色关联
+            Wrapper<ReleUserRole> userRoleWrapper = new EntityWrapper<>();
+            userRoleWrapper.eq("user_id", userId);
+            success = this.userRoleService.delete(userRoleWrapper);
 
-        Long userId = user.getId();
-        //删除该用户的所有角色关联
-        Wrapper<ReleUserRole> userRoleWrapper = new EntityWrapper<>();
-        userRoleWrapper.eq("user_id", userId);
-        success = this.userRoleService.delete(userRoleWrapper);
+            //保存该用户的所有角色关联
+            List<SysRoleDto> roleDtos = userDto.getRoles();
+            for (SysRoleDto roleDto : roleDtos) {
+                Long roleId = roleDto.getId();
 
-        //保存该用户的所有角色关联
-        List<SysRoleDto> roleDtos = userDto.getRoles();
-        for (SysRoleDto roleDto : roleDtos){
-            Long roleId = roleDto.getId();
-
-            ReleUserRole userRole = new ReleUserRole();
-            userRole.setRoleId(userId);
-            userRole.setUserId(roleId);
-            success = this.userRoleService.insert(userRole);
+                ReleUserRole userRole = new ReleUserRole();
+                userRole.setRoleId(userId);
+                userRole.setUserId(roleId);
+                success = this.userRoleService.insert(userRole);
+            }
         }
         return success;
     }

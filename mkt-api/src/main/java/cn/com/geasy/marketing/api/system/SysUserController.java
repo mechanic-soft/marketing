@@ -5,7 +5,6 @@
 package cn.com.geasy.marketing.api.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
-import cn.com.geasy.marketing.mapstruct.system.SysUserMapstruct;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
@@ -49,23 +48,23 @@ public class SysUserController {
 
     @ApiOperation(value = "获取匹配用户ID的用户")
     @GetMapping(path = "/users/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getUser(@PathVariable(required = true) Long id) {
-        SysUserDto sysUserDto = SysUserMapstruct.getInstance.toDto(this.sysUserService.selectById(id));
-        return ResponseUtils.result(sysUserDto);
+    public ResponseEntity<ModelMap> getUser(@PathVariable Long id) {
+//        SysUserDto sysUserDto = SysUserMapstruct.getInstance.toDto(this.sysUserService.selectById(id));
+        return ResponseUtils.result(this.sysUserService.findDtoById(id));
     }
 
     @ApiOperation(value = "新增用户")
     @PostMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> save(@RequestBody(required = true) SysUserDto sysUserDto) {
+    public ResponseEntity<ModelMap> save(@RequestBody SysUserDto sysUserDto) {
         sysUserDto.setId(null);
         return ResponseUtils.result(this.sysUserService.insertOrUpdate(sysUserDto)? "新增成功" : "新增失败");
     }
 
     @ApiOperation(value = "更新用户")
     @PatchMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysUserDto sysUserDto) {
+    public ResponseEntity<ModelMap> updatge(@RequestBody SysUserDto sysUserDto) {
         this.sysUserService.insertOrUpdate(sysUserDto);
-        return ResponseUtils.result(sysUserDto);
+        return ResponseUtils.result(this.sysUserService.insertOrUpdate(sysUserDto)? "更新成功" : "更新失败");
     }
 
     @ApiOperation(value = "删除用户")

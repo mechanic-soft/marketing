@@ -35,8 +35,12 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
 
+    private final MyFilterSecurityInterceptor myFilterSecurityInterceptor;
+
     @Autowired
-    private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
+    public SecurityCongfiguration(MyFilterSecurityInterceptor myFilterSecurityInterceptor) {
+        this.myFilterSecurityInterceptor = myFilterSecurityInterceptor;
+    }
 
     @Bean
     UserDetailsService userService() {
@@ -61,7 +65,8 @@ public class SecurityCongfiguration extends WebSecurityConfigurerAdapter {
                         "/h2/**",
                         "/login",
                         "/wx/login",
-                        "/unauthor").permitAll()
+                        "/unauthor",
+                        "/v1/customerDynamics").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()

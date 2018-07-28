@@ -145,9 +145,9 @@ INSERT INTO sys_permission (id, name, endpoint, method, description, status, cre
 VALUES
   (1704, 'get_customerDynamics_statistics_interaction', '/v1/customerDynamics/statistics/interaction', 'GET', '客户互动统计',
    1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
+/*INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (1705, 'post_customerDynamics', '/v1/customerDynamics', 'POST', '添加客户动态', 1, 1, CURRENT_TIMESTAMP(), 1,
-        CURRENT_TIMESTAMP());
+        CURRENT_TIMESTAMP());*/
 
 -- 聊天
 INSERT INTO sys_permission (id, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
@@ -251,7 +251,7 @@ INSERT INTO rele_role_permission VALUES (1038, 1, 1701, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (1039, 1, 1702, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1040, 1, 1703, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1041, 1, 1704, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (1042, 1, 1705, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+/*INSERT INTO rele_role_permission VALUES (1042, 1, 1705, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());*/
 INSERT INTO rele_role_permission VALUES (1043, 1, 1801, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1044, 1, 1802, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (1045, 1, 1803, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
@@ -305,7 +305,7 @@ INSERT INTO rele_role_permission VALUES (3011, 3, 1701, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (3012, 3, 1702, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3013, 3, 1703, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3014, 3, 1704, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
-INSERT INTO rele_role_permission VALUES (3015, 3, 1705, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+/*INSERT INTO rele_role_permission VALUES (3015, 3, 1705, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());*/
 INSERT INTO rele_role_permission VALUES (3016, 3, 1801, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3017, 3, 1802, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3018, 3, 1803, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
