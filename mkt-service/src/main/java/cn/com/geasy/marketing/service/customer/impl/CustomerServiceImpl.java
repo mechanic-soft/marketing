@@ -91,16 +91,15 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     }
 
     @Override
-    public Page<WxContactDto> getWxContantByPage(int pageNum) {
+    public List<WxContactDto> getWxContantList() {
         //获取当前登录用户
         Long userId = SessionUtils.getUserId();
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
         ew.where("user_id = {0}",userId);
-        Page<WxContact> page = PageUtils.getPage(pageNum);
-        page =  wxContactService.selectPage(page,ew);
+
         //将对应实体转换为对应实体的DTO
-        List<WxContactDto> corpDtos = WxContactMapstruct.getInstance.toDtoList(page.getRecords());
-        return PageUtils.getPage(page, corpDtos);
+        List<WxContactDto> corpDtos = WxContactMapstruct.getInstance.toDtoList(wxContactService.selectList(ew));
+        return corpDtos;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
