@@ -95,6 +95,12 @@ public class CustomerController {
         return ResponseUtils.result(customerSrv.customerLifecycleById(customerId));
     }
 
+    @ApiOperation(value = "客户生命周期事件列表（新）")
+    @PostMapping(path = "/customers/{customerId}/newlifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> newCustomerLifecycle(@PathVariable("customerId") Long customerId){
+        return ResponseUtils.result(customerSrv.newCustomerLifecycle(customerId));
+    }
+
 
 
     @ApiOperation(value = "客户标签列表查询")

@@ -398,7 +398,7 @@ CREATE TABLE rele_customer_tag (
 CREATE TABLE customer_lifecycle_event (
   id          BIGINT PRIMARY KEY                  NOT NULL,
   customer_id BIGINT                              NOT NULL, -- 客户ID
-  event       TINYINT DEFAULT 0                   NULL, -- 事件(0=呼叫,1=加微,2=转发,3=开户,4=阅读,5=联系)
+  event       TINYINT DEFAULT 0                   NULL, -- 事件(0=阅读,1=订阅,2=联系,3=转发,4=加微,5=开户,6=呼叫)
   event_date  TIMESTAMP                           NULL, -- 事件日期
   user_id     BIGINT                              NULL, -- 用户ID
   status      TINYINT DEFAULT 1                   NOT NULL, -- 状态(0=删除,1=正常)

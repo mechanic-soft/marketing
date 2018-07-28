@@ -83,7 +83,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         Long userId = SessionUtils.getUserId();
         Page<CustomerDynamicDto> page = PageUtils.getPage(pageNum);
         EntityWrapper<CustomerDynamicDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate);
+        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).between("event", 0, 2);
         List<CustomerDynamicDto> customerDynamicDtos = this.customerDynamicMapper.getCustomerDynamics(page, wrapper);
         return page.setRecords(customerDynamicDtos);
     }
@@ -93,7 +93,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         //获取当前登录用户
         Long userId = SessionUtils.getUserId();
         EntityWrapper<CustomerDynamicStatisticDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("user_id", userId).ge("event_date", startDate).groupBy("event");
+        wrapper.eq("user_id", userId).ge("event_date", startDate).between("event", 0, 2).groupBy("event");
         return this.customerDynamicMapper.getCustomerDynamicStatistics(wrapper);
     }
 
@@ -116,7 +116,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         Long userId = SessionUtils.getUserId();
         Page<CustomerInteractionDynamicStatisticsDto> page = PageUtils.getPage(pageNum);
         EntityWrapper<CustomerInteractionDynamicStatisticsDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).groupBy("customer_id,nick_name,head_img_url");
+        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).between("event", 0, 2).groupBy("customer_id,nick_name,head_img_url");
         List<CustomerInteractionDynamicStatisticsDto> customerInteractionDynamicStatisticsDtos = customerDynamicMapper.getCustomerInteractionDynamicStatistics(page, wrapper);
 
         if(CollectionUtils.isEmpty(customerInteractionDynamicStatisticsDtos)){

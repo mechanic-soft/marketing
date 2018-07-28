@@ -18,8 +18,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerLifecycleEventDto implements Serializable {
+
+    private static final long serialVersionUID = 6532714755800499404L;
     /**
-     * 事件(0=呼叫,1=加微,2=转发,3=开户,4=阅读,5=联系)
+     * 事件(0=阅读,1=订阅,2=联系,3=转发,4=加微,5=开户,6=呼叫)
      */
     private Integer event;
 
@@ -28,4 +30,5 @@ public class CustomerLifecycleEventDto implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private LocalDateTime eventDate;
+
 }

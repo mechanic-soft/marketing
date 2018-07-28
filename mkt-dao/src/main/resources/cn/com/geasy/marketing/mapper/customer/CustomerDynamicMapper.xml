@@ -33,6 +33,11 @@
         <result property="headImgUrl" column="head_img_url" javaType="String"/>
         <result property="interactionCount" column="interaction_count" javaType="Integer"/>
     </resultMap>
+    
+    <resultMap id="First_One_In_Event_Map" type="cn.com.geasy.marketing.domain.dto.customer.CustomerLifecycleEventDto">
+        <result property="event" column="event" jdbcType="TINYINT" javaType="Integer"/>
+        <result property="eventDate" column="event_date" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime"/>
+    </resultMap>
 
     <select id="getCustomerDynamics" resultMap="Base_Result_Map">
         SELECT cd.id, cd.customer_id, cd.event, cd.event_date, cd.article_id, cd.article_title, cd.user_id,cd.article_tag,cd.read_time,cd.is_full_read,
@@ -106,6 +111,19 @@
         GROUP BY cd.customer_id
         HAVING count(cd.customer_id) ${symbol}  ${frequency}
         ORDER BY create_time ASC
+    </select>
+
+    <select id="getFirstOneInEvent" parameterType="Long" resultMap="First_One_In_Event_Map">
+        SELECT
+          a.event,
+          min(a.event_date) AS event_date
+        FROM
+          customer_dynamic a
+        WHERE
+          a.event IN (0, 1, 2, 3)
+        AND a.customer_id = 50
+        GROUP BY
+          a. EVENT
     </select>
 
 </mapper>
