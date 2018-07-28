@@ -55,7 +55,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
 
         //根据昵称匹配微信联系人
         EntityWrapper<WxContact> wxContactEntityWrapper = new EntityWrapper<>();
-        wxContactEntityWrapper.eq("nick_name",customerDynamicDto.getNickname());
+        wxContactEntityWrapper.eq("nick_name",customerDynamicDto.getNickName());
         List<WxContact> wxContacts = this.wxContactMapper.selectList(wxContactEntityWrapper);
 
         if(CollectionUtils.isEmpty(wxContacts)){

@@ -51,7 +51,7 @@ public class CustomerDynamicControllerTest extends AbstractWebMvcTest {
         expect.setArticleTag("测试标签");
         expect.setReadTime(69);
         expect.setIsFullRead(1);
-        expect.setNickname("测试昵称");
+        expect.setNickName("测试昵称");
 
         //given(this.customerDynamicService.save(expect)).willReturn(expect);
 

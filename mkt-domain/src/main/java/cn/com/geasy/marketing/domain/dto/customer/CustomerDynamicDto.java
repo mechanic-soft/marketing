@@ -63,7 +63,7 @@ public class CustomerDynamicDto  implements Serializable{
     /**
      * 微信昵称
      */
-    private String nickname;
+    private String nickName;
     /**
      * 微信头像URL
      */
