@@ -73,6 +73,13 @@
         </root>
     </springProfile>
 
+    <springProfile name="localtest">
+        <root level="DEBUG">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
     <springProfile name="test">
         <root level="DEBUG">
             <appender-ref ref="FILE"/>

@@ -1,18 +1,18 @@
+#------------------------------------------------------------------
+# 公共环境配置
+# author: Phil
+#------------------------------------------------------------------
+
 server:
-  port: 8080
   servlet:
     context-path: /mkt
   error:
     path: /error
 
-
 spring:
-#  profiles:
-#    active: @environment@
   application:
     name: Marketing API
   jackson:
-#    date-format: yyyy-MM-dd HH:mm:ss``
     time-zone: GMT+8
     serialization:
       indent_output: true

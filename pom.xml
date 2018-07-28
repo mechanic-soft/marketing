@@ -152,7 +152,14 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-        <!-- 测试环境 -->
+        <!-- 公司测试环境 -->
+        <profile>
+            <id>localtest</id>
+            <properties>
+                <environment>localtest</environment>
+            </properties>
+        </profile>
+        <!-- 阿里云测试环境 -->
         <profile>
             <id>test</id>
             <properties>

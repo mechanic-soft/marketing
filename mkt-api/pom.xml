@@ -118,6 +118,7 @@
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>config/application-dev.yml</exclude>
+                    <exclude>config/application-localtest.yml</exclude>
                     <exclude>config/application-test.yml</exclude>
                     <exclude>config/application-prod.yml</exclude>
                     <exclude>config/application.yml</exclude>
