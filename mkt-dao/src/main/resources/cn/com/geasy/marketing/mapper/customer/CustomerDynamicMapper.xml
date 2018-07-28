@@ -50,7 +50,7 @@
         SELECT event , count(event) as event_count
         FROM customer_dynamic
         <where>
-            status =1 and
+            status =1
             ${ew.sqlSegment}
         </where>
     </select>
@@ -64,7 +64,7 @@
         FROM
           customer_dynamic
         <where>
-            status =1 and
+            status =1
             ${ew.sqlSegment}
         </where>
     </select>
@@ -80,7 +80,7 @@
         LEFT JOIN customer c ON cd.customer_id = c.wx_contact_id
         LEFT JOIN wx_contact wc ON c.wx_contact_id = wc.id
         <where>
-            cd.status =1 and
+            cd.status =1
             ${ew.sqlSegment}
         </where>
 
