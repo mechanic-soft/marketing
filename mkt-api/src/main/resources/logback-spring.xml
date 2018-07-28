@@ -73,6 +73,12 @@
         </root>
     </springProfile>
 
+    <springProfile name="localaliyun">
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
     <springProfile name="localtest">
         <root level="DEBUG">
             <appender-ref ref="FILE"/>

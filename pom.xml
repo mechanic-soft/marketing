@@ -159,6 +159,13 @@
                 <environment>localtest</environment>
             </properties>
         </profile>
+        <!-- 公司直连阿里云数据库环境 -->
+        <profile>
+            <id>localaliyun</id>
+            <properties>
+                <environment>localaliyun</environment>
+            </properties>
+        </profile>
         <!-- 阿里云测试环境 -->
         <profile>
             <id>test</id>

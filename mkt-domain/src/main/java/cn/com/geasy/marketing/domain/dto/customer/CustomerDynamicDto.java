@@ -88,10 +88,12 @@ public class CustomerDynamicDto  implements Serializable{
     /**
      * 开始时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private LocalDate startTime;
     /**
      * 结束时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private LocalDate endTime;
 
     @JsonIgnore
