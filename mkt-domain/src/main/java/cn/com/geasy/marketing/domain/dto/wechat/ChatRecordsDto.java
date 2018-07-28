@@ -29,6 +29,7 @@ public class ChatRecordsDto  implements Serializable {
     /**
      * 聊天记录ID
      */
+
     private Long id;
     /**
      * 客户id
@@ -38,6 +39,11 @@ public class ChatRecordsDto  implements Serializable {
      * 微信用户名称
      */
     private String wxUsername;
+
+    /**
+     * 微信昵称
+     */
+    private String wxNickName;
 
     /**
      *消息类型
