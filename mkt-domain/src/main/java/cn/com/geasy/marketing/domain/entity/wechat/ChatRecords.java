@@ -42,6 +42,11 @@ public class ChatRecords extends Entity implements Serializable {
     private String wxUsername;
 
     /**
+     * 微信昵称
+     */
+    private String wxNickName;
+
+    /**
      *消息类型
      */
     private Integer msgType;

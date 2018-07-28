@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public interface ChatRecordsService extends SuperService<ChatRecords> {
     public String save(ChatRecordsDto chatRecordsDto);
-    public Page<ChatRecordsDto> findChatRecordsByCondition(String username, String keyword, int pageNum);
+    public Page<ChatRecordsDto> findChatRecordsByCondition(String nickName, String keyword, int pageNum);
     public Page<WxCustomerDto> getChatConsumersList(Integer isSort,Integer pageNum);
     public Page<WxCustomerDto> getChatConsumersByWxContactIdList(List<Long> wxContactIdList, LocalDate startTime,LocalDate endTime, Integer pageNum);
 }
