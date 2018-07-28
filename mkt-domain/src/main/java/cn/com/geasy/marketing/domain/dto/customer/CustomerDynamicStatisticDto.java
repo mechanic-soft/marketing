@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 客户行为统计Dto
  *
@@ -17,7 +19,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDynamicStatisticDto {
+public class CustomerDynamicStatisticDto implements Serializable {
+
+    private static final long serialVersionUID = -3326736238121607672L;
     /**
      * 事件(0=阅读,1=订阅,2=联系)
      */
