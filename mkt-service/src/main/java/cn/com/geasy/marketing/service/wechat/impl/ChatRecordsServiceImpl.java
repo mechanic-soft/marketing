@@ -91,13 +91,13 @@ public class ChatRecordsServiceImpl extends SuperServiceImpl<ChatRecordsMapper, 
 
 
     @Override
-    public Page<ChatRecordsDto> findChatRecordsByCondition(String username, String keyword, int pageNum) {
+    public Page<ChatRecordsDto> findChatRecordsByCondition(String nickName, String keyword, int pageNum) {
         Page<ChatRecordsDto> result = PageUtils.getPage(pageNum);
-        if (StringUtils.isNotBlank(username)) {
+        if (StringUtils.isNotBlank(nickName)) {
             //根据客户ID以及当前登录用户ID
             EntityWrapper<ChatRecords> chatRecordEw = new EntityWrapper<ChatRecords>();
             chatRecordEw.where("create_user = {0}", SessionUtils.getUserId());
-            chatRecordEw.andNew("wx_username ={0}", username);
+            chatRecordEw.andNew("wx_nick_name ={0}", nickName);
             if (StringUtils.isNoneBlank(keyword)) {
                 chatRecordEw.like("content", keyword);
             }
