@@ -41,8 +41,8 @@ public class ChatController {
 
     @ApiOperation(value = "聊天记录")
     @GetMapping(path = "/chatRecords", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> findChatRecords(@RequestParam String username, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1",required = false) Integer pageNum){
-        return ResponseUtils.result(chatRecordsService.findChatRecordsByCondition(username,keyword,pageNum));
+    public ResponseEntity<ModelMap> findChatRecords(@RequestParam String nickName, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1",required = false) Integer pageNum){
+        return ResponseUtils.result(chatRecordsService.findChatRecordsByCondition(nickName,keyword,pageNum));
     }
 
     @ApiOperation(value = "加微客户列表")

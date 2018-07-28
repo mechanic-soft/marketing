@@ -101,7 +101,7 @@ public class WxContactSecondDto implements Serializable{
     /**
      *
      */
-    private Integer attrStatus;
+    private Long attrStatus;
     /**
      * 省
      */

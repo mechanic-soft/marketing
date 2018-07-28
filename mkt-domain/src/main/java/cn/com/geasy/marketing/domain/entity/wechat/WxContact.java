@@ -109,7 +109,7 @@ public class WxContact extends Entity implements Serializable {
     /**
      *
      */
-    private Integer attrStatus;
+    private Long attrStatus;
     /**
      * 省
      */
