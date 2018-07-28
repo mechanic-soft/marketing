@@ -5,6 +5,7 @@
 package cn.com.geasy.marketing.domain.entity.customer;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.gitee.mechanic.core.constants.Status;
 import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 客户信息实体
@@ -26,6 +28,20 @@ import java.io.Serializable;
 @TableName("customer")
 public class Customer extends Entity implements Serializable {
     private static final long serialVersionUID = 267795432213577189L;
+
+
+    public Customer(Integer status, Long createUser, LocalDateTime createTime, Long updateUser, LocalDateTime updateTime,
+                    String callTime, String customerCode, String remark,  String callcenterUserId) {
+        this.status = status;
+        this.createUser = createUser;
+        this.createTime = createTime;
+        this.updateUser = updateUser;
+        this.updateTime = updateTime;
+        this.callTime = callTime;
+        this.customerCode = customerCode;
+        this.remark = remark;
+        this.callcenterUserId = callcenterUserId;
+    }
 
     /**
      * 微信联系人ID

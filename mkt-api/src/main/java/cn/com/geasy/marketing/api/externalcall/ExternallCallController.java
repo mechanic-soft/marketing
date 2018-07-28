@@ -1,8 +1,11 @@
 package cn.com.geasy.marketing.api.externalcall;
 
 import cn.com.geasy.marketing.domain.dto.externalCall.QuestionnaireDto;
+import cn.com.geasy.marketing.domain.entity.customer.Customer;
 import cn.com.geasy.marketing.domain.entity.externalCall.ExternalCall;
+import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.externalcall.ExternalCallService;
+import cn.com.geasy.marketing.utils.SessionUtils;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -27,7 +31,8 @@ public class ExternallCallController {
 
     @Autowired
     private ExternalCallService ecSrv;
-
+    @Autowired
+    private CustomerService customerSrv;
 
     @ApiOperation(value = "外呼系统数据接入")
     @PostMapping(path = "/externallCalls", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -64,10 +69,17 @@ public class ExternallCallController {
             @ApiParam("问卷记录")@RequestBody(required = false) List<QuestionnaireDto> record
       ){
         ExternalCall ec = new ExternalCall(itemCode,itemName,taskCode,taskName,businessHallCode,businessHallName,callTime,userCode,customerId,customerName,callTimeStart,callTimeAnswer,callTimeEnd,talkTime,ringTime,lineUpTime,isAnswer,callResult,callType,callInOut,isSendMsg,msg,recordMsg,reservedFieldOne,reservedFieldTwo,reservedFieldThree,reservedFieldFour,reservedFieldFive,remark);
-        String flag = "0";
+//
 
-        flag = ecSrv.insert(ec,record);
-        return ResponseUtils.result(flag);
+
+
+
+
+        Customer customer = new Customer(1,SessionUtils.getUserId(),LocalDateTime.now(),SessionUtils.getUserId(),LocalDateTime.now()
+                ,callTimeStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),userCode,remark,customerId);
+        ecSrv.insert(ec,record);
+        customerSrv.insert(customer);
+        return ResponseUtils.result("1");
 
     }
 
