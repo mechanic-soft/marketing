@@ -73,8 +73,8 @@ public class CustomerController {
     @ApiOperation(value = "微信好友列表")
     //@ApiImplicitParams(value = {@ApiImplicitParam(name = "pageNum", value = "页数", paramType = "body")})
     @GetMapping(path = "/wxcontacts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getWxContantByPage(@RequestParam(defaultValue = "1") int pageNum){
-        return ResponseUtils.result(customerSrv.getWxContantByPage(pageNum));
+    public ResponseEntity<ModelMap> getWxContantList(){
+        return ResponseUtils.result(customerSrv.getWxContantList());
     }
 
     @ApiOperation(value = "同步客户")
@@ -93,6 +93,12 @@ public class CustomerController {
     @PostMapping(path = "/customers/{customerId}/lifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> customerLifecycle(@PathVariable("customerId") Long customerId){
         return ResponseUtils.result(customerSrv.customerLifecycleById(customerId));
+    }
+
+    @ApiOperation(value = "客户生命周期事件列表（新）")
+    @PostMapping(path = "/customers/{customerId}/newlifecycles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> newCustomerLifecycle(@PathVariable("customerId") Long customerId){
+        return ResponseUtils.result(customerSrv.newCustomerLifecycle(customerId));
     }
 
 

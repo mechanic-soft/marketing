@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CustomerService extends SuperService<Customer> {
     public CustomerDto releWechat(CustomerDto customerDto);
-    public Page<WxContactDto> getWxContantByPage(int pageNum);
+    public List<WxContactDto> getWxContantList();
     public String synchronizeCustomer(List<WxContactDto> list);
     public String addCustomerTag(Long customerId,List<Long> tagIds);
     public List<CustomerLifecycleEventDto> customerLifecycleById(Long id);
@@ -23,4 +23,12 @@ public interface CustomerService extends SuperService<Customer> {
     public Page<CustomerDto>  selectDtoPage(int pageNum,int pageSize, CustomerDto customerDto);
 
     public String  synchronizeWxUserList(List<WxContactSecondDto> list);
+
+    /**
+     * 客户生命周期时间查询服务
+     * （由于客户生命周期事件分散在不同表中，需要到不同的表取数）
+     * @param customerId 客户ID
+     * @return
+     */
+    List<CustomerLifecycleEventDto> newCustomerLifecycle(Long customerId);
 }

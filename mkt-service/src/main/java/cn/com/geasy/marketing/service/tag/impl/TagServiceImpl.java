@@ -56,7 +56,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     @Override
     public String addTag(TagDto tagDto) {
         Integer rs = 0;
-        if (SynchronizeUtils.sendTag(tagDto.getName())) { //新增标签时同时发送到服务号系统
+        if (0==tagDto.getTagSrc() &&SynchronizeUtils.sendTag(tagDto.getName())) { //  标签来源(0=阅读,1=外呼，2=聊天)  当标签来源是阅读时，新增标签时同时发送到服务号系统
             Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
             tag.setTagTypeId(tagDto.getSubTypeId());
             tag.setIsSys(tagDto.getIsSys());

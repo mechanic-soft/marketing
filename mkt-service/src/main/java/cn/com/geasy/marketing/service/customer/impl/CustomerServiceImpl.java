@@ -1,6 +1,7 @@
 package cn.com.geasy.marketing.service.customer.impl;
 
 import cn.com.geasy.marketing.contant.Const;
+import cn.com.geasy.marketing.dao.customer.CustomerDynamicMapper;
 import cn.com.geasy.marketing.dao.customer.CustomerMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerLifecycleEventDto;
@@ -12,7 +13,6 @@ import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
 import cn.com.geasy.marketing.mapstruct.customer.CustomerLifecycleEventMapstruct;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
-import cn.com.geasy.marketing.mapstruct.wechat.WxContactSecondMapstruct;
 import cn.com.geasy.marketing.service.customer.CustomerLifecycleEventService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
@@ -21,7 +21,6 @@ import cn.com.geasy.marketing.utils.SessionUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
-import com.gitee.mechanic.mybatis.utils.PageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +31,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +53,14 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
 
     @Autowired
     private CustomerLifecycleEventService customerLifecycleEventService;
+
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @Autowired
+    private CustomerDynamicMapper customerDynamicMapper;
+
+
 
     //设置为事务的操作
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
@@ -91,16 +99,15 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     }
 
     @Override
-    public Page<WxContactDto> getWxContantByPage(int pageNum) {
+    public List<WxContactDto> getWxContantList() {
         //获取当前登录用户
         Long userId = SessionUtils.getUserId();
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
         ew.where("user_id = {0}",userId);
-        Page<WxContact> page = PageUtils.getPage(pageNum);
-        page =  wxContactService.selectPage(page,ew);
+
         //将对应实体转换为对应实体的DTO
-        List<WxContactDto> corpDtos = WxContactMapstruct.getInstance.toDtoList(page.getRecords());
-        return PageUtils.getPage(page, corpDtos);
+        List<WxContactDto> corpDtos = WxContactMapstruct.getInstance.toDtoList(wxContactService.selectList(ew));
+        return corpDtos;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
@@ -259,6 +266,32 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         boolean flag = wxContactService.inserOrUpdateBatchByUin(list);
 
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
+    }
+
+    @Override
+    public List<CustomerLifecycleEventDto> newCustomerLifecycle(Long customerId) {
+        List<CustomerLifecycleEventDto> customerLifecycleEventDtos = new ArrayList<>();
+        Customer customer = this.customerMapper.selectById(customerId);
+
+        if(customer == null){
+            return customerLifecycleEventDtos;
+        }
+
+        if( !StringUtils.isBlank(customer.getCallTime())){
+            //添加呼叫生命周期事件
+            customerLifecycleEventDtos.add(new CustomerLifecycleEventDto(6, LocalDateTime.parse(customer.getCallTime(),
+                                                                                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+        };
+
+        if( customer.getUpdateTime() != null){
+            //添加加微生命周期事件
+            customerLifecycleEventDtos.add(new CustomerLifecycleEventDto(4, customer.getUpdateTime()));
+        };
+
+        customerLifecycleEventDtos.addAll(this.customerDynamicMapper.getFirstOneInEvent(customerId));
+
+        return customerLifecycleEventDtos;
+
     }
 }
 

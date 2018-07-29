@@ -37,8 +37,10 @@
                 WHERE 1 = 1
 
                 and t1.status = 1
-                <if test="customerDto.nickname != null and customerDto.nickname != ''">
-                    AND t2.nick_name LIKE CONCAT('%',#{customerDto.nickname},'%')
+
+
+                <if test="customerDto.nickName != null and customerDto.nickName != ''">
+                    AND t2.nick_name = #{customerDto.nickName}
                 </if>
 
                 <!--wx_contact_id   null 就是未加微信-->

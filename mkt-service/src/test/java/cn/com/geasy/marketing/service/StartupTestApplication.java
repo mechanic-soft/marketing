@@ -10,12 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * 请在此写下该类的说明
+ * Service 测试启动类
  *
  * @author phil
  * @version 1.0.0
  */
-@SpringBootApplication(scanBasePackages = {"com.baomidou.mybatisplus", "cn.com.geasy.marketing"})
+@SpringBootApplication(scanBasePackages = {"com.gitee.mechanic", "cn.com.geasy.marketing"})
 @EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan(basePackages = "cn.com.geasy.marketing.dao")
 public class StartupTestApplication {

@@ -89,18 +89,24 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     @Override
     public SysUserDto findByUsername(String username) {
-        return super.baseMapper.findByUsername(username);
+        Wrapper<SysUser> userWrapper = new EntityWrapper<>();
+        userWrapper.eq("username", username);
+        SysUser sysUser = super.selectOne(userWrapper);
+        return SysUserMapstruct.getInstance.toDto(sysUser);
     }
 
     @Override
     public SysUserDto findByWxUin(Long wxUin) {
-        return super.baseMapper.findByWxUin(wxUin);
+        Wrapper<SysUser> userWrapper = new EntityWrapper<>();
+        userWrapper.eq("wx_uin", wxUin);
+        SysUser sysUser = super.selectOne(userWrapper);
+        return SysUserMapstruct.getInstance.toDto(sysUser);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     public Integer remove(List<Long> ids) {
-        EntityWrapper<ReleUserRole> userRoleEntityWrapper = new EntityWrapper<>();
+        Wrapper<ReleUserRole> userRoleEntityWrapper = new EntityWrapper<>();
         userRoleEntityWrapper.in("user_id", ids);
         this.userRoleService.delete(userRoleEntityWrapper);
         return super.baseMapper.deleteBatchIds(ids);

@@ -98,5 +98,45 @@
             <value>1</value>
             <value>2017-10-30 12:16:57</value>
         </row>
+        <row>
+            <value>4</value>
+            <value>deleteduser</value>
+            <value>4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8</value>
+            <value>e5a721750f676a48ee77f3fe8c5a58e9</value>
+            <value>被删除的</value>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <null/>
+            <value>0</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>insertuser</value>
+            <value>112</value>
+            <null/>
+            <value>333</value>
+            <value>444</value>
+            <value>dddd</value>
+            <value>大师傅</value>
+            <value><![CDATA[eticon?seq=1856357848&username=@42dc1e0cb92c1e]]></value>
+            <value>1</value>
+            <value>一多少啊识333。</value>
+            <null/>
+            <null/>
+            <value>0</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+            <value>1</value>
+            <value>2017-10-30 12:16:57</value>
+        </row>
     </table>
 </dataset>
