@@ -114,10 +114,14 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     if(returnRuleCustomerLabelList.size() > 0 ){
                         EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
                         StringBuffer sql =  new StringBuffer();
-                        sql.append("status = 1 ");
                         for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
                             RuleCustomerLabel ruleCustomerLabel = returnRuleCustomerLabelList.get(i);
-                            sql.append("AND tag_id = "+ruleCustomerLabel.getTagId()+"");
+                            if(sql.length() == 0){
+                                sql.append("status = 1 ");
+                                sql.append(" AND tag_id = "+ruleCustomerLabel.getTagId()+"");
+                            }else{
+                                sql.append(" OR tag_id = "+ruleCustomerLabel.getTagId()+"");
+                            }
                         }
                         ewByReleCustomerTag.where(sql.toString());
                         //根据标签主键关联客户标签关联表，拿到客户信息
@@ -166,7 +170,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     //取出集合的并集
                     if(releCustomerTagList.size() > 0 ){
                         if(customerIdByReadActionListFlag){
-                            releCustomerTagList.retainAll(customerIdByReadActionList);
+                            customerIdByReadActionList.retainAll(releCustomerTagList);
                             if(customerIdByReadActionList.size() > 0){
                                 luckCostomerList.addAll(customerIdByReadActionList);
                             }else{
@@ -174,7 +178,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                             }
                         }
                         if(customerIdBySubActionFlag){
-                            releCustomerTagList.retainAll(customerIdBySubActionList);
+                            customerIdBySubActionList.retainAll(releCustomerTagList);
                             if(customerIdBySubActionList.size() > 0){
                                 luckCostomerList.addAll(customerIdBySubActionList);
                             }else{
@@ -182,7 +186,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                             }
                         }
                         if(customerIdByTalkActionFlag){
-                            releCustomerTagList.retainAll(customerIdByTalkActionList);
+                            customerIdByTalkActionList.retainAll(releCustomerTagList);
                             if(customerIdByTalkActionList.size() > 0){
                                 luckCostomerList.addAll(customerIdByTalkActionList);
                             }else{
