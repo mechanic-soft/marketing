@@ -4,6 +4,7 @@
  */
 package cn.com.geasy.marketing.domain.dto.task;
 
+import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
 import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -67,6 +68,10 @@ public class RuleDto implements Serializable {
      */
     List<RuleTriggerAction> triggers;
 
+    /**
+     * 标签对象
+     */
+    List<TagDto> tagList;
     /**
      * 创建人
      */
