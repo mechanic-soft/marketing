@@ -38,7 +38,7 @@ public class TagController {
        return ResponseUtils.result(tagService.addTag(tagDto));
     }
 
-    @ApiOperation(value = "新增标签类别")
+    @ApiOperation(value = "新增标签子类别")
     @PostMapping(path = "/tagTypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ModelMap> addTagType(@RequestBody TagTypeDto tagTypeDto){
         return ResponseUtils.result(tagService.addTagType(tagTypeDto));

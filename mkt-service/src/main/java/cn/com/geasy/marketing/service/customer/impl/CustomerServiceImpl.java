@@ -72,7 +72,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         String nickname=customerDto.getNickName();
         ew.where("user_id = {0}",SessionUtils.getUserId());
         if(StringUtils.isNotBlank(nickname)){
-            ew.andNew("nick_name = {0}",nickname);
+            ew.andNew("BINARY nick_name = {0}",nickname);
         }
         List<WxContact> list = wxContactService.selectList(ew);
         //步骤二:更新该记录的微信联系人ID   设置关联
