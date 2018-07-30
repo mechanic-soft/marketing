@@ -33,11 +33,8 @@ public class CustomerController {
     private CustomerService customerSrv;
 
     @ApiOperation(value = "删除客户信息")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "ids", value = "客户ID", paramType = "body")
-    })
-    @DeleteMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getUser(@RequestBody List<Long> ids){
+    @DeleteMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> delete(@RequestBody List<Long> ids){
         return ResponseUtils.result(customerSrv.deleteBatchIds(ids));
     }
 

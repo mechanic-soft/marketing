@@ -35,6 +35,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import com.gitee.mechanic.mybatis.utils.PageUtils;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mysql.jdbc.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,10 +116,14 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     if(returnRuleCustomerLabelList.size() > 0 ){
                         EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
                         StringBuffer sql =  new StringBuffer();
-                        sql.append("status = 1 ");
                         for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
                             RuleCustomerLabel ruleCustomerLabel = returnRuleCustomerLabelList.get(i);
-                            sql.append("AND tag_id = "+ruleCustomerLabel.getTagId()+"");
+                            if(sql.length() == 0){
+                                sql.append("status = 1 ");
+                                sql.append(" AND tag_id = "+ruleCustomerLabel.getTagId()+"");
+                            }else{
+                                sql.append(" OR tag_id = "+ruleCustomerLabel.getTagId()+"");
+                            }
                         }
                         ewByReleCustomerTag.where(sql.toString());
                         //根据标签主键关联客户标签关联表，拿到客户信息
@@ -166,7 +172,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     //取出集合的并集
                     if(releCustomerTagList.size() > 0 ){
                         if(customerIdByReadActionListFlag){
-                            releCustomerTagList.retainAll(customerIdByReadActionList);
+                            customerIdByReadActionList.retainAll(releCustomerTagList);
                             if(customerIdByReadActionList.size() > 0){
                                 luckCostomerList.addAll(customerIdByReadActionList);
                             }else{
@@ -174,7 +180,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                             }
                         }
                         if(customerIdBySubActionFlag){
-                            releCustomerTagList.retainAll(customerIdBySubActionList);
+                            customerIdBySubActionList.retainAll(releCustomerTagList);
                             if(customerIdBySubActionList.size() > 0){
                                 luckCostomerList.addAll(customerIdBySubActionList);
                             }else{
@@ -182,7 +188,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                             }
                         }
                         if(customerIdByTalkActionFlag){
-                            releCustomerTagList.retainAll(customerIdByTalkActionList);
+                            customerIdByTalkActionList.retainAll(releCustomerTagList);
                             if(customerIdByTalkActionList.size() > 0){
                                 luckCostomerList.addAll(customerIdByTalkActionList);
                             }else{
@@ -299,12 +305,12 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         rule.setUpdateUser(userId);
         rule.setId(ruleId);
         //根据规则主键ruleId，去查找规则客户标签关联表
-        HashMap<String,Object> columnMap = new HashMap<String,Object>(5);
+        HashMap<String,Object> columnMap =  Maps.newHashMap();
         columnMap.put("rule_id",ruleId);
         List<RuleCustomerLabel> oldRuleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnMap);
-        ArrayList<RuleCustomerLabel> updateRuleCustomerLabelList = new ArrayList<RuleCustomerLabel>();
-        ArrayList<RuleCustomerLabel> addRuleCustomerLabelList = new ArrayList<RuleCustomerLabel>();
-        HashMap<String,Object> oldRuleCustomerLabelMap = new HashMap<String,Object>();
+        ArrayList<RuleCustomerLabel> updateRuleCustomerLabelList = Lists.newArrayList();
+        ArrayList<RuleCustomerLabel> addRuleCustomerLabelList =Lists.newArrayList();
+        HashMap<String,Object> oldRuleCustomerLabelMap =  Maps.newHashMap();
         oldRuleCustomerLabelList.forEach(ruleCustomerLabelObj ->{
             oldRuleCustomerLabelMap.put(ruleCustomerLabelObj.getRuleId().toString() +"@"+ ruleCustomerLabelObj.getTagId().toString(),ruleCustomerLabelObj);
         });
@@ -331,12 +337,12 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
             updateRuleCustomerLabelList.add(oldRuleCustomerLabel);
         });
         //根据规则主键ruleId，去查找规则触发行为表
-        HashMap<String,Object> columnRuleTriggerActionMap = new HashMap<String,Object>(5);
+        HashMap<String,Object> columnRuleTriggerActionMap =  Maps.newHashMap();
         columnRuleTriggerActionMap.put("rule_id",ruleId);
         List<RuleTriggerAction> oldRuleTriggerActionList = ruleTriggerActionService.selectByMap(columnMap);
-        ArrayList<RuleTriggerAction> updateRuleTriggerActionList = new ArrayList<RuleTriggerAction>();
-        ArrayList<RuleTriggerAction> addRuleTriggerActionList = new ArrayList<RuleTriggerAction>();
-        HashMap<String,Object> oldRuleTriggerActionMap = new HashMap<String,Object>();
+        ArrayList<RuleTriggerAction> updateRuleTriggerActionList = Lists.newArrayList();
+        ArrayList<RuleTriggerAction> addRuleTriggerActionList = Lists.newArrayList();
+        HashMap<String,Object> oldRuleTriggerActionMap =  Maps.newHashMap();
         oldRuleTriggerActionList.forEach(ruleTriggerActionObj ->{
             oldRuleTriggerActionMap.put(ruleTriggerActionObj.getRuleId().toString() +"@"+ ruleTriggerActionObj.getAction().toString(),ruleTriggerActionObj);
         });
@@ -388,7 +394,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
     @Override
     public RuleDto findRuleByRuleId(Long ruleId) {
         Long userId = SessionUtils.getUserId();
-        HashMap<String,Object> columnRuleMap = new HashMap<String,Object>(3);
+        HashMap<String,Object> columnRuleMap = Maps.newHashMap();
         columnRuleMap.put("id",ruleId);
         columnRuleMap.put("status",Const.ONE);
         List<Rule> ruleList = super.selectByMap(columnRuleMap);
@@ -399,17 +405,17 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         }else{
             return returnRuleDto;
         }
-        HashMap<String,Object> columnRuleCustomerLabelMap = new HashMap<String,Object>(3);
+        HashMap<String,Object> columnRuleCustomerLabelMap = Maps.newHashMap();
         columnRuleCustomerLabelMap.put("rule_id",ruleId);
         //0代表状态为删除，1代表状态为正常
         columnRuleCustomerLabelMap.put("status",Const.ONE);
         List<RuleCustomerLabel> ruleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnRuleCustomerLabelMap);
-        ArrayList<Long> customerTagsList = new ArrayList<Long>();
+        ArrayList<Long> customerTagsList = Lists.newArrayList();
         ruleCustomerLabelList.forEach( ruleCustomerLabelObj -> {
             Long tagId = ruleCustomerLabelObj.getTagId();
             customerTagsList.add(tagId);
         });
-        HashMap<String,Object> columnRuleTriggerActionMap = new HashMap<String,Object>(3);
+        HashMap<String,Object> columnRuleTriggerActionMap = Maps.newHashMap();
         columnRuleTriggerActionMap.put("rule_id",ruleId);
         //0代表状态为删除，1代表状态为正常
         columnRuleTriggerActionMap.put("status",Const.ONE);
@@ -420,6 +426,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         returnRuleDto.setStartDate(rule.getStartDate());
         returnRuleDto.setEndDate(rule.getEndDate());
         returnRuleDto.setCustomerTags(customerTagsList);
+        returnRuleDto.setStatus(rule.getStatus());
         returnRuleDto.setTriggers(ruleTriggerActionList);
         return returnRuleDto;
     }

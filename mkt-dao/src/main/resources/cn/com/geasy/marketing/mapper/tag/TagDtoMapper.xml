@@ -29,7 +29,8 @@
         <if test="tagDto.isSys != null">
             and t1.is_sys = #{tagDto.isSys}
         </if>
-        order by t4.name,t3.name
+        GROUP BY  t1.id,t1.name,t3.id,t3.name,t4.id,t1.tag_src
+        ORDER by t4.name,t3.name
     </sql>
 
     <!--列表查询-->
