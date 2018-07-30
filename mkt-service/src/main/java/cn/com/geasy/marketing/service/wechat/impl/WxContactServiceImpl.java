@@ -83,7 +83,7 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
 
         for(WxContact wxContactUpdate:wxContactsUpdate) {
             EntityWrapper wxContactUpdateWrapper = new EntityWrapper<>();
-            wxContactUpdateWrapper.eq("nick_name", wxContactUpdate.getNickName()).eq("user_id", SessionUtils.getUserId().toString());
+            wxContactUpdateWrapper.eq("user_id", SessionUtils.getUserId().toString()).eq("BINARY nick_name", wxContactUpdate.getNickName());
             log.info("updateIndex:" + updateIndex);
             log.info(wxContactUpdate.toString());
             this.update(wxContactUpdate, wxContactUpdateWrapper);
