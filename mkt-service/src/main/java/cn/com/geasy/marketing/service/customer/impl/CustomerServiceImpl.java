@@ -171,7 +171,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     @Override
     public Page<CustomerDto> selectDtoPage(int pageNum, int pageSize,CustomerDto customerDto) {
         Page<CustomerDto> page = new Page<>(pageNum,pageSize);
-        List<CustomerDto> customerDtos = baseMapper.selectDtoPage(page, customerDto);
+        List<CustomerDto> customerDtos = baseMapper.selectMyDtoPage(page, customerDto);//selectDtoPage
         initCustomerDto(customerDtos);
         page.setRecords(customerDtos);
         return page;
