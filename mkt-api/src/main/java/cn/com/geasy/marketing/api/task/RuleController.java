@@ -81,12 +81,12 @@ public class RuleController {
         return ResponseUtils.result(this.ruleService.findRuleByRuleId(id));
     }
 
-   /* @ApiOperation(value = "今日提醒跳转加微客户列表")
+    @ApiOperation(value = "今日提醒跳转加微客户列表")
     @GetMapping(path = "/rules/chatConsumers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getChatConsumersByWxContactIdList(@RequestParam List<Long> customerList,
                                                                       @RequestParam(required = true)LocalDate startTime,
                                                                       @RequestParam(required = true)LocalDate endTime,
                                                                       @RequestParam(defaultValue = "1",required = true) int pageNum){
         return ResponseUtils.result(chatRecordsService.getChatConsumersByWxContactIdList(customerList,startTime,endTime,pageNum));
-    }*/
+    }
 }
