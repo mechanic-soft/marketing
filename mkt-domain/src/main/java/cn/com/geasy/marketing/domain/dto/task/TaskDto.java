@@ -4,20 +4,14 @@
  */
 package cn.com.geasy.marketing.domain.dto.task;
 
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gitee.mechanic.mybatis.base.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -65,22 +59,6 @@ public class TaskDto implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private LocalDate createTime;
-/*    *//**
-     * 创建记录的用户id
-     *//*
-    private BigInteger createUserId;
-    *//**
-     * 创建记的时间
-     *//*
-    private LocalDateTime createTime;
-    *//**
-     * 记录最后一次更新的用户id
-     *//*
-    private BigInteger updateUserId;
-    *//**
-     * 更改记录的时间
-     *//*
-    private LocalDateTime updateTime;*/
     @JsonIgnore
     public String getCreateTimeStr(){
         return null!=createTime?createTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")):null;
