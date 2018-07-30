@@ -8,23 +8,22 @@ package cn.com.geasy.marketing.service.task.impl;
 import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.dao.task.RuleMapper;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto;
+import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
 import cn.com.geasy.marketing.domain.dto.wechat.WxContactDto;
-import cn.com.geasy.marketing.domain.dto.wechat.WxCustomerDto;
-import cn.com.geasy.marketing.domain.entity.article.ArticleRead;
-import cn.com.geasy.marketing.domain.entity.article.ArticleSubscription;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
-import cn.com.geasy.marketing.domain.entity.customer.CustomerDynamic;
 import cn.com.geasy.marketing.domain.entity.customer.ReleCustomerTag;
+import cn.com.geasy.marketing.domain.entity.tag.Tag;
 import cn.com.geasy.marketing.domain.entity.task.Rule;
 import cn.com.geasy.marketing.domain.entity.task.RuleCustomerLabel;
 import cn.com.geasy.marketing.domain.entity.task.RuleTriggerAction;
-import cn.com.geasy.marketing.domain.entity.wechat.ChatRecords;
 import cn.com.geasy.marketing.domain.entity.wechat.WxContact;
+import cn.com.geasy.marketing.mapstruct.tag.TagMapstruct;
 import cn.com.geasy.marketing.mapstruct.wechat.WxContactMapstruct;
 import cn.com.geasy.marketing.service.customer.CustomerDynamicService;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.customer.ReleCustomerTagService;
+import cn.com.geasy.marketing.service.tag.TagService;
 import cn.com.geasy.marketing.service.task.RuleCustomerLabelService;
 import cn.com.geasy.marketing.service.task.RuleService;
 import cn.com.geasy.marketing.service.task.RuleTriggerActionService;
@@ -34,10 +33,8 @@ import cn.com.geasy.marketing.utils.SessionUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
-import com.gitee.mechanic.mybatis.utils.PageUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.mysql.jdbc.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -45,7 +42,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 规则服务接口实现
@@ -77,6 +76,9 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
 
     @Autowired
     private CustomerDynamicService customerDynamicService;
+
+    @Autowired
+    private TagService tagService;
 
     @Override
     public RuleDto getRemindings() {
@@ -412,14 +414,18 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         List<RuleCustomerLabel> ruleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnRuleCustomerLabelMap);
         ArrayList<Long> customerTagsList = Lists.newArrayList();
         ruleCustomerLabelList.forEach( ruleCustomerLabelObj -> {
-            Long tagId = ruleCustomerLabelObj.getTagId();
-            customerTagsList.add(tagId);
+            customerTagsList.add(ruleCustomerLabelObj.getTagId());
         });
         HashMap<String,Object> columnRuleTriggerActionMap = Maps.newHashMap();
         columnRuleTriggerActionMap.put("rule_id",ruleId);
         //0代表状态为删除，1代表状态为正常
         columnRuleTriggerActionMap.put("status",Const.ONE);
         List<RuleTriggerAction> ruleTriggerActionList = ruleTriggerActionService.selectByMap(columnRuleTriggerActionMap);
+        List<TagDto> tagDtoList = Lists.newArrayList();
+        if(customerTagsList.size() > 0 ){
+            List<Tag> tagList = tagService.selectBatchIds(customerTagsList);
+            tagDtoList = TagMapstruct.getInstance.toDtoList(tagList);
+        }
         returnRuleDto.setId(ruleId);
         returnRuleDto.setContent(rule.getContent());
         returnRuleDto.setTitle(rule.getTitle());
@@ -428,6 +434,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         returnRuleDto.setCustomerTags(customerTagsList);
         returnRuleDto.setStatus(rule.getStatus());
         returnRuleDto.setTriggers(ruleTriggerActionList);
+        returnRuleDto.setTagList(tagDtoList);
         return returnRuleDto;
     }
 
