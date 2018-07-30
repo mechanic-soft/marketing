@@ -44,12 +44,18 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
         List<WxContact> wxContacts = WxContactSecondMapstruct.getInstance.toEntityList(list);
         List<String> nickNames = new ArrayList<>();
         List<String> existNickNames = new ArrayList<>();//数据库中已经存在的昵称
+        StringBuffer sb = new StringBuffer(200);
+        sb.append("in(");
         wxContacts.forEach(wxContact ->{
             nickNames.add(wxContact.getNickName());
+            sb.append("'"+wxContact.getNickName()+"',");
         });
-        EntityWrapper ew =new EntityWrapper<>();
-        ew.in("nick_name",nickNames).eq("user_id",SessionUtils.getUserId().toString());
-        List<WxContact> existWxContacts =this.selectList(ew);
+        log.info("微信昵称：");
+        log.info(sb.substring(0,sb.length()-1) + ")");
+
+
+        List<WxContact> existWxContacts =existWxContacts(nickNames);
+        log.debug(existWxContacts.size()+"");
         existWxContacts.forEach(existWxContact->{
             existNickNames.add(existWxContact.getNickName());
         });
@@ -73,11 +79,49 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
         if(CollectionUtils.isNotEmpty(wxContactsInsert)) {
             this.insertBatch(wxContactsInsert);
         }
-        wxContactsUpdate.forEach(wxContactUpdate->{
-            EntityWrapper wxContactUpdateWrapper =new EntityWrapper<>();
-            wxContactUpdateWrapper.eq("nick_name",wxContactUpdate.getNickName()).eq("user_id",SessionUtils.getUserId().toString());
-            this.update(wxContactUpdate,wxContactUpdateWrapper);
-        });
+        int updateIndex = 0;
+
+        for(WxContact wxContactUpdate:wxContactsUpdate) {
+            EntityWrapper wxContactUpdateWrapper = new EntityWrapper<>();
+            wxContactUpdateWrapper.eq("nick_name", wxContactUpdate.getNickName()).eq("user_id", SessionUtils.getUserId().toString());
+            log.info("updateIndex:" + updateIndex);
+            log.info(wxContactUpdate.toString());
+            this.update(wxContactUpdate, wxContactUpdateWrapper);
+            updateIndex++;
+        }
         return true;
     }
+
+    /***
+     * mysql支持in 个数受限制
+     * @param nickNames
+     * @return
+     */
+    private List<WxContact> existWxContacts(List<String> nickNames) {
+        int pageSize = 100;
+        int totals = nickNames.size();
+        int pageCount = getpageCount(totals,pageSize);
+        List<WxContact> existWxContacts = new ArrayList<>(300);
+        for(int i=0;i<pageCount;i++){
+            EntityWrapper ew =new EntityWrapper<>();
+            int fromIndex = 0+i*pageSize;
+            int toIndex = ((i==pageCount-1)?(totals % pageSize):99)+i*pageSize;
+            log.info("fromIndex:"+ fromIndex + "  toIndex:" + toIndex);
+            ew.in("nick_name",nickNames.subList(fromIndex,toIndex)).eq("user_id",SessionUtils.getUserId().toString());
+            existWxContacts.addAll(this.selectList(ew));
+        }
+
+        return existWxContacts;
+    }
+
+    private int getpageCount(int totals, int pageSize) {
+        int pageCount = (totals/pageSize);
+        if (totals % pageSize != 0){
+            pageCount ++;
+        }
+
+        return pageCount;
+    }
+
+
 }
