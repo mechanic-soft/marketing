@@ -27,24 +27,10 @@
         <!--</collection>-->
     </resultMap>
     <sql id="Base_Column_List">
-        sr.id AS id,
-        sr.name AS name,
-        sr.description AS description,
-        sr.status AS status,
-        sr.create_user AS createUser,
-        sr.create_time AS createTime,
-        sr.update_user AS updateUser,
-        sr.update_time AS updateTime
+        sr.id AS id, sr.name AS name, sr.description AS description, sr.status AS status, sr.create_user AS createUser, sr.create_time AS createTime, sr.update_user AS updateUser, sr.update_time AS updateTime
     </sql>
     <sql id="Case_Permission_Column_List">
-        sr.id AS id,
-        sr.name AS name,
-        sr.description AS description,
-        sp.id AS sp_id,
-        sp.name AS sp_name,
-        sp.endpoint AS sp_endpoint,
-        sp.method AS sp_method,
-        sp.description AS sp_description
+        sr.id AS id, sr.name AS name, sr.description AS description, sp.id AS sp_id, sp.name AS sp_name, sp.endpoint AS sp_endpoint, sp.method AS sp_method, sp.description AS sp_description
     </sql>
     <select id="findByUserId" resultMap="Base_Result_Map" parameterType="Long">
         SELECT
@@ -85,23 +71,21 @@
         WHERE sr.status = 1 AND rrp.status = 1 AND sp.status = 1
         ORDER BY sr.id
     </select>
-    <select id="findDtos" resultMap="Case_Permission_Result_Map">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_role sr
-        <where>
-            <if test="ew != null and ew != ''">
-                ${ew.sqlSegment}
-            </if>
-        </where>
-    </select>
-    <select id="findDto" resultMap="Case_Permission_Result_Map">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_role sr
-        <!--WHERE sr.id = #{id}-->
-        <where>
-            ${ew.sqlSegment}
-        </where>
-    </select>
+    <!--<select id="findDtos" resultMap="Case_Permission_Result_Map">-->
+        <!--SELECT-->
+        <!--<include refid="Base_Column_List"/>-->
+        <!--FROM sys_role sr-->
+        <!--<where>-->
+            <!--${ew.sqlSegment}-->
+        <!--</where>-->
+    <!--</select>-->
+    <!--<select id="findDto" resultMap="Case_Permission_Result_Map">-->
+        <!--SELECT-->
+        <!--<include refid="Base_Column_List"/>-->
+        <!--FROM sys_role sr-->
+        <!--&lt;!&ndash;WHERE sr.id = #{id}&ndash;&gt;-->
+        <!--<where>-->
+            <!--${ew.sqlSegment}-->
+        <!--</where>-->
+    <!--</select>-->
 </mapper>
