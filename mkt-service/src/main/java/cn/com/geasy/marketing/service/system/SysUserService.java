@@ -25,20 +25,20 @@ public interface SysUserService extends SuperService<SysUser> {
      * @param pageNum 页码
      * @return Page&lt;SysUserDto&gt;
      */
-    Page<SysUserDto> findDtos(int pageNum);
+    Page<SysUserDto> findPage(int pageNum);
     /**
      * 用户列表
      *
      * @return List&lt;SysUserDto&gt;
      */
-    List<SysUserDto> findDtos();
+    List<SysUserDto> findList();
 
     /**
      * 返回匹配指定ID的用户
      * @param id 用户ID
      * @return SysUserDto
      */
-    SysUserDto findDtoById(Long id);
+    SysUserDto findById(Long id);
     /**
      * 返回匹配指定登录账户的用户
      *
