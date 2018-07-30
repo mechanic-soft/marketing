@@ -1,3 +1,9 @@
+#------------------------------------------------------------------
+# 本地开发环境直连阿里云RDC配置
+# 编译命令：mvn clean package -P localaliyun
+# author: Phil
+#------------------------------------------------------------------
+
 # SSL 配置
 server:
   port: 8080
@@ -15,6 +21,6 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #url: jdbc:mysql://192.168.3.88:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
-    url: jdbc:mysql://rdsco67s7eooc0j497293o.mysql.rds.aliyuncs.com:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
+    url: jdbc:mysql://rdsco67s7eooc0j497293o.mysql.rds.aliyuncs.com:3306/marketing?useUnicode=true&characterEncoding=utf8mb4&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
     username: marketing
     password: marketing#2018

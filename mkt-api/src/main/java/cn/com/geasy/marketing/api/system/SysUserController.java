@@ -43,14 +43,13 @@ public class SysUserController {
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getUsers(@RequestParam(required = false, defaultValue = "0") int pageNum,
                                              @RequestParam(required = false, defaultValue = "true") boolean isPage) {
-        return isPage ? ResponseUtils.result(this.sysUserService.findDtos(pageNum)) : ResponseUtils.result(this.sysUserService.findDtos());
+        return isPage ? ResponseUtils.result(this.sysUserService.findPage(pageNum)) : ResponseUtils.result(this.sysUserService.findList());
     }
 
     @ApiOperation(value = "获取匹配用户ID的用户")
     @GetMapping(path = "/users/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> getUser(@PathVariable Long id) {
-//        SysUserDto sysUserDto = SysUserMapstruct.getInstance.toDto(this.sysUserService.selectById(id));
-        return ResponseUtils.result(this.sysUserService.findDtoById(id));
+        return ResponseUtils.result(this.sysUserService.findById(id));
     }
 
     @ApiOperation(value = "新增用户")
