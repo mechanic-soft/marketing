@@ -107,7 +107,7 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
             int fromIndex = 0+i*pageSize;
             int toIndex = ((i==pageCount-1)?(totals % pageSize):99)+i*pageSize;
             log.info("fromIndex:"+ fromIndex + "  toIndex:" + toIndex);
-            ew.in("nick_name",nickNames.subList(fromIndex,toIndex)).eq("user_id",SessionUtils.getUserId().toString());
+            ew.in("BINARY nick_name",nickNames.subList(fromIndex,toIndex)).eq("user_id",SessionUtils.getUserId().toString());
             existWxContacts.addAll(this.selectList(ew));
         }
 
