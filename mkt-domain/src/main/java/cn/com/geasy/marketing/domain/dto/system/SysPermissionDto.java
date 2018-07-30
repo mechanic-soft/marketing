@@ -27,6 +27,10 @@ public class SysPermissionDto implements Serializable {
      */
     private Long id;
     /**
+     *
+     */
+    private Long pid;
+    /**
      * 端点资源地址
      */
     private String name;

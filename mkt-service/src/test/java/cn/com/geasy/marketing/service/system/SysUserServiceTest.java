@@ -6,6 +6,7 @@ package cn.com.geasy.marketing.service.system;
 
 import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
+import cn.com.geasy.marketing.utils.SecurityPasswordUtils;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.core.exception.ServiceException;
 import com.gitee.mechanic.test.AbstractTransSpringPowerMockDbunitTests;
@@ -19,6 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Test for {@link SysUserService}
@@ -39,7 +44,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 })
 @PowerMockRunnerDelegate(SpringRunner.class)
 @RunWith(PowerMockRunner.class)
-//@PrepareForTest(PageUtils.class)
+@PrepareForTest(SecurityPasswordUtils.class)
 public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -127,14 +132,6 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     public void testFindList() throws Exception {
         List<SysUserDto> userDtos = this.userService.findList();
         assertThat(userDtos).isEqualTo(Lists.newArrayList(admin, manager, user));
-//        assertThat(userDtos.size()).isEqualTo(3);
-//        assertThat(userDtos.get(0).getId()).isEqualTo(1L);
-//        assertThat(userDtos.get(0).getUsername()).isEqualTo("admin");
-//        assertThat(userDtos.get(0).getRoles().get(0).getId()).isEqualTo(1L);
-//
-//        assertThat(userDtos.get(2).getId()).isEqualTo(3L);
-//        assertThat(userDtos.get(2).getUsername()).isEqualTo("user");
-//        assertThat(userDtos.get(2).getRoles().get(0).getId()).isEqualTo(3L);
     }
 
     @DatabaseSetups(value = {
@@ -162,8 +159,10 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
             @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
     })
     @Test
-    public void testFindByByWxUin() throws Exception {
-        SysUserDto actual = this.userService.findByWxUin(1185887460L);
+    public void testFindByWxUin() throws Exception {
+        SysUserDto actual = this.userService.findByWxUin(635203961L);
+        assertThat(actual).isNull();
+        actual = this.userService.findByWxUin(1185887460L);
         assertThat(actual).isEqualTo(admin);
     }
 
@@ -213,16 +212,11 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
         thrown.expectMessage("用户名或微信UIN已存在");
         SysUserDto insertData = new SysUserDto();
         insertData.setWxUin(1185887460L);
-
         this.userService.insertOrUpdate(insertData);
     }
 
-    @ExpectedDatabase(value = "/dbunit/init/sys_user.insert.xml", assertionMode = DatabaseAssertionMode.NON_STRICT
-            ,table = "sys_user"
-            ,query = "SELECT username, password, wx_uin, wx_username, wx_nickname, wx_head_img_url, wx_sex, wx_signature FROM sys_user"
-    )
     @Test
-    public void testInsertOrUpdate() throws Exception {
+    public void testInsert() throws Exception {
         SysUserDto insertData = new SysUserDto();
 //        insertData.setId(1L);
         insertData.setUsername("insertuser");
@@ -236,6 +230,30 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
         insertData.setWxSignature("一多少啊识333。");
 
         this.userService.insertOrUpdate(insertData);
+        assertThat(this.userService.selectList().size()).isEqualTo(4);
+    }
+
+    @ExpectedDatabase(value = "/dbunit/init/sys_user.update.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @Test
+    public void testUpdate() throws Exception {
+
+        mockStatic(SecurityPasswordUtils.class);
+        when(SecurityPasswordUtils.encrypt(anyString())).thenReturn("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
+
+        SysUserDto insertData = new SysUserDto();
+        insertData.setId(1L);
+        insertData.setUsername("admin");
+        insertData.setPassword("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
+        insertData.setRealName("管理员");
+        insertData.setWxUin(1185834434387460L);
+        insertData.setWxUsername("@42dc1e0cb9有意义2c1eb6eda3cb65c0ddbf64");
+        insertData.setWxNickname("格物致知122");
+        insertData.setWxHeadImgUrl("/cgi-bin/mmwebwx-bin/webwxgeticon?seq=1856357848&username=@42dc1e0cb92c1e");
+        insertData.setWxSex(2);
+        insertData.setWxSignature("一代鲜肉替腊肉，终究风干无人识333。");
+
+        this.userService.insertOrUpdate(insertData);
+//        assertThat(this.userService.selectList().size()).isEqualTo(4);
     }
 
     @Test
@@ -361,3 +379,10 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
 
     }
 }
+
+//class SysUserColumnFilter implements IColumnFilter{
+//    @Override
+//    public boolean accept(String tableName, Column column) {
+//        return false;
+//    }
+//}

@@ -39,17 +39,21 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 
         List<SysPermissionDto> permissions = permissionMapper.findAllCaseRole();
         for(SysPermissionDto p : permissions) {
-            String endpoint = p.getEndpoint();
-            String method = p.getMethod();
-            List<SysRoleDto> roles = p.getRoles();
-            String[] rolesName = new String[roles.size()];
-            for (int i=0; i < roles.size(); i++){
-                rolesName[i] = "ROLE_" + roles.get(i).getName();
+            //过滤掉父权限（因为父权限URL为空）
+            if(p.getPid()!=0){
+                String endpoint = p.getEndpoint();
+                String method = p.getMethod();
+                List<SysRoleDto> roles = p.getRoles();
+                String[] rolesName = new String[roles.size()];
+                for (int i=0; i < roles.size(); i++){
+                    rolesName[i] = "ROLE_" + roles.get(i).getName();
+                }
+                matcher = new AntPathRequestMatcher(endpoint, method);
+                if (matcher.matches(request)) {
+                    return SecurityConfig.createList(rolesName);
+                }
             }
-            matcher = new AntPathRequestMatcher(endpoint, method);
-            if (matcher.matches(request)) {
-                return SecurityConfig.createList(rolesName);
-            }
+
         }
 
 

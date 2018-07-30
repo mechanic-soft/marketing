@@ -32,6 +32,10 @@ import java.util.Set;
 public class SysPermission extends Entity implements Serializable {
     private static final long serialVersionUID = -5640366819272273166L;
     /**
+     *
+     */
+    private Long pid;
+    /**
      * 端点资源地址
      */
     private String name;
