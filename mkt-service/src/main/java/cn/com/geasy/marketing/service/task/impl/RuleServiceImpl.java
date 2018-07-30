@@ -421,10 +421,9 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         //0代表状态为删除，1代表状态为正常
         columnRuleTriggerActionMap.put("status",Const.ONE);
         List<RuleTriggerAction> ruleTriggerActionList = ruleTriggerActionService.selectByMap(columnRuleTriggerActionMap);
-        List<Tag> tagList = Lists.newArrayList();
         List<TagDto> tagDtoList = Lists.newArrayList();
         if(customerTagsList.size() > 0 ){
-            tagList = tagService.selectBatchIds(customerTagsList);
+            List<Tag> tagList = tagService.selectBatchIds(customerTagsList);
             tagDtoList = TagMapstruct.getInstance.toDtoList(tagList);
         }
         returnRuleDto.setId(ruleId);
