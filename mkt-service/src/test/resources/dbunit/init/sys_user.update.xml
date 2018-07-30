@@ -14,10 +14,10 @@
         <column>mp_openid</column>
         <column>mp_uuid</column>
         <column>status</column>
-        <column>create_user</column>
-        <column>create_time</column>
-        <column>update_user</column>
-        <column>update_time</column>
+        <!--<column>create_user</column>-->
+        <!--<column>create_time</column>-->
+        <!--<column>update_user</column>-->
+        <!--<column>update_time</column>-->
         <row>
             <value>1</value>
             <value>admin</value>
@@ -33,10 +33,10 @@
             <null/>
             <null/>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
         </row>
         <row>
             <value>2</value>
@@ -53,10 +53,10 @@
             <null/>
             <null/>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
         </row>
         <row>
             <value>3</value>
@@ -73,10 +73,10 @@
             <null/>
             <null/>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
         </row>
         <row>
             <value>4</value>
@@ -93,10 +93,10 @@
             <null/>
             <null/>
             <value>0</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
+            <!--<value>1</value>-->
+            <!--<value>2017-10-30 12:16:57</value>-->
         </row>
     </table>
 </dataset>

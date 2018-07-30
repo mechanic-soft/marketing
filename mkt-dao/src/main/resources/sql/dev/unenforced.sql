@@ -33,15 +33,15 @@ VALUES (2000, 0, 'logs', null, null, '日志管理', 1, 1, CURRENT_TIMESTAMP(), 
 INSERT INTO sys_permission (id, pid, name, endpoint, method, description, status, create_user, create_time, update_user, update_time)
 VALUES (3000, 0, 'menus', null, null, '菜单管理', 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 
-update sys_permission set pid = 1000 where endpoint like '/v1/sys/users%'
-update sys_permission set pid = 1100 where endpoint like '/v1/sys/roles%'
-update sys_permission set pid = 1200 where endpoint like '/v1/sys/permissions%'
-update sys_permission set pid = 1300 where endpoint like '/v1/sys/corps%'
-update sys_permission set pid = 1400 where endpoint like '/v1/tasks%'
-update sys_permission set pid = 1500 where endpoint like '/v1/rules%'
-update sys_permission set pid = 1600 where endpoint like '/v1/customers%'
-update sys_permission set pid = 1700 where endpoint like '/v1/customerDynamics%'
-update sys_permission set pid = 1800 where endpoint like '/v1/chatRecords%'
-update sys_permission set pid = 1900 where endpoint like '/v1/tags%'
-update sys_permission set pid = 2000 where endpoint like '/v1/sys/logs%'
-update sys_permission set pid = 3000 where endpoint like '/v1/sys/menus%'
+update sys_permission set pid = 1000 where endpoint like '/v1/sys/users%';
+update sys_permission set pid = 1100 where endpoint like '/v1/sys/roles%';
+update sys_permission set pid = 1200 where endpoint like '/v1/sys/permissions%';
+update sys_permission set pid = 1300 where endpoint like '/v1/sys/corps%';
+update sys_permission set pid = 1400 where endpoint like '/v1/tasks%';
+update sys_permission set pid = 1500 where endpoint like '/v1/rules%';
+update sys_permission set pid = 1600 where endpoint like '/v1/customers%';
+update sys_permission set pid = 1700 where endpoint like '/v1/customerDynamics%';
+update sys_permission set pid = 1800 where endpoint like '/v1/chatRecords%';
+update sys_permission set pid = 1900 where endpoint like '/v1/tags%';
+update sys_permission set pid = 2000 where endpoint like '/v1/sys/logs%';
+update sys_permission set pid = 3000 where endpoint like '/v1/sys/menus%';

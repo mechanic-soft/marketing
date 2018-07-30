@@ -14,10 +14,10 @@
         <column>mp_openid</column>
         <column>mp_uuid</column>
         <column>status</column>
-        <column>create_user</column>
+<!--        <column>create_user</column>
         <column>create_time</column>
         <column>update_user</column>
-        <column>update_time</column>
+        <column>update_time</column>-->
         <row>
             <value>1</value>
             <value>admin</value>

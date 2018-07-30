@@ -105,6 +105,9 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         Wrapper<SysUser> userWrapper = new EntityWrapper<>();
         userWrapper.eq("wx_uin", wxUin);
         SysUser sysUser = super.selectOne(userWrapper);
+        if (sysUser == null){
+            return null;
+        }
         SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
         userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
         return userDto;
