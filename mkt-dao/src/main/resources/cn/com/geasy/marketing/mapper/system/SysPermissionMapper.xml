@@ -15,6 +15,7 @@
     <!--</resultMap>-->
     <resultMap id="DTO_Base_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysPermissionDto">
         <id property="id" column="id" javaType="Long"/>
+        <result property="pid" column="pid" javaType="Long"/>
         <result property="name" column="name" javaType="String"/>
         <result property="endpoint" column="endpoint" javaType="String"/>
         <result property="method" column="method" javaType="String"/>
@@ -22,6 +23,7 @@
     </resultMap>
     <resultMap id="DTO_Case_SysRole_Result_Map" type="cn.com.geasy.marketing.domain.dto.system.SysPermissionDto">
         <id property="id" column="id" javaType="Long"/>
+        <result property="pid" column="pid" javaType="Long"/>
         <result property="name" column="name" javaType="String"/>
         <result property="endpoint" column="endpoint" javaType="String"/>
         <result property="method" column="method" javaType="String"/>
@@ -35,6 +37,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         sp.id AS id,
+        sp.pid AS pid,
         sp.name AS name,
         sp.endpoint AS endpoint,
         sp.method AS method,
@@ -48,6 +51,7 @@
     </sql>
     <sql id="Case_SysRole_Column_List">
         sp.id AS id,
+        sp.pid AS pid,
         sp.name AS name,
         sp.endpoint AS endpoint,
         sp.method AS method,

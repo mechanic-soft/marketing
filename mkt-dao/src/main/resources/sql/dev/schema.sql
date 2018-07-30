@@ -76,6 +76,7 @@ CREATE TABLE sys_role (
 /*==============================================================*/
 CREATE TABLE sys_permission (
   id          BIGINT PRIMARY KEY NOT NULL, -- 权限ID
+  pid         BIGINT             NOT NULL DEFAULT 0, -- 父权限ID
   name        VARCHAR(256)       NOT NULL, -- 权限名称
   endpoint    VARCHAR(1024)      NULL, -- 资源地址
   method      VARCHAR(16)        NULL, -- HTTP事件
