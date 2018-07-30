@@ -1,5 +1,5 @@
 #------------------------------------------------------------------
-# 公司测试环境配置(192.168.3.81)
+# 公司测试环境配置(WEB:192.168.3.81 DB:192.168.3.87)
 # 编译命令：mvn clean package -P localtest
 # author: Phil
 #------------------------------------------------------------------
@@ -16,11 +16,7 @@ server:
 # 数据库配置
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:mysql://rdsco67s7eooc0j497293o.mysql.rds.aliyuncs.com:3306/marketing?useUnicode=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://192.168.3.87:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
     username: marketing
-    password: marketing#2018
-#    url: jdbc:mysql://192.168.3.88:3306/marketing?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
-#    username: marketing
-#    password: marketing
+    password: marketing
