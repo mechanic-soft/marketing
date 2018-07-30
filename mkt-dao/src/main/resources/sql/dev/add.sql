@@ -6,3 +6,6 @@ ALTER TABLE `chat_records` ADD COLUMN `wx_nick_name`  varchar(256) NULL;
 
 --规则行为表的frequency字段的tinyin类型改为INT类型。
 alter table rule_trigger_action MODIFY column frequency INT ;
+
+--标签表添加user_id 字段（不知道是谁在tag实体中添加了userId，但是数据库并没有）
+ALTER TABLE `tag` ADD COLUMN `user_id`  bigint(20) NULL;
