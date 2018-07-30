@@ -51,7 +51,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
-    public Page<SysUserDto> findDtos(int pageNum) {
+    public Page<SysUserDto> findPage(int pageNum) {
         Page<SysUser> page = PageUtils.getPage(pageNum);
         page = super.selectPage(page);
         List<SysUserDto> userDtos = SysUserMapstruct.getInstance.toDtoList(page.getRecords());
@@ -62,11 +62,14 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
             iterator.set(userDto);
         }
-        return PageUtils.getPage(page, userDtos);
+
+        Page<SysUserDto> userDtoPage = PageUtils.getPage(page, userDtos);
+
+        return userDtoPage;
     }
 
     @Override
-    public List<SysUserDto> findDtos() {
+    public List<SysUserDto> findList() {
         List<SysUser> users = super.selectList();
         List<SysUserDto> userDtos = SysUserMapstruct.getInstance.toDtoList(users);
 
@@ -80,9 +83,9 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
-    public SysUserDto findDtoById(Long id) {
-        SysUser user = super.selectById(id);
-        SysUserDto userDto = SysUserMapstruct.getInstance.toDto(user);
+    public SysUserDto findById(Long id) {
+        SysUser sysUser = super.selectById(id);
+        SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
         userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
         return userDto;
     }
@@ -92,7 +95,9 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         Wrapper<SysUser> userWrapper = new EntityWrapper<>();
         userWrapper.eq("username", username);
         SysUser sysUser = super.selectOne(userWrapper);
-        return SysUserMapstruct.getInstance.toDto(sysUser);
+        SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
+        userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+        return userDto;
     }
 
     @Override
@@ -100,7 +105,9 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         Wrapper<SysUser> userWrapper = new EntityWrapper<>();
         userWrapper.eq("wx_uin", wxUin);
         SysUser sysUser = super.selectOne(userWrapper);
-        return SysUserMapstruct.getInstance.toDto(sysUser);
+        SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
+        userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+        return userDto;
     }
 
     @Override
@@ -146,8 +153,8 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
                 Long roleId = roleDto.getId();
 
                 ReleUserRole userRole = new ReleUserRole();
-                userRole.setRoleId(userId);
-                userRole.setUserId(roleId);
+                userRole.setRoleId(roleId);
+                userRole.setUserId(userId);
                 success = this.userRoleService.insert(userRole);
             }
         }

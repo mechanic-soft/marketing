@@ -4,19 +4,25 @@
  */
 package cn.com.geasy.marketing.service.system;
 
+import cn.com.geasy.marketing.domain.dto.system.SysRoleDto;
 import cn.com.geasy.marketing.domain.dto.system.SysUserDto;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.core.exception.ServiceException;
-import com.gitee.mechanic.test.AbstractTransSpringBootDbunitTests;
+import com.gitee.mechanic.test.AbstractTransSpringPowerMockDbunitTests;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseSetups;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import com.google.common.collect.Lists;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -31,18 +37,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DatabaseSetups(value = {
         @DatabaseSetup(value = "/dbunit/init/sys_user.setUp.xml")
 })
+@PowerMockRunnerDelegate(SpringRunner.class)
+@RunWith(PowerMockRunner.class)
 //@PrepareForTest(PageUtils.class)
-public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
-
+public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests {
+    @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+//    @MockBean
+//    Page<SysUser> page;
 
     @Autowired
     private SysUserService userService;
 
-    private SysUserDto admin = new SysUserDto();
+    private SysUserDto admin;
+    private SysUserDto manager;
+    private SysUserDto user;
+    private SysRoleDto adminRole;
+    private SysRoleDto managerRole;
+    private SysRoleDto userRole;
 
     @Before
     public void setUp() throws Exception {
+
+        adminRole = new SysRoleDto();
+        adminRole.setId(1L);
+        adminRole.setName("系统管理");
+        adminRole.setDescription("拥有所有权限的系统管理员");
+        adminRole.setPermissions(null);
+
+        managerRole = new SysRoleDto();
+        managerRole.setId(2L);
+        managerRole.setName("管理者");
+        managerRole.setDescription("理财经理的上级管理人员");
+        managerRole.setPermissions(null);
+
+        userRole = new SysRoleDto();
+        userRole.setId(3L);
+        userRole.setName("理财经理");
+        userRole.setDescription("理财经理");
+        userRole.setPermissions(null);
+
         admin = new SysUserDto();
         admin.setId(1L);
         admin.setUsername("admin");
@@ -54,77 +89,81 @@ public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
         admin.setWxHeadImgUrl("/cgi-bin/mmwebwx-bin/webwxgeticon?seq=1856357848&username=@42dc1e0cb92c1eb6eda3cb65c0ddbf64&skey=@crypt_69a1cdd6_64f03a7c1eff37e99cee69ef9f93a70c");
         admin.setWxSex(1);
         admin.setWxSignature("一代鲜肉替腊肉，终究风干无人识。");
+        admin.setRoles(Lists.newArrayList(adminRole));
+
+        manager = new SysUserDto();
+        manager.setId(2L);
+        manager.setUsername("manager");
+        manager.setPassword("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
+        manager.setRealName("管理者");
+        manager.setRoles(Lists.newArrayList(managerRole));
+
+        user = new SysUserDto();
+        user.setId(3L);
+        user.setUsername("user");
+        user.setPassword("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
+        user.setRealName("理财经理1");
+        user.setRoles(Lists.newArrayList(userRole));
     }
 
+    @DatabaseSetups(value = {
+            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+    })
     @Test
-    public void testFindDtosPage() throws Exception {
-//
-//        Page<Object> page = PageUtils.getPage(2,2);
-//
-//        mockStatic(PageUtils.class);
-//        when(PageUtils.getPage(anyInt())).thenReturn(page);
+    public void testFindPage() throws Exception {
 
-        Page<SysUserDto> userDtoPage = this.userService.findDtos(1);
+        Page<SysUserDto> userDtoPage = this.userService.findPage(1);
         assertThat(userDtoPage.getTotal()).isEqualTo(3);
         assertThat(userDtoPage.getCurrent()).isEqualTo(1);
-        assertThat(userDtoPage.getRecords().size()).isEqualTo(3);
-        assertThat(userDtoPage.getRecords().get(2).getId()).isEqualTo(3L);
-        assertThat(userDtoPage.getRecords().get(2).getUsername()).isEqualTo("user");
+        assertThat(userDtoPage.getRecords()).isEqualTo(Lists.newArrayList(admin, manager, user));
     }
 
+    @DatabaseSetups(value = {
+            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+    })
     @Test
-    public void testFindDtos() throws Exception {
-        List<SysUserDto> userDtos = this.userService.findDtos();
-        assertThat(userDtos.size()).isEqualTo(3);
-        assertThat(userDtos.get(0).getId()).isEqualTo(1L);
-        assertThat(userDtos.get(0).getUsername()).isEqualTo("admin");
-        assertThat(userDtos.get(2).getId()).isEqualTo(3L);
-        assertThat(userDtos.get(2).getUsername()).isEqualTo("user");
+    public void testFindList() throws Exception {
+        List<SysUserDto> userDtos = this.userService.findList();
+        assertThat(userDtos).isEqualTo(Lists.newArrayList(admin, manager, user));
+//        assertThat(userDtos.size()).isEqualTo(3);
+//        assertThat(userDtos.get(0).getId()).isEqualTo(1L);
+//        assertThat(userDtos.get(0).getUsername()).isEqualTo("admin");
+//        assertThat(userDtos.get(0).getRoles().get(0).getId()).isEqualTo(1L);
+//
+//        assertThat(userDtos.get(2).getId()).isEqualTo(3L);
+//        assertThat(userDtos.get(2).getUsername()).isEqualTo("user");
+//        assertThat(userDtos.get(2).getRoles().get(0).getId()).isEqualTo(3L);
     }
 
+    @DatabaseSetups(value = {
+            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+    })
     @Test
-    public void testFindDtoById() throws Exception {
-
-
-        SysUserDto actual = this.userService.findDtoById(1L);
+    public void testFindById() throws Exception {
+        SysUserDto actual = this.userService.findById(1L);
         assertThat(actual).isEqualTo(admin);
     }
 
+    @DatabaseSetups(value = {
+            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+    })
     @Test
     public void testFindByUsername() throws Exception {
-//        SysUserDto expect = new SysUserDto();
-//        expect.setId(1L);
-//        expect.setUsername("admin");
-//        expect.setPassword("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
-//        expect.setRealName("管理员");
-//        expect.setWxUin(1185887460L);
-//        expect.setWxUsername("@42dc1e0cb92c1eb6eda3cb65c0ddbf64");
-//        expect.setWxNickname("格物致知");
-//        expect.setWxHeadImgUrl("/cgi-bin/mmwebwx-bin/webwxgeticon?seq=1856357848&username=@42dc1e0cb92c1eb6eda3cb65c0ddbf64&skey=@crypt_69a1cdd6_64f03a7c1eff37e99cee69ef9f93a70c");
-//        expect.setWxSex(1);
-//        expect.setWxSignature("一代鲜肉替腊肉，终究风干无人识。");
-
         SysUserDto actual = this.userService.findByUsername("admin");
-
         assertThat(actual).isEqualTo(admin);
     }
 
+    @DatabaseSetups(value = {
+            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+    })
     @Test
     public void testFindByByWxUin() throws Exception {
-//        SysUserDto expect = new SysUserDto();
-//        expect.setId(1L);
-//        expect.setUsername("admin");
-//        expect.setPassword("4a79d0a37b1bf2ded4b72f1372c5dec9a0b36520a77c4846a9accacb527d91c8");
-//        expect.setRealName("管理员");
-//        expect.setWxUin(1185887460L);
-//        expect.setWxUsername("@42dc1e0cb92c1eb6eda3cb65c0ddbf64");
-//        expect.setWxNickname("格物致知");
-//        expect.setWxHeadImgUrl("/cgi-bin/mmwebwx-bin/webwxgeticon?seq=1856357848&username=@42dc1e0cb92c1eb6eda3cb65c0ddbf64&skey=@crypt_69a1cdd6_64f03a7c1eff37e99cee69ef9f93a70c");
-//        expect.setWxSex(1);
-//        expect.setWxSignature("一代鲜肉替腊肉，终究风干无人识。");
-
         SysUserDto actual = this.userService.findByWxUin(1185887460L);
-
         assertThat(actual).isEqualTo(admin);
     }
 
@@ -159,7 +198,7 @@ public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
     }
 
     @Test
-    public void testInsertOrUpdateWhenUsernameExistShouldThrowServiceException()  throws Exception {
+    public void testInsertOrUpdateWhenUsernameExistShouldThrowServiceException() throws Exception {
         thrown.expect(ServiceException.class);
         thrown.expectMessage("用户名或微信UIN已存在");
         SysUserDto insertData = new SysUserDto();
@@ -169,7 +208,7 @@ public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
     }
 
     @Test
-    public void testInsertOrUpdateWhenWxUinExistShouldThrowServiceException()  throws Exception {
+    public void testInsertOrUpdateWhenWxUinExistShouldThrowServiceException() throws Exception {
         thrown.expect(ServiceException.class);
         thrown.expectMessage("用户名或微信UIN已存在");
         SysUserDto insertData = new SysUserDto();
@@ -178,9 +217,12 @@ public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
         this.userService.insertOrUpdate(insertData);
     }
 
-    @ExpectedDatabase(value = "/dbunit/init/sys_user.insert.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/dbunit/init/sys_user.insert.xml", assertionMode = DatabaseAssertionMode.NON_STRICT
+            ,table = "sys_user"
+            ,query = "SELECT username, password, wx_uin, wx_username, wx_nickname, wx_head_img_url, wx_sex, wx_signature FROM sys_user"
+    )
     @Test
-    public void testInsertOrUpdate()  throws Exception {
+    public void testInsertOrUpdate() throws Exception {
         SysUserDto insertData = new SysUserDto();
 //        insertData.setId(1L);
         insertData.setUsername("insertuser");
@@ -197,7 +239,7 @@ public class SysUserServiceTest extends AbstractTransSpringBootDbunitTests {
     }
 
     @Test
-    public void testUsernameOrWxUinIsExist()  throws Exception {
+    public void testUsernameOrWxUinIsExist() throws Exception {
         SysUserDto userDto = new SysUserDto();
 
         //用户名为admin。存在
