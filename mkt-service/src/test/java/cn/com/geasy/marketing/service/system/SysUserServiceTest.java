@@ -19,12 +19,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -40,10 +36,10 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * @version 1.0.0
  */
 @DatabaseSetups(value = {
-        @DatabaseSetup(value = "/dbunit/init/sys_user.setUp.xml")
+        @DatabaseSetup(value = "/dbunit/sys_user.setUp.xml")
 })
-@PowerMockRunnerDelegate(SpringRunner.class)
-@RunWith(PowerMockRunner.class)
+//@PowerMockRunnerDelegate(SpringRunner.class)
+//@RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityPasswordUtils.class)
 public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests {
     @Rule
@@ -112,8 +108,8 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
-            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
     public void testFindPage() throws Exception {
@@ -125,8 +121,8 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
-            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
     public void testFindList() throws Exception {
@@ -135,8 +131,8 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
-            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
     public void testFindById() throws Exception {
@@ -145,8 +141,8 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
-            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
     public void testFindByUsername() throws Exception {
@@ -155,8 +151,8 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/init/sys_role.xml"),
-            @DatabaseSetup(value = "/dbunit/init/rele_user_role.xml")
+            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
     public void testFindByWxUin() throws Exception {
@@ -166,7 +162,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
         assertThat(actual).isEqualTo(admin);
     }
 
-    @ExpectedDatabase(value = "/dbunit/init/sys_user.delete.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/dbunit/sys_user.delete.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     @Test
     public void testRemove() throws Exception {
         List<Long> ids = Lists.newArrayList(1L, 3L);
@@ -182,7 +178,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
         this.userService.updateByUsername(wxUniExistUser);
     }
 
-    @ExpectedDatabase(value = "/dbunit/init/sys_user.update.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/dbunit/sys_user.update.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     @Test
     public void testUpdateByUsername() throws Exception {
         SysUserDto wxUniExistUser = new SysUserDto();
@@ -233,7 +229,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
         assertThat(this.userService.selectList().size()).isEqualTo(4);
     }
 
-    @ExpectedDatabase(value = "/dbunit/init/sys_user.update.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/dbunit/sys_user.update.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     @Test
     public void testUpdate() throws Exception {
 
@@ -253,7 +249,16 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
         insertData.setWxSignature("一代鲜肉替腊肉，终究风干无人识333。");
 
         this.userService.insertOrUpdate(insertData);
-//        assertThat(this.userService.selectList().size()).isEqualTo(4);
+    }
+
+    @Test
+    public void testWxUinIsExist(){
+        assertThat(this.userService.wxUinIsExist(admin.getWxUin())).isTrue();
+        assertThat(this.userService.wxUinIsExist(12345L)).isFalse();
+
+        assertThat(this.userService.wxUinIsExist(admin.getWxUin(), "admin")).isFalse();
+        assertThat(this.userService.wxUinIsExist(admin.getWxUin(), "xxx")).isTrue();
+        assertThat(this.userService.wxUinIsExist(12345L, "admin")).isFalse();
     }
 
     @Test
@@ -379,10 +384,3 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
 
     }
 }
-
-//class SysUserColumnFilter implements IColumnFilter{
-//    @Override
-//    public boolean accept(String tableName, Column column) {
-//        return false;
-//    }
-//}

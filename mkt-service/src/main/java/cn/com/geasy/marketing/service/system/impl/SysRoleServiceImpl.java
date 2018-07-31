@@ -70,24 +70,23 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
 
     @Override
     public List<SysRoleDto> findDtoAll() {
-        return baseMapper.findDtos(null);
+        List<SysRole> roless = selectList();
+        return SysRoleMapstruct.getInstance.toDtoList(roless);
     }
 
     @Override
     public Page<SysRoleDto> findDtoPage(int pageNum) {
         Page<SysRoleDto> page = PageUtils.getPage(pageNum);
-        List<SysRoleDto> roleDtos = baseMapper.findDtos(null, page);
-        return page.setRecords(roleDtos);
+        Page<SysRole> rolesPage = selectPage(pageNum);
+        List<SysRoleDto> roleDtos = SysRoleMapstruct.getInstance.toDtoList(rolesPage.getRecords());
+        return PageUtils.getPage(rolesPage, roleDtos);
     }
 
     @Override
     public SysRoleDto findDtoById(Long id) {
-
-        Wrapper<SysRoleDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("sr.id", id);
-
+        SysRole role = selectById(id);
         //查询角色
-        return baseMapper.findDto(wrapper);
+        return SysRoleMapstruct.getInstance.toDto(role);
     }
 
     /**
