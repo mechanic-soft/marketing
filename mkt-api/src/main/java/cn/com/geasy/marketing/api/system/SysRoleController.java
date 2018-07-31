@@ -43,26 +43,26 @@ public class SysRoleController {
     public ResponseEntity<ModelMap> getRoles(@RequestParam(defaultValue = "0") int pageNum,
                                              @RequestParam(required = false, defaultValue = "true") boolean isPage) {
         return isPage ?
-                ResponseUtils.result(this.sysRoleService.findDtoPage(pageNum))
-                : ResponseUtils.result(this.sysRoleService.findDtoAll());
+                ResponseUtils.result(this.sysRoleService.findPage(pageNum))
+                : ResponseUtils.result(this.sysRoleService.findAll());
     }
 
     @ApiOperation(value = "角色详情")
     @GetMapping(path = "/roles/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> get(@PathVariable(required = true) Long id) {
-        return ResponseUtils.result(this.sysRoleService.findDtoById(id));
+        return ResponseUtils.result(this.sysRoleService.findById(id));
     }
 
     @ApiOperation(value = "新增角色")
     @PostMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> insert(@RequestBody(required = true) SysRoleDto sysRoleDto) {
-        return ResponseUtils.result(this.sysRoleService.save(sysRoleDto) ? "更新成功" : "更新失败");
+        return ResponseUtils.result("id:" + this.sysRoleService.save(sysRoleDto));
     }
 
     @ApiOperation(value = "更新角色")
     @PatchMapping(path = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> updatge(@RequestBody(required = true) SysRoleDto sysRoleDto) {
-        return ResponseUtils.result(this.sysRoleService.save(sysRoleDto) ? "更新成功" : "更新失败");
+        return ResponseUtils.result("id:" + this.sysRoleService.save(sysRoleDto));
     }
 
 

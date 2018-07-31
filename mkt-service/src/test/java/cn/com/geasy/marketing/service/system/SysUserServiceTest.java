@@ -38,8 +38,6 @@ import static org.powermock.api.mockito.PowerMockito.when;
 @DatabaseSetups(value = {
         @DatabaseSetup(value = "/dbunit/sys_user.setUp.xml")
 })
-//@PowerMockRunnerDelegate(SpringRunner.class)
-//@RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityPasswordUtils.class)
 public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests {
     @Rule
@@ -54,26 +52,23 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     private SysUserDto admin;
     private SysUserDto manager;
     private SysUserDto user;
-    private SysRoleDto adminRole;
-    private SysRoleDto managerRole;
-    private SysRoleDto userRole;
 
     @Before
     public void setUp() throws Exception {
 
-        adminRole = new SysRoleDto();
+        SysRoleDto adminRole = new SysRoleDto();
         adminRole.setId(1L);
         adminRole.setName("系统管理");
         adminRole.setDescription("拥有所有权限的系统管理员");
         adminRole.setPermissions(null);
 
-        managerRole = new SysRoleDto();
+        SysRoleDto managerRole = new SysRoleDto();
         managerRole.setId(2L);
         managerRole.setName("管理者");
         managerRole.setDescription("理财经理的上级管理人员");
         managerRole.setPermissions(null);
 
-        userRole = new SysRoleDto();
+        SysRoleDto userRole = new SysRoleDto();
         userRole.setId(3L);
         userRole.setName("理财经理");
         userRole.setDescription("理财经理");
@@ -108,7 +103,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/sys_role.setUp.xml"),
             @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
@@ -121,7 +116,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/sys_role.setUp.xml"),
             @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
@@ -131,7 +126,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/sys_role.setUp.xml"),
             @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
@@ -141,7 +136,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/sys_role.setUp.xml"),
             @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
@@ -151,7 +146,7 @@ public class SysUserServiceTest extends AbstractTransSpringPowerMockDbunitTests 
     }
 
     @DatabaseSetups(value = {
-            @DatabaseSetup(value = "/dbunit/sys_role.xml"),
+            @DatabaseSetup(value = "/dbunit/sys_role.setUp.xml"),
             @DatabaseSetup(value = "/dbunit/rele_user_role.xml")
     })
     @Test
