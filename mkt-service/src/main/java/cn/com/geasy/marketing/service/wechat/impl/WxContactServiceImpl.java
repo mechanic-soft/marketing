@@ -47,7 +47,7 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
         wxContacts.forEach(wxContact ->{
             nickNames.add(wxContact.getNickName());
         });
-        EntityWrapper ew =new EntityWrapper<>();
+        EntityWrapper<WxContact> ew =new EntityWrapper<>();
         ew.eq("user_id",SessionUtils.getUserId().toString()).in("BINARY nick_name",nickNames);
         List<WxContact> existWxContacts =this.selectList(ew);
         existWxContacts.forEach(existWxContact->{
