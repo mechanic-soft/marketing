@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,10 +35,6 @@ public class ExternallCallController {
 
     @Autowired
     private ExternalCallService ecSrv;
-    @Autowired
-    private CustomerService customerSrv;
-    @Autowired
-    private SysUserService sysUserSrv;
 
     @ApiOperation(value = "外呼系统数据接入")
     @PostMapping(path = "/externallCalls", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -74,23 +71,21 @@ public class ExternallCallController {
             @ApiParam("问卷记录")@RequestBody(required = false) List<QuestionnaireDto> record
       ){
         ExternalCall ec = new ExternalCall(itemCode,itemName,taskCode,taskName,businessHallCode,businessHallName,callTime,userCode,customerId,customerName,callTimeStart,callTimeAnswer,callTimeEnd,talkTime,ringTime,lineUpTime,isAnswer,callResult,callType,callInOut,isSendMsg,msg,recordMsg,reservedFieldOne,reservedFieldTwo,reservedFieldThree,reservedFieldFour,reservedFieldFive,remark);
-//
-
-
-
 
         //外呼系统与系统用户表有一定对应关系，根据ExternalCall.customerId 去sys_user.callcenter_user_id 找用户id
-        SysUser sysUser = (SysUser) sysUserSrv.selectObj(new EntityWrapper<SysUser>().eq("callcenter_user_id",customerId));
-        Long userId = null==sysUser?null:sysUser.getId();
+        //SysUser sysUser = (SysUser) sysUserSrv.selectObj(new EntityWrapper<SysUser>().eq("callcenter_user_id",customerId));
+        /*HashMap<String,Object> columnMap = new HashMap<String,Object>();
+        columnMap.put("callcenter_user_id",customerId);
+        List<SysUser> sysUsers = sysUserSrv.selectByMap(columnMap);
+        Long userId = null==sysUsers.get(0)?null:sysUsers.get(0).getId();
 
         Customer customer = new Customer(1,userId,LocalDateTime.now(),SessionUtils.getUserId(),LocalDateTime.now()
-                ,callTimeStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),userCode,remark,customerId);
+                ,callTimeStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),userCode,remark,customerId);*/
         //外呼表存一份
-        ecSrv.insert(ec,record);
+        //ecSrv.insert(ec, record);
         //录入客户表
-        customerSrv.insert(customer);
-        return ResponseUtils.result("1");
-
+        /*customerService.insert(customer);*/
+        return ResponseUtils.result(ecSrv.insert(ec, record));
     }
 
 }
