@@ -59,13 +59,11 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         ListIterator<SysUserDto> iterator = userDtos.listIterator();
         while (iterator.hasNext()) {
             SysUserDto userDto = iterator.next();
-            userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+            userDto.setRoles(roleService.findByUserId(userDto.getId()));
             iterator.set(userDto);
         }
 
-        Page<SysUserDto> userDtoPage = PageUtils.getPage(page, userDtos);
-
-        return userDtoPage;
+        return PageUtils.getPage(page, userDtos);
     }
 
     @Override
@@ -76,7 +74,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         ListIterator<SysUserDto> iterator = userDtos.listIterator();
         while (iterator.hasNext()) {
             SysUserDto userDto = iterator.next();
-            userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+            userDto.setRoles(roleService.findByUserId(userDto.getId()));
             iterator.set(userDto);
         }
         return userDtos;
@@ -86,7 +84,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     public SysUserDto findById(Long id) {
         SysUser sysUser = super.selectById(id);
         SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
-        userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+        userDto.setRoles(roleService.findByUserId(userDto.getId()));
         return userDto;
     }
 
@@ -96,7 +94,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         userWrapper.eq("username", username);
         SysUser sysUser = super.selectOne(userWrapper);
         SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
-        userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+        userDto.setRoles(roleService.findByUserId(userDto.getId()));
         return userDto;
     }
 
@@ -109,7 +107,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             return null;
         }
         SysUserDto userDto = SysUserMapstruct.getInstance.toDto(sysUser);
-        userDto.setRoles(roleService.findDtoByUserId(userDto.getId()));
+        userDto.setRoles(roleService.findByUserId(userDto.getId()));
         return userDto;
     }
 
