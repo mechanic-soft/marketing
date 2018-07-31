@@ -275,15 +275,15 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     public List<CustomerLifecycleEventDto> newCustomerLifecycle(Long customerId) {
         List<CustomerLifecycleEventDto> customerLifecycleEventDtos = new ArrayList<>();
         Customer customer = this.customerMapper.selectById(customerId);
-
         if(customer == null){
             return customerLifecycleEventDtos;
         }
 
         if( !StringUtils.isBlank(customer.getCallTime())){
+            String callTimeStr = customer.getCallTime();
+            callTimeStr = callTimeStr.substring(0, callTimeStr.length() - 2);
             //添加呼叫生命周期事件
-            customerLifecycleEventDtos.add(new CustomerLifecycleEventDto(6, LocalDateTime.parse(customer.getCallTime(),
-                                                                                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+            customerLifecycleEventDtos.add(new CustomerLifecycleEventDto(6, LocalDateTime.parse(callTimeStr,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         };
 
         if( customer.getUpdateTime() != null){
