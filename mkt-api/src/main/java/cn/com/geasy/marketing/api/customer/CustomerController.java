@@ -37,8 +37,8 @@ public class CustomerController {
     public ResponseEntity<ModelMap> delete(@RequestBody List<Long> ids){
         return ResponseUtils.result(customerSrv.deleteBatchIds(ids));
     }
-
-    @ApiOperation(value = "客户列表查询")
+    //分页
+    @ApiOperation(value = "客户列表查询(分页)")
     @GetMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> selectPage(
             @RequestParam(required = false) String nickname,
@@ -56,7 +56,23 @@ public class CustomerController {
         CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
         return ResponseUtils.result(customerSrv.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,customerDto));
     }
+    //不分页
+    @ApiOperation(value = "客户列表查询(不分页)")
+    @GetMapping(path = "/customersList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ModelMap> selectList(
+            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) Integer isAddWechat,
+            @RequestParam(required = false) List<Long> tagIds,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false) LocalDate callTimeStart,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @RequestParam(required = false) LocalDate callTimeEnd)
+    {
 
+        //localDateToStr(callTimeStart);
+        CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
+        return ResponseUtils.result(customerSrv.selectDtoList(customerDto));
+    }
 
     @ApiOperation(value = "关联微信")
     /*@ApiImplicitParams(value = {@ApiImplicitParam(name = "nickname", value = "微信昵称", paramType = "body")

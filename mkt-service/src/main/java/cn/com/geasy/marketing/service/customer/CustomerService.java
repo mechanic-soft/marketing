@@ -21,6 +21,7 @@ public interface CustomerService extends SuperService<Customer> {
     public List<CustomerLifecycleEventDto> customerLifecycleById(Long id);
 
     public Page<CustomerDto>  selectDtoPage(int pageNum,int pageSize, CustomerDto customerDto);
+    public List<CustomerDto>  selectDtoList(CustomerDto customerDto);
 
     public String  synchronizeWxUserList(List<WxContactSecondDto> list);
 
