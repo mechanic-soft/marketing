@@ -127,23 +127,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     public String removeTagTypes(List<Long> ids) {
         StringBuffer  sqlByTagTypeStr = new StringBuffer();
         StringBuffer  sqlByTagStr = new StringBuffer();
-        //判断标签类型下是否有标签。
-        /*EntityWrapper<Tag> ewByTag = new EntityWrapper<Tag>();
-        List<TagType> tagTypes = tagTypeService.selectBatchIds(ids);
-        for (int i = 0; i < tagTypes.size(); i++) {
-            String tagTypeId = tagTypes.get(i).toString();
-            if(i == 0){
-                sqlStr.append(" status = 1 and parent_id ="+tagTypeId+" ");
-            }else{
-                sqlStr.append(" OR parent_id = "+tagTypeId+" ");
-            }
-        }*/
-        /*if(tagTypes.size() > 0 ){
-            return Const.DELETE_FAIL_BE_QUOTED;
-        }*/
-        //清空sqlStr
-        //sqlStr.setLength(0);
-        //判断标签类型下是否有子标签类型。
+        //判断标签类型下是否有标签和判断标签类型下是否有子标签类型。
         EntityWrapper<Tag> ewByTag = new EntityWrapper<Tag>();
         EntityWrapper<TagType> ewByTagType = new EntityWrapper<TagType>();
         for (int i = 0; i < ids.size(); i++) {
