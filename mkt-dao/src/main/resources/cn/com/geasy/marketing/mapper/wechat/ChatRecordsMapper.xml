@@ -42,7 +42,7 @@
                             </where>
                         ) b1 ON a1.wx_username = b1.wx_username AND a1.send_time <![CDATA[ < ]]> b1.send_time
 
-                        GROUP BY a1.wx_username,a1.send_time HAVING COUNT(b1.id) <![CDATA[ < ]]>  1
+                        GROUP BY a1.wx_username,a1.send_time,a1.id HAVING COUNT(b1.id) <![CDATA[ < ]]>  1
                         <if test="isSort==1">
                             ORDER BY a1.send_time DESC
                         </if>

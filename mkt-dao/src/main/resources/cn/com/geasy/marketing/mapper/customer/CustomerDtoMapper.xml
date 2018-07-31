@@ -40,7 +40,7 @@
                 SELECT DISTINCT (t1.id)
                 ,date_format(t1.call_time, '%Y-%m-%d') AS call_time
                 ,t1.wx_id
-                ,t1.remark
+                ,t2.remark_name as remark
                 ,t1.phone
                 ,t1.maturity
                 ,t2.nick_name
