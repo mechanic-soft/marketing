@@ -110,7 +110,7 @@
         </where>
         GROUP BY cd.customer_id
         HAVING count(cd.customer_id) ${symbol}  ${frequency}
-        ORDER BY create_time ASC
+        <!--ORDER BY cd.customer_id ASC-->
     </select>
 
     <select id="getFirstOneInEvent" parameterType="Long" resultMap="First_One_In_Event_Map">
