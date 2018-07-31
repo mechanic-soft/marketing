@@ -53,14 +53,14 @@ public interface SysRoleMapper extends SuperMapper<SysRole> {
      * @param pagination 分页参数
      * @return Page&lt;SysRole&gt;
      */
-    List<SysRoleDto> findDtos(@Param("ew") Wrapper<SysRoleDto> wrapper, Pagination pagination);
+//    List<SysRoleDto> findDtos(@Param("ew") Wrapper<SysRoleDto> wrapper, Pagination pagination);
 
     /**
      * 返回及联权限的角色分页信息
      *
      * @return List&lt;SysRole&gt;
      */
-    List<SysRoleDto> findDtos(@Param("ew") Wrapper<SysRoleDto> wrapper);
+//    List<SysRoleDto> findDtos(@Param("ew") Wrapper<SysRoleDto> wrapper);
 
 
     /**
@@ -69,5 +69,5 @@ public interface SysRoleMapper extends SuperMapper<SysRole> {
      * @param wrapper 查询条件
      * @return SysRole
      */
-    SysRoleDto findDto(@Param("ew") Wrapper<SysRoleDto> wrapper);
+//    SysRoleDto findDto(@Param("ew") Wrapper<SysRoleDto> wrapper);
 }
