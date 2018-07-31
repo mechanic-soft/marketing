@@ -25,12 +25,12 @@ public interface CustomerMapper extends SuperMapper<Customer> {
     List<CustomerDto> selectDtoPage(Page page , @Param("customerDto") CustomerDto customerDto);
 
     /**
-     * 客户列表分页查询版本2
-     * @param page
+     * 客户列表查询（不分页）
      * @param customerDto
      * @return
      */
-    List<CustomerDto> selectMyDtoPage(Page page , @Param("customerDto") CustomerDto customerDto);
+    List<CustomerDto> selectDtoList(@Param("customerDto") CustomerDto customerDto);
+
 
     /**
      * 查找已经“已开户”标签下的客户

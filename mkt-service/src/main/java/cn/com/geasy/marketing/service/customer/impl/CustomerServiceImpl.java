@@ -180,6 +180,14 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return page;
     }
 
+    @Override
+    public List<CustomerDto> selectDtoList(CustomerDto customerDto) {
+
+        List<CustomerDto> customerDtos = baseMapper.selectDtoList(customerDto);//selectMyDtoPage
+        initCustomerDto(customerDtos);
+
+        return customerDtos;
+    }
 
 
     /**
