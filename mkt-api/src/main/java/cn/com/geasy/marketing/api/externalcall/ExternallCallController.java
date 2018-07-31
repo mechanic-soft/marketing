@@ -3,9 +3,12 @@ package cn.com.geasy.marketing.api.externalcall;
 import cn.com.geasy.marketing.domain.dto.externalCall.QuestionnaireDto;
 import cn.com.geasy.marketing.domain.entity.customer.Customer;
 import cn.com.geasy.marketing.domain.entity.externalCall.ExternalCall;
+import cn.com.geasy.marketing.domain.entity.system.SysUser;
 import cn.com.geasy.marketing.service.customer.CustomerService;
 import cn.com.geasy.marketing.service.externalcall.ExternalCallService;
+import cn.com.geasy.marketing.service.system.SysUserService;
 import cn.com.geasy.marketing.utils.SessionUtils;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,8 @@ public class ExternallCallController {
     private ExternalCallService ecSrv;
     @Autowired
     private CustomerService customerSrv;
+    @Autowired
+    private SysUserService sysUserSrv;
 
     @ApiOperation(value = "外呼系统数据接入")
     @PostMapping(path = "/externallCalls", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -74,10 +79,15 @@ public class ExternallCallController {
 
 
 
+        //外呼系统与系统用户表有一定对应关系，根据ExternalCall.customerId 去sys_user.callcenter_user_id 找用户id
+        SysUser sysUser = (SysUser) sysUserSrv.selectObj(new EntityWrapper<SysUser>().eq("callcenter_user_id",customerId));
+        Long userId = null==sysUser?null:sysUser.getId();
 
-        Customer customer = new Customer(1,SessionUtils.getUserId(),LocalDateTime.now(),SessionUtils.getUserId(),LocalDateTime.now()
+        Customer customer = new Customer(1,userId,LocalDateTime.now(),SessionUtils.getUserId(),LocalDateTime.now()
                 ,callTimeStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),userCode,remark,customerId);
+        //外呼表存一份
         ecSrv.insert(ec,record);
+        //录入客户表
         customerSrv.insert(customer);
         return ResponseUtils.result("1");
 
