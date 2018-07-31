@@ -11,13 +11,16 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 外呼实体
+ * @Author: xiezehong
+ * @Date: 2018/7/31 10:34
+ * @Description: 外呼实体
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("external_call")
 public class ExternalCall extends Entity implements Serializable {
+
     private static final long serialVersionUID = 267791232213577189L;
 
     /**

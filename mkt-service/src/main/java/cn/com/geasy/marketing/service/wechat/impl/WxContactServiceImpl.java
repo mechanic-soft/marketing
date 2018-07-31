@@ -12,6 +12,7 @@ import cn.com.geasy.marketing.service.wechat.WxContactService;
 import cn.com.geasy.marketing.utils.SessionUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class WxContactServiceImpl extends SuperServiceImpl<WxContactMapper, WxCo
 
         List<WxContact> wxContacts = WxContactSecondMapstruct.getInstance.toEntityList(list);
         List<String> nickNames = new ArrayList<>();
-        List<String> existNickNames = new ArrayList<>();//数据库中已经存在的昵称
+        List<String> existNickNames = Lists.newArrayList();//数据库中已经存在的昵称
         wxContacts.forEach(wxContact ->{
             nickNames.add(wxContact.getNickName());
         });
