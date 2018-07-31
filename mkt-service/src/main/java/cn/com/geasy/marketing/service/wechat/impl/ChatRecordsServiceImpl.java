@@ -61,7 +61,8 @@ public class ChatRecordsServiceImpl extends SuperServiceImpl<ChatRecordsMapper, 
         try{
             Long roleId = SessionUtils.getRoleId();
             Long userId = SessionUtils.getUserId();
-            if(ROLE_ID.equals(roleId.toString())){
+            //暂时不判断是否是经理的权限,之后可能需要
+            //if(ROLE_ID.equals(roleId.toString())){
                 //判断 ，根据当前日期，客户，事件(聊天)，客户经理
                 LocalDate localDate = LocalDate.now();
                 Long customerId = chatRecordsDto.getCustomerId();
@@ -80,7 +81,7 @@ public class ChatRecordsServiceImpl extends SuperServiceImpl<ChatRecordsMapper, 
                     customerDynamic.setEventDate(LocalDateTime.now());
                     customerDynamicService.insert(customerDynamic);
                 }
-            }
+            //}
             chatRecords.setCreateUser(userId);
             chatRecords.setUpdateUser(userId);
         }catch (Exception e){
