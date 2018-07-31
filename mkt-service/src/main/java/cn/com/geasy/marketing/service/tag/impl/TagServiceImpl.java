@@ -98,6 +98,7 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     public String updateTag(TagDto tagDto) {
         //设置path
         Integer rows = 0;
+        //name,TypeId,SubTypeId,id
         if(StringUtils.isNotBlank(tagDto.getName()) && null !=tagDto.getTypeId() && null !=tagDto.getSubTypeId() && null!=tagDto.getId()){
             Tag tag = TagMapstruct.getInstance.toEntity(tagDto);
             tag.setTagTypeId(tagDto.getSubTypeId());

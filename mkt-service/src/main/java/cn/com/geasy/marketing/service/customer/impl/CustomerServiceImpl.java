@@ -114,10 +114,13 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     @Override
     public String synchronizeCustomer(List<WxContactDto> list) {
         List<WxContact> wxContacts = WxContactMapstruct.getInstance.toEntityList(list);
+        List<Customer> customers = new ArrayList<>();
         //设置修改为当前用户
         for (WxContact item:wxContacts) {
             item.setUpdateUser(SessionUtils.getUserId());
+            customers.add(new Customer(item.getId(),SessionUtils.getUserId(),LocalDateTime.now(),SessionUtils.getUserId()));
         }
+        this.insertBatch(customers);
         boolean flag = wxContactService.updateBatchById(wxContacts);
         return flag?Const.SYNCHRONIZE_SUCCESS:Const.SYNCHRONIZE_FAIL;
     }
@@ -171,7 +174,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     @Override
     public Page<CustomerDto> selectDtoPage(int pageNum, int pageSize,CustomerDto customerDto) {
         Page<CustomerDto> page = new Page<>(pageNum,pageSize);
-        List<CustomerDto> customerDtos = baseMapper.selectMyDtoPage(page, customerDto);//selectDtoPage
+        List<CustomerDto> customerDtos = baseMapper.selectDtoPage(page, customerDto);//selectMyDtoPage
         initCustomerDto(customerDtos);
         page.setRecords(customerDtos);
         return page;

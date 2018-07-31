@@ -43,6 +43,14 @@ public class Customer extends Entity implements Serializable {
         this.callcenterUserId = callcenterUserId;
     }
 
+    public Customer(Long wxContactId,Long createUser, LocalDateTime createTime,Long userId) {
+        this.wxContactId = wxContactId;
+        this.createUser = createUser;
+        this.createTime = createTime;
+        this.userId = userId;
+    }
+
+
     /**
      * 微信联系人ID
      */
