@@ -76,3 +76,12 @@ INSERT INTO rele_role_permission VALUES (3021, 3, 1600, 1, 1, CURRENT_TIMESTAMP(
 INSERT INTO rele_role_permission VALUES (3022, 3, 1700, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3023, 3, 1800, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
 INSERT INTO rele_role_permission VALUES (3024, 3, 3000, 1, 1, CURRENT_TIMESTAMP(), 1, CURRENT_TIMESTAMP());
+
+/*==============================================================*/
+/* 更新说明：权限角色关联                                        */
+/* 更新作者：梁天利                                              */
+/*==============================================================*/
+
+update sys_permission set pid = 1600 where endpoint like '/v1/wxcontacts%';
+update sys_permission set pid = 1800 where endpoint like '/v1/consumers%';
+update sys_permission set pid = 1900 where endpoint like '/v1/tagTypes%';
