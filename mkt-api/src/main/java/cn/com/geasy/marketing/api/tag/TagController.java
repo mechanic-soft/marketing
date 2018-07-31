@@ -68,4 +68,9 @@ public class TagController {
         return ResponseUtils.result(tagService.findTagType());
     }
 
+    @ApiOperation(value = "删除标签类别")
+    @DeleteMapping(path = "/tagTypes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ModelMap> removeTagType(@RequestBody List<Long> ids){
+        return ResponseUtils.result(tagService.removeTagTypes(ids));
+    }
 }

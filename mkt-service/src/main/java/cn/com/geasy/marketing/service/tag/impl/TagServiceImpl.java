@@ -18,6 +18,7 @@ import cn.com.geasy.marketing.service.tag.TagTreeDtoService;
 import cn.com.geasy.marketing.service.tag.TagTypeService;
 import cn.com.geasy.marketing.utils.SessionUtils;
 import cn.com.geasy.marketing.utils.SynchronizeUtils;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
@@ -119,5 +120,52 @@ public class TagServiceImpl extends SuperServiceImpl<TagMapper, Tag> implements 
     public List findTagType() {
 
         return tagTreeDtoSrv.findTagTree();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    @Override
+    public String removeTagTypes(List<Long> ids) {
+        StringBuffer  sqlByTagTypeStr = new StringBuffer();
+        StringBuffer  sqlByTagStr = new StringBuffer();
+        //判断标签类型下是否有标签。
+        /*EntityWrapper<Tag> ewByTag = new EntityWrapper<Tag>();
+        List<TagType> tagTypes = tagTypeService.selectBatchIds(ids);
+        for (int i = 0; i < tagTypes.size(); i++) {
+            String tagTypeId = tagTypes.get(i).toString();
+            if(i == 0){
+                sqlStr.append(" status = 1 and parent_id ="+tagTypeId+" ");
+            }else{
+                sqlStr.append(" OR parent_id = "+tagTypeId+" ");
+            }
+        }*/
+        /*if(tagTypes.size() > 0 ){
+            return Const.DELETE_FAIL_BE_QUOTED;
+        }*/
+        //清空sqlStr
+        //sqlStr.setLength(0);
+        //判断标签类型下是否有子标签类型。
+        EntityWrapper<Tag> ewByTag = new EntityWrapper<Tag>();
+        EntityWrapper<TagType> ewByTagType = new EntityWrapper<TagType>();
+        for (int i = 0; i < ids.size(); i++) {
+            String tagTypeId = ids.get(i).toString();
+            if(i == 0){
+                sqlByTagTypeStr.append(" status = 1 and parent_id ="+tagTypeId+" ");
+                sqlByTagStr.append(" status = 1 and tag_type_id ="+tagTypeId+" ");
+            }else{
+                sqlByTagTypeStr.append(" OR parent_id = "+tagTypeId+" ");
+                sqlByTagStr.append(" OR tag_type_id = "+tagTypeId+" ");
+            }
+        }
+        ewByTag.where(sqlByTagStr.toString());
+        List<Tag> tags = this.selectList(ewByTag);
+        if(tags.size() > 0 ){
+            return Const.DELETE_FAIL_BE_QUOTED;
+        }
+        ewByTagType.where(sqlByTagTypeStr.toString());
+        List<TagType> tagTypeList = tagTypeService.selectList(ewByTagType);
+        if(tagTypeList.size() > 0 ){
+            return Const.DELETE_FAIL_BE_QUOTED;
+        }
+        return tagTypeService.deleteBatchIds(ids)?Const.DELETE_SUCCESS:Const.DELETE_FAIL;
     }
 }

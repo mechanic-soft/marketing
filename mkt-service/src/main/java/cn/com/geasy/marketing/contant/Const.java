@@ -60,4 +60,8 @@ public class Const {
      *斜杠标识符常量
      */
     public static final String SPRIT = "/";
+    /**
+     *删除时，出现子表引用，不能删除。
+     */
+    public static final String DELETE_FAIL_BE_QUOTED="被引用无法删除";
 }
