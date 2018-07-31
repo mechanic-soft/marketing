@@ -7,10 +7,6 @@
         <column>method</column>
         <column>description</column>
         <column>status</column>
-        <column>create_user</column>
-        <column>create_time</column>
-        <column>update_user</column>
-        <column>update_time</column>
         <row>
             <value>1</value>
             <value>add_user</value>
@@ -18,10 +14,6 @@
             <value>POST</value>
             <value>添加用户</value>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
         </row>
         <row>
             <value>2</value>
@@ -30,10 +22,6 @@
             <value>PUT</value>
             <value>更新用户</value>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
         </row>
         <row>
             <value>3</value>
@@ -42,10 +30,6 @@
             <value>DELETE</value>
             <value>删除用户</value>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
         </row>
         <row>
             <value>4</value>
@@ -54,10 +38,6 @@
             <value>GET</value>
             <value>获取用户</value>
             <value>1</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
         </row>
         <row>
             <value>5</value>
@@ -66,10 +46,6 @@
             <value>DELETE</value>
             <value>被删除的</value>
             <value>0</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
-            <value>1</value>
-            <value>2017-10-30 12:16:57</value>
         </row>
     </table>
 </dataset>

@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import com.gitee.mechanic.mybatis.utils.PageUtils;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,24 +70,23 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
     }
 
     @Override
-    public List<SysRoleDto> findDtoAll() {
-        List<SysRole> roless = selectList();
-        return SysRoleMapstruct.getInstance.toDtoList(roless);
+    public List<SysRoleDto> findAll() {
+        List<SysRole> roles = selectList();
+        return findPermissions(roles);
     }
 
     @Override
-    public Page<SysRoleDto> findDtoPage(int pageNum) {
+    public Page<SysRoleDto> findPage(int pageNum) {
         Page<SysRoleDto> page = PageUtils.getPage(pageNum);
         Page<SysRole> rolesPage = selectPage(pageNum);
-        List<SysRoleDto> roleDtos = SysRoleMapstruct.getInstance.toDtoList(rolesPage.getRecords());
-        return PageUtils.getPage(rolesPage, roleDtos);
+        return PageUtils.getPage(rolesPage, findPermissions(rolesPage.getRecords()));
     }
 
     @Override
-    public SysRoleDto findDtoById(Long id) {
+    public SysRoleDto findById(Long id) {
         SysRole role = selectById(id);
         //查询角色
-        return SysRoleMapstruct.getInstance.toDto(role);
+        return findPermissions(role);
     }
 
     /**
@@ -96,27 +96,61 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
      * @return List&lt;SysRole&gt; 角色
      */
     @Override
-    public List<SysRoleDto> findDtoByUserId(Long userId){
-        return SysRoleMapstruct.getInstance.toDtoList(baseMapper.findByUserId(userId));
+    public List<SysRoleDto> findByUserId(Long userId) {
+        return findPermissions(baseMapper.findByUserId(userId));
     }
 
-    /**
-     * 返回匹配指定用户ID的角色
-     *
-     * @param userId 用户ID
-     * @return List&lt;SysRole&gt; 角色
-     */
     @Override
-    public List<SysRole> findByUserId(Long userId){
-        return baseMapper.findByUserId(userId);
+    public Long save(SysRoleDto roleDto) {
+
+        boolean success = false;
+
+        //保存角色
+        SysRole role = SysRoleMapstruct.getInstance.toEntity(roleDto);
+        super.insertOrUpdate(role);
+
+        Long roleId = role.getId();
+        //删除该角色的所有权限关联
+        Wrapper<ReleRolePermission> rolePermissionWrapper = new EntityWrapper<>();
+        rolePermissionWrapper.eq("role_id", roleId);
+        this.rolePermissionService.delete(rolePermissionWrapper);
+
+        //保存该角色的所有权限关联
+        List<SysPermissionDto> permissionDtos = roleDto.getPermissions();
+        for (SysPermissionDto permissionDto : permissionDtos) {
+            Long permissionId = permissionDto.getId();
+            ReleRolePermission rolePermission = new ReleRolePermission();
+            rolePermission.setRoleId(roleId);
+            rolePermission.setPermissionId(permissionId);
+            this.rolePermissionService.insert(rolePermission);
+        }
+        return roleId;
     }
 
     /**
      * 返回将包含关联权限的角色
+     *
+     * @param roles 角色信息
+     * @return List&lt;SysRoleDto&gt;
+     */
+    private List<SysRoleDto> findPermissions(List<SysRole> roles) {
+        List<SysRoleDto> roleDtos = Lists.newArrayList();
+        for (SysRole role : roles) {
+            roleDtos.add(findPermissions(role));
+        }
+        return roleDtos;
+    }
+
+    /**
+     * 返回将包含关联权限的角色
+     *
      * @param role 角色信息
      * @return SysRoleDto
      */
-    private SysRoleDto findPermissions(SysRole role){
+    private SysRoleDto findPermissions(SysRole role) {
+        if (role == null){
+            return null;
+        }
         SysRoleDto roleDto = SysRoleMapstruct.getInstance.toDto(role);
 
         //从关联表查询权限ID
@@ -136,32 +170,5 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
             }
         }
         return roleDto;
-    }
-
-    @Override
-    public boolean save(SysRoleDto roleDto) {
-
-        boolean success = false;
-
-        //保存角色
-        SysRole role = SysRoleMapstruct.getInstance.toEntity(roleDto);
-        success = super.insertOrUpdate(role);
-
-        Long roleId = role.getId();
-        //删除该角色的所有权限关联
-        Wrapper<ReleRolePermission> rolePermissionWrapper = new EntityWrapper<>();
-        rolePermissionWrapper.eq("role_id", roleId);
-        success = this.rolePermissionService.delete(rolePermissionWrapper);
-
-        //保存该角色的所有权限关联
-        List<SysPermissionDto> permissionDtos = roleDto.getPermissions();
-        for (SysPermissionDto permissionDto : permissionDtos){
-            Long permissionId = permissionDto.getId();
-            ReleRolePermission rolePermission = new ReleRolePermission();
-            rolePermission.setRoleId(roleId);
-            rolePermission.setPermissionId(permissionId);
-            success = this.rolePermissionService.insert(rolePermission);
-        }
-        return success;
     }
 }

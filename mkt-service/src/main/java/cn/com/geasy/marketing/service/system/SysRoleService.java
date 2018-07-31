@@ -28,41 +28,40 @@ public interface SysRoleService extends SuperService<SysRole> {
 
     /**
      * 分页查询，同时级联权限
+     *
      * @param pageNum 页码
      * @return Page&lt;SysRoleDto&gt;
      */
-    Page<SysRoleDto> findDtoPage(int pageNum);
+    Page<SysRoleDto> findPage(int pageNum);
 
     /**
      * 查询角色，同时级联权限
+     *
      * @return List&lt;SysRoleDto&gt;
      */
-    List<SysRoleDto> findDtoAll();
+    List<SysRoleDto> findAll();
+
     /**
      * 按ID查询角色
+     *
      * @param id 角色ID
      * @return SysRoleDto
      */
-    SysRoleDto findDtoById(Long id);
+    SysRoleDto findById(Long id);
+
     /**
      * 返回匹配指定用户ID的角色
      *
      * @param userId 用户ID
      * @return List&lt;SysRole&gt; 角色
      */
-    List<SysRoleDto> findDtoByUserId(Long userId);
-    /**
-     * 返回匹配指定用户ID的角色
-     *
-     * @param userId 用户ID
-     * @return List&lt;SysRole&gt; 角色
-     */
-    List<SysRole> findByUserId(Long userId);
+    List<SysRoleDto> findByUserId(Long userId);
 
     /**
      * 保存角色
+     *
      * @param roleDto 角色信息
-     * @return true or false
+     * @return ID
      */
-    boolean save(SysRoleDto roleDto);
+    Long save(SysRoleDto roleDto);
 }
