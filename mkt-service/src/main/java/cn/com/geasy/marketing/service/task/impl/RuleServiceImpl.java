@@ -220,6 +220,9 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                             }
                         }
                     }
+                    if(luckCostomerList.size() <= 0 ){
+                        return returnRuleDto;
+                    }
                     //查找用户
                     EntityWrapper<Customer> ewByCustomer = new EntityWrapper<Customer>();
                     ewByCustomer.in("id",luckCostomerList);
