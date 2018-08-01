@@ -29,7 +29,8 @@
             and t2.customer_id = #{tagDto.customerId}
         </if>
         <if test="tagDto.isSys != null">
-            and t1.is_sys = #{tagDto.isSys}
+            <!-- 现在注释掉标签类型的判断，以后可能用到，现在暂时不用  0等于否，1等于是 -->
+          <!--and t1.is_sys = #{tagDto.isSys}-->
         </if>
         GROUP BY  t1.id,t1.name,t3.id,t3.name,t4.id,t1.tag_src
         ORDER by t4.name,t3.name
