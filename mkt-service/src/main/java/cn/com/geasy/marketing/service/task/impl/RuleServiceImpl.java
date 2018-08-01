@@ -7,6 +7,7 @@ package cn.com.geasy.marketing.service.task.impl;
 
 import cn.com.geasy.marketing.contant.Const;
 import cn.com.geasy.marketing.dao.task.RuleMapper;
+import cn.com.geasy.marketing.domain.dto.customer.CustomerDto;
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto;
 import cn.com.geasy.marketing.domain.dto.tag.TagDto;
 import cn.com.geasy.marketing.domain.dto.task.RuleDto;
@@ -112,11 +113,19 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     returnRuleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnMap);
                     //查询规则中的行为
                     returnRuleTriggerActionList = ruleTriggerActionService.selectByMap(columnMap);
+
                     //查询标签条件
                     boolean customerTagFlag = true;
-                    List<Long> releCustomerTagList = new ArrayList<Long>();
+                    List<Long> tagList = Lists.newArrayList();
                     if(returnRuleCustomerLabelList.size() > 0 ){
-                        EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
+                        for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
+                            RuleCustomerLabel ruleCustomerLabel = returnRuleCustomerLabelList.get(i);
+                            Long tagId = ruleCustomerLabel.getTagId();
+                            if(!tagList.contains(tagId)){
+                                tagList.add(tagId);
+                            }
+                        }
+                       /*EntityWrapper<ReleCustomerTag> ewByReleCustomerTag = new EntityWrapper<ReleCustomerTag>();
                         StringBuffer sql =  new StringBuffer();
                         for (int i = 0; i < returnRuleCustomerLabelList.size(); i++) {
                             RuleCustomerLabel ruleCustomerLabel = returnRuleCustomerLabelList.get(i);
@@ -132,8 +141,21 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                         List<ReleCustomerTag> customerTagList = releCustomerTagService.selectList(ewByReleCustomerTag);
                         customerTagList.forEach(customerTagObj->{
                             releCustomerTagList.add(customerTagObj.getCustomerId());
-                        });
+                        });*/
                     }
+                    List<Long> releCustomerTagList = Lists.newArrayList();
+                    CustomerDto columnCustomerDto = new CustomerDto();
+                    columnCustomerDto.setUserId(userId);
+                    columnCustomerDto.setTagIds(releCustomerTagList);
+                    List<CustomerDto> customerDtoList = customerService.selectCustomerDtoListByTagIdListAndUserId(columnCustomerDto);
+                    for (int i = 0; i < customerDtoList.size(); i++) {
+                        CustomerDto cd = customerDtoList.get(i);
+                        Long customerId = cd.getId();
+                        if(!releCustomerTagList.contains(customerId)){
+                            releCustomerTagList.add(customerId);
+                        }
+                    }
+
                     List<Long> customerIdByReadActionList = new ArrayList<>();
                     List<Long> customerIdBySubActionList = new ArrayList<>();
                     List<Long> customerIdByTalkActionList = new ArrayList<>();
