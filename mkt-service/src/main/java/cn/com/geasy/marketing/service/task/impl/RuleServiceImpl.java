@@ -146,7 +146,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
                     List<Long> releCustomerTagList = Lists.newArrayList();
                     CustomerDto columnCustomerDto = new CustomerDto();
                     columnCustomerDto.setUserId(userId);
-                    columnCustomerDto.setTagIds(releCustomerTagList);
+                    columnCustomerDto.setTagIds(tagList);
                     List<CustomerDto> customerDtoList = customerService.selectCustomerDtoListByTagIdListAndUserId(columnCustomerDto);
                     for (int i = 0; i < customerDtoList.size(); i++) {
                         CustomerDto cd = customerDtoList.get(i);
