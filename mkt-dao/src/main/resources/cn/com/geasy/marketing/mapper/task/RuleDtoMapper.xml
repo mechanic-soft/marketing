@@ -26,6 +26,7 @@
                 <if test="ruleDto.createTimeStr != null and ruleDto.createTimeStr != ''">
                     AND DATE_FORMAT(t1.create_time, '%Y-%m-%d') = '${ruleDto.createTimeStr}'
                 </if>
+                ORDER BY t1.create_time DESC
     </select>
 
 </mapper>
