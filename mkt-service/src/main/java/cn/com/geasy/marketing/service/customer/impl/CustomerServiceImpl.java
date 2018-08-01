@@ -289,7 +289,7 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
 
         if( !StringUtils.isBlank(customer.getCallTime())){
             String callTimeStr = customer.getCallTime();
-            callTimeStr = callTimeStr.substring(0, callTimeStr.length() - 2);
+            callTimeStr = callTimeStr.substring(0, 19);
             //添加呼叫生命周期事件
             customerLifecycleEventDtos.add(new CustomerLifecycleEventDto(6, LocalDateTime.parse(callTimeStr,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         };
