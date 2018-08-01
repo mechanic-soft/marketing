@@ -424,7 +424,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         Long userId = SessionUtils.getUserId();
         HashMap<String,Object> columnRuleMap = Maps.newHashMap();
         columnRuleMap.put("id",ruleId);
-        columnRuleMap.put("status",Const.ONE);
+        //columnRuleMap.put("status",Const.ONE);
         List<Rule> ruleList = super.selectByMap(columnRuleMap);
         Rule rule = null;
         RuleDto returnRuleDto = new RuleDto();
@@ -436,7 +436,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         HashMap<String,Object> columnRuleCustomerLabelMap = Maps.newHashMap();
         columnRuleCustomerLabelMap.put("rule_id",ruleId);
         //0代表状态为删除，1代表状态为正常
-        columnRuleCustomerLabelMap.put("status",Const.ONE);
+        //columnRuleCustomerLabelMap.put("status",Const.ONE);
         List<RuleCustomerLabel> ruleCustomerLabelList = ruleCustomerLabelService.selectByMap(columnRuleCustomerLabelMap);
         ArrayList<Long> customerTagsList = Lists.newArrayList();
         ruleCustomerLabelList.forEach( ruleCustomerLabelObj -> {
