@@ -41,7 +41,7 @@ public class CustomerController {
     @ApiOperation(value = "客户列表查询(分页)")
     @GetMapping(path = "/customers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> selectPage(
-            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) String nickName,
             @RequestParam(required = false) Integer isAddWechat,
             @RequestParam(required = false) List<Long> tagIds,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -53,14 +53,14 @@ public class CustomerController {
     {
 
         //localDateToStr(callTimeStart);
-        CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
+        CustomerDto customerDto = new CustomerDto(nickName,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
         return ResponseUtils.result(customerSrv.selectDtoPage(pageNum==null?1:pageNum,pageSize==null?10:pageSize,customerDto));
     }
     //不分页
     @ApiOperation(value = "客户列表查询(不分页)")
     @GetMapping(path = "/customersList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> selectList(
-            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) String nickName,
             @RequestParam(required = false) Integer isAddWechat,
             @RequestParam(required = false) List<Long> tagIds,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -70,7 +70,7 @@ public class CustomerController {
     {
 
         //localDateToStr(callTimeStart);
-        CustomerDto customerDto = new CustomerDto(nickname,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
+        CustomerDto customerDto = new CustomerDto(nickName,isAddWechat,tagIds,callTimeStart,callTimeEnd, SessionUtils.getUserId());
         return ResponseUtils.result(customerSrv.selectDtoList(customerDto));
     }
 
