@@ -330,6 +330,7 @@ public class RuleServiceImpl extends SuperServiceImpl<RuleMapper, Rule> implemen
         rule.setStartDate(ruleDto.getStartDate());
         rule.setEndDate(ruleDto.getEndDate());
         rule.setUpdateUser(userId);
+        rule.setStatus(ruleDto.getStatus());
         rule.setId(ruleId);
         //根据规则主键ruleId，去查找规则客户标签关联表
         HashMap<String,Object> columnMap =  Maps.newHashMap();
