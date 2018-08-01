@@ -304,5 +304,10 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
         return customerLifecycleEventDtos;
 
     }
+
+    @Override
+    public List<CustomerDto> selectCustomerDtoListByTagIdListAndUserId(CustomerDto customerDto) {
+        return baseMapper.selectCustomerDtoListByTagIdListAndUserId(customerDto);
+    }
 }
 

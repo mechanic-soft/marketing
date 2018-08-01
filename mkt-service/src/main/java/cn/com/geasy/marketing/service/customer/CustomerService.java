@@ -24,7 +24,7 @@ public interface CustomerService extends SuperService<Customer> {
     public List<CustomerDto>  selectDtoList(CustomerDto customerDto);
 
     public String  synchronizeWxUserList(List<WxContactSecondDto> list);
-
+    public List<CustomerDto>  selectCustomerDtoListByTagIdListAndUserId(CustomerDto customerDto);
     /**
      * 客户生命周期时间查询服务
      * （由于客户生命周期事件分散在不同表中，需要到不同的表取数）

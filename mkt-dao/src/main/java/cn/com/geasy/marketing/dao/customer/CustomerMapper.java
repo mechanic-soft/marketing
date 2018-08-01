@@ -39,5 +39,11 @@ public interface CustomerMapper extends SuperMapper<Customer> {
      */
     List<CustomerDto> findOpenAccountCustomerDtoIds(@Param("ids") List<Long> customerDtoIds);
 
+    /**
+     * 规则那边的今日提醒功能用到：根据tagList标签集合和用户userid 查客户
+     * @param customerDto
+     * @return List<CustomerDto>
+     */
+    List<CustomerDto> selectCustomerDtoListByTagIdListAndUserId(@Param("customerDto") CustomerDto customerDto);
 }
 

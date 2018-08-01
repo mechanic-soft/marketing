@@ -48,6 +48,12 @@
         <include refid="Base_sql2"/>
     </select>
 
+    <!--规则那边用到：根据tagList标签集合和用户userid 查-->
+    <select id="selectCustomerDtoListByTagIdListAndUserId" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDto"
+            resultMap="Base_Result_Map">
+        <include refid="Base_sql"/>
+    </select>
+
     <sql id="Base_sql2">
         SELECT t1.id
         ,date_format(t1.call_time, '%Y-%m-%d') AS call_time
