@@ -6,6 +6,8 @@ package cn.com.geasy.marketing.api.customer;
 
 import cn.com.geasy.marketing.domain.dto.customer.CustomerDynamicDto;
 import cn.com.geasy.marketing.service.customer.CustomerDynamicService;
+import com.gitee.mechanic.json.mapper.JsonMapper;
+import com.gitee.mechanic.web.utils.RequestUtils;
 import com.gitee.mechanic.web.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,12 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -41,6 +38,12 @@ public class CustomerDynamicController {
     @ApiOperation(value = "添加客户动态")
     @PostMapping(path = "/customerDynamics", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody CustomerDynamicDto customerDynamicDto) {
+
+        String url = RequestUtils.getRequest().getRequestURL().toString();
+
+        log.info("收到来自：" + url + "的消息……");
+        log.info("消息内容：\n" + JsonMapper.instance.toJson(customerDynamicDto));
+
         return ResponseUtils.result(this.customerDynamicService.save(customerDynamicDto) ? "保存成功" : "添加失败：昵称不匹配。" );
     }
 
