@@ -83,7 +83,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         Long userId = SessionUtils.getUserId();
         Page<CustomerDynamicDto> page = PageUtils.getPage(pageNum);
         EntityWrapper<CustomerDynamicDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).between("event", 0, 2);
+        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).between("event", 0, 2).orderBy("cd.create_time",false);
         List<CustomerDynamicDto> customerDynamicDtos = this.customerDynamicMapper.getCustomerDynamics(page, wrapper);
         return page.setRecords(customerDynamicDtos);
     }
@@ -105,7 +105,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         EntityWrapper<CustomerArticleDynamicStatisticsDto> wrapper = new EntityWrapper<>();
         wrapper.eq("user_id", userId).eq("event", 0)
                .ge("event_date", startDate)
-               .groupBy("article_title");
+               .groupBy("article_title").orderBy("create_time",false);
         List<CustomerArticleDynamicStatisticsDto> customerArticleDynamicStatisticsDtos = customerDynamicMapper.getCustomerArticleDynamicStatistics(page, wrapper);
         return page.setRecords(customerArticleDynamicStatisticsDtos);
     }
