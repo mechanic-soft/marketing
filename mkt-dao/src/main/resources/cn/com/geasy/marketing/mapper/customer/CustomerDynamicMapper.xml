@@ -121,7 +121,7 @@
           customer_dynamic a
         WHERE
           a.event IN (0, 1, 2, 3)
-        AND a.customer_id = 50
+        AND a.customer_id = #{customerId}
         GROUP BY
           a. EVENT
     </select>
