@@ -51,7 +51,7 @@
     <!--规则那边用到：根据tagList标签集合和用户userid 查-->
     <select id="selectCustomerDtoListByTagIdListAndUserId" parameterType="cn.com.geasy.marketing.domain.dto.customer.CustomerDto"
             resultMap="Base_Result_Map">
-        <include refid="Base_sql"/>
+        <include refid="Base_sql2"/>
     </select>
 
     <sql id="Base_sql2">
