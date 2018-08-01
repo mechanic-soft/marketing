@@ -62,19 +62,22 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
             return false;
         }
 
-        //根据微信联系人ID查询客户信息
-        EntityWrapper<Customer> customerEntityWrapper = new EntityWrapper<>();
-        customerEntityWrapper.eq("wx_contact_id", wxContacts.get(0).getId());
-        List<Customer> customers = this.customerMapper.selectList(customerEntityWrapper);
+        for(WxContact wxContact : wxContacts){
+            //根据微信联系人ID查询客户信息
+            EntityWrapper<Customer> customerEntityWrapper = new EntityWrapper<>();
+            customerEntityWrapper.eq("wx_contact_id", wxContact.getId()).eq("user_id",wxContact.getUserId());
+            List<Customer> customers = this.customerMapper.selectList(customerEntityWrapper);
 
-        if(CollectionUtils.isEmpty(customers)){
-            return false;
+            if(CollectionUtils.isEmpty(customers)){
+                continue;
+            }
+
+            customerDynamic.setCustomerId(customers.get(0).getId());
+            customerDynamic.setUserId(customers.get(0).getUserId());
+            super.insertOrUpdate(customerDynamic);
         }
 
-        customerDynamic.setCustomerId(customers.get(0).getId());
-        customerDynamic.setUserId(customers.get(0).getUserId());
-
-        return super.insertOrUpdate(customerDynamic);
+        return true;
     }
 
     @Override
