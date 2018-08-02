@@ -62,19 +62,22 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
             return false;
         }
 
-        //根据微信联系人ID查询客户信息
-        EntityWrapper<Customer> customerEntityWrapper = new EntityWrapper<>();
-        customerEntityWrapper.eq("wx_contact_id", wxContacts.get(0).getId());
-        List<Customer> customers = this.customerMapper.selectList(customerEntityWrapper);
+        for(WxContact wxContact : wxContacts){
+            //根据微信联系人ID查询客户信息
+            EntityWrapper<Customer> customerEntityWrapper = new EntityWrapper<>();
+            customerEntityWrapper.eq("wx_contact_id", wxContact.getId()).eq("user_id",wxContact.getUserId());
+            List<Customer> customers = this.customerMapper.selectList(customerEntityWrapper);
 
-        if(CollectionUtils.isEmpty(customers)){
-            return false;
+            if(CollectionUtils.isEmpty(customers)){
+                continue;
+            }
+
+            customerDynamic.setCustomerId(customers.get(0).getId());
+            customerDynamic.setUserId(customers.get(0).getUserId());
+            super.insertOrUpdate(customerDynamic);
         }
 
-        customerDynamic.setCustomerId(customers.get(0).getId());
-        customerDynamic.setUserId(customers.get(0).getUserId());
-
-        return super.insertOrUpdate(customerDynamic);
+        return true;
     }
 
     @Override
@@ -83,7 +86,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         Long userId = SessionUtils.getUserId();
         Page<CustomerDynamicDto> page = PageUtils.getPage(pageNum);
         EntityWrapper<CustomerDynamicDto> wrapper = new EntityWrapper<>();
-        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).between("event", 0, 2);
+        wrapper.eq("cd.user_id", userId).ge("cd.event_date", startDate).between("event", 0, 2).orderBy("cd.create_time",false);
         List<CustomerDynamicDto> customerDynamicDtos = this.customerDynamicMapper.getCustomerDynamics(page, wrapper);
         return page.setRecords(customerDynamicDtos);
     }
@@ -105,7 +108,7 @@ public class CustomerDynamicServiceImpl extends SuperServiceImpl<CustomerDynamic
         EntityWrapper<CustomerArticleDynamicStatisticsDto> wrapper = new EntityWrapper<>();
         wrapper.eq("user_id", userId).eq("event", 0)
                .ge("event_date", startDate)
-               .groupBy("article_title");
+               .groupBy("article_title").orderBy("create_time",false);
         List<CustomerArticleDynamicStatisticsDto> customerArticleDynamicStatisticsDtos = customerDynamicMapper.getCustomerArticleDynamicStatistics(page, wrapper);
         return page.setRecords(customerArticleDynamicStatisticsDtos);
     }

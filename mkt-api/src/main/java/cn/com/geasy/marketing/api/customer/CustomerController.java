@@ -86,8 +86,8 @@ public class CustomerController {
     @ApiOperation(value = "微信好友列表")
     //@ApiImplicitParams(value = {@ApiImplicitParam(name = "pageNum", value = "页数", paramType = "body")})
     @GetMapping(path = "/wxcontacts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ModelMap> getWxContantList(){
-        return ResponseUtils.result(customerSrv.getWxContantList());
+    public ResponseEntity<ModelMap> getWxContantList(@RequestParam(required = false) String nickNameOrRemarkName){
+        return ResponseUtils.result(customerSrv.getWxContantList(nickNameOrRemarkName));
     }
 
     @ApiOperation(value = "同步客户")

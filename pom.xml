@@ -125,6 +125,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>mkt-api-${version}-${environment}</finalName>
     </build>
     <dependencyManagement>
         <dependencies>

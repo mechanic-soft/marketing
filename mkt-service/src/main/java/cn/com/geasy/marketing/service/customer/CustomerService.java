@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CustomerService extends SuperService<Customer> {
     public CustomerDto releWechat(CustomerDto customerDto);
-    public List<WxContactDto> getWxContantList();
+    public List<WxContactDto> getWxContantList(String nickNameOrRemark);
     public String synchronizeCustomer(List<WxContactDto> list);
     public String addCustomerTag(Long customerId,List<Long> tagIds);
     public List<CustomerLifecycleEventDto> customerLifecycleById(Long id);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <table name="sys_log">
+        <column>id</column>
+        <column>username</column>
+        <column>menu</column>
+        <column>url</column>
+        <column>remark</column>
+        <column>status</column>
+        <row>
+            <value>1</value>
+            <value>管理员</value>
+            <value>用户管理</value>
+            <value>/v1/sys/users</value>
+            <value>获取用户信息</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>理财经理</value>
+            <value>客户管理</value>
+            <value>/v1/customers</value>
+            <value>获取客户信息</value>
+            <value>1</value>
+        </row>
+    </table>
+</dataset>

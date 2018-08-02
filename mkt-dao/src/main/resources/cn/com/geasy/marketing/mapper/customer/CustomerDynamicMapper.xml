@@ -43,7 +43,7 @@
         SELECT cd.id, cd.customer_id, cd.event, cd.event_date, cd.article_id, cd.article_title, cd.user_id,cd.article_tag,cd.read_time,cd.is_full_read,
         wc.head_img_url, wc.nick_name
         FROM customer_dynamic cd
-        LEFT JOIN customer c on cd.customer_id = c.wx_contact_id
+        LEFT JOIN customer c on cd.customer_id = c.id
         LEFT JOIN wx_contact wc on c.wx_contact_id = wc.id
         <where>
 
@@ -82,7 +82,7 @@
           count(cd.event) AS interaction_count
         FROM
           customer_dynamic cd
-        LEFT JOIN customer c ON cd.customer_id = c.wx_contact_id
+        LEFT JOIN customer c ON cd.customer_id = c.id
         LEFT JOIN wx_contact wc ON c.wx_contact_id = wc.id
         <where>
             cd.status =1

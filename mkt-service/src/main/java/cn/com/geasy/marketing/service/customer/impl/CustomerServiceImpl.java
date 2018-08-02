@@ -99,12 +99,12 @@ public class CustomerServiceImpl extends SuperServiceImpl<CustomerMapper, Custom
     }
 
     @Override
-    public List<WxContactDto> getWxContantList() {
+    public List<WxContactDto> getWxContantList(String nickNameOrRemarkName) {
         //获取当前登录用户
         Long userId = SessionUtils.getUserId();
         EntityWrapper<WxContact> ew=new EntityWrapper<WxContact>();
         ew.where("user_id = {0}",userId);
-
+        ew.andNew(" nick_name LIKE '%"+nickNameOrRemarkName+"%' " + " OR remark_name LIKE '%"+nickNameOrRemarkName+"%' ");
         //将对应实体转换为对应实体的DTO
         List<WxContactDto> corpDtos = WxContactMapstruct.getInstance.toDtoList(wxContactService.selectList(ew));
         return corpDtos;

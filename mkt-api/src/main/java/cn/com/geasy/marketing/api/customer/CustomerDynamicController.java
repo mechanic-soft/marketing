@@ -39,7 +39,8 @@ public class CustomerDynamicController {
     @PostMapping(path = "/customerDynamics", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ModelMap> save(@RequestBody CustomerDynamicDto customerDynamicDto) {
 
-        String url = RequestUtils.getRequest().getRequestURL().toString();
+
+        String url = RequestUtils.getRequest().getRemoteHost() + ":" + RequestUtils.getRequest().getRemotePort();
 
         log.info("收到来自：" + url + "的消息……");
         log.info("消息内容：\n" + JsonMapper.instance.toJson(customerDynamicDto));
