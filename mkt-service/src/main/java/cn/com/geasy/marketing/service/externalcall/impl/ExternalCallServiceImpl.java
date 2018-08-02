@@ -14,9 +14,11 @@ import cn.com.geasy.marketing.service.externalcall.QuestionnaireService;
 import cn.com.geasy.marketing.service.externalcall.ReleExternalCallQuestionnaireService;
 import cn.com.geasy.marketing.service.system.SysUserService;
 import cn.com.geasy.marketing.utils.SessionUtils;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.gitee.mechanic.mybatis.base.SuperServiceImpl;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -82,8 +84,17 @@ public class ExternalCallServiceImpl extends SuperServiceImpl<ExternalCallMapper
         Long userId = null==sysUsers.get(0)?null:sysUsers.get(0).getId();
         Customer customer = new Customer(1,userId,LocalDateTime.now(), SessionUtils.getUserId(),LocalDateTime.now()
                 ,callTimeStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),userCode,remark,customerId);
-        //录入客户表
-        customerService.insert(customer);
+
+        List<Customer> customers =customerService.selectList(new EntityWrapper<Customer>().eq("callcenter_user_id",customerId));
+
+        //外呼系统客户id如果存在则更新客户表信息。不存在则插入
+        if(CollectionUtils.isNotEmpty(customers)){
+            customerService.update(customer,new EntityWrapper<Customer>().eq("callcenter_user_id",customerId));
+        }else{
+            //录入客户表
+            customerService.insert(customer);
+        }
+
         return "1";
     }
 }
