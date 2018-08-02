@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 /**
- * 请在此写下该类的说明
+ * Test for {@link SysLogService}
  *
  * @author phil
  * @version 1.0.0
